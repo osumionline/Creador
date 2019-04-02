@@ -1,23 +1,47 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule }                       from '@angular/platform-browser';
+import { NgModule }                            from '@angular/core';
+import { ServiceWorkerModule }                 from '@angular/service-worker';
+import { BrowserAnimationsModule }             from '@angular/platform-browser/animations';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FlexLayoutModule }                    from '@angular/flex-layout';
+import { FormsModule }                         from '@angular/forms';
+import { AppRoutingModule }                    from './app-routing.module';
+import { AppComponent }                        from './app.component';
+import { environment }                         from '../environments/environment';
+import { TokenInterceptor }                    from './interceptors/token.interceptor';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { PAGES, COMPONENTS, PIPES, SERVICES, MATERIAL } from './app.common';
+
+import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent }   from './components/dialogs/alert-dialog/alert-dialog.component';
+import { FormDialogComponent }    from './components/dialogs/form-dialog/form-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+	...PAGES,
+	...COMPONENTS,
+	...PIPES
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+	HttpClientModule,
+	FlexLayoutModule,
+	FormsModule,
     BrowserAnimationsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+	...MATERIAL
   ],
-  providers: [],
+  entryComponents: [ConfirmDialogComponent, AlertDialogComponent, FormDialogComponent],
+  providers: [
+	...SERVICES,
+	{
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

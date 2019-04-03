@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
 				this.user.token  = this.cs.urldecode(result.token);
 				this.user.saveLogin();
 				
-				this.router.navigate(['/home']);
+				this.router.navigate(['/main']);
 			}
 			else{
 				this.registerNameError = true;

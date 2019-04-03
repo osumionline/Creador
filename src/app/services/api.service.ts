@@ -6,7 +6,8 @@ import { environment }             from '../../environments/environment';
 import {
   LoginData,
   LoginResult,
-  RegisterData
+  RegisterData,
+  ProjectResult
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -23,5 +24,9 @@ export class ApiService {
 
 	register(data: RegisterData): Observable<LoginResult> {
 		return this.http.post<LoginResult>(this.apiUrl + 'register', data);
+	}
+	
+	getProjects(): Observable<ProjectResult> {
+		return this.http.post<ProjectResult>(this.apiUrl + 'get-projects', {});
 	}
 }

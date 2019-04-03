@@ -34,3 +34,15 @@ export interface DialogOptions {
 export interface StatusResult {
 	status: string;
 }
+
+export interface Project {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+}
+
+export interface ProjectResult {
+  status: string;
+  list: Project[];
+}

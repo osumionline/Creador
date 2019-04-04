@@ -1,0 +1,61 @@
+.project-line {
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-line:hover {
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.project-line span {
+  display: inline-block;
+  line-height: 50px;
+  margin-left: 32px;
+  font-size: 1.3em;
+}
+
+.project-line-icon {
+  margin-right: 20px;
+  margin-top: 14px;
+  transition: 0.4s all;
+}
+
+.project-line-icon-rotate {
+  transform: rotate(180deg);
+}
+
+.project-sub-line {
+  max-height: 0;
+  transition: 0.4s all;
+  overflow: hidden;
+}
+
+.project-sub-line-deployed {
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+  max-height: 1000px;
+}
+
+.project-sub-line > * {
+  width: 100%;
+}
+
+.project-line-title {
+  padding-bottom: 16px;
+}
+
+.project-line-title > span {
+  display: inline-block;
+  margin-right: 16px;
+  min-width: 100px;
+}
+
+.sub-fields {
+  
+}
+
+.sub-fields-deployed {
+  
+}

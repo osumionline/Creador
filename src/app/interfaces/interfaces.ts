@@ -48,9 +48,27 @@ export interface ProjectResult {
 }
 
 export interface ProjectConfiguration {
+  baseUrl: string;
+  adminEmail: string;
+  defaultTitle: string;
+  lang: string;
   hasDB: boolean;
   dbHost: string;
   dbName: string;
   dbUser: string;
   dbPass: string;
+  cookiesPrefix: string;
+  cookiesUrl: string;
+  modBrowser: boolean;
+  modEmail: boolean;
+  modEmailSmtp: boolean;
+  modFtp: boolean;
+  modImage: boolean;
+  modPdf: boolean;
+  modTranslate: boolean;
+  smtpHost: string;
+  smtpPort: string;
+  smtpSecure: string;
+  smtpUser: string;
+  smtpPass: string;
 }

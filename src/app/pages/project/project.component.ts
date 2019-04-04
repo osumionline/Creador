@@ -14,13 +14,52 @@ export class ProjectComponent implements OnInit {
     description: ''
   } as Project;
   projectConfiguration = {
+    baseUrl: '',
+    adminEmail: '',
+    defaultTitle: '',
+    lang: 'es',
     hasDB: false,
-	dbHost: '',
-	dbName: '',
-	dbUser: '',
-	dbPass: ''
+    dbHost: '',
+    dbName: '',
+    dbUser: '',
+    dbPass: '',
+    cookiesPrefix: '',
+    cookiesUrl: '',
+    modBrowser: false,
+    modEmail: false,
+    modEmailSmtp: false,
+    modFtp: false,
+    modImage: false,
+    modPdf: false,
+    modTranslate: false,
+    smtpHost: '',
+    smtpPort: '',
+    smtpSecure: '',
+    smtpUser: '',
+    smtpPass: ''
   } as ProjectConfiguration;
+  row = {
+    general: true,
+    db: false,
+    cookies: false,
+    baseModules: false
+  };
 
   constructor() {}
   ngOnInit() {}
+  
+  deploy(ind) {
+    this.row[ind] = !this.row[ind];
+  }
+  
+  changeHasDB() {
+    this.projectConfiguration.hasDB = !this.projectConfiguration.hasDB;
+  }
+  
+  changeModule(ind) {
+    this.projectConfiguration[ind] = !this.projectConfiguration[ind];
+    if (!this.projectConfiguration.modEmail){
+      this.projectConfiguration.modEmailSmtp = false;
+    }
+  }
 }

@@ -12,20 +12,20 @@
     <mat-tab-group>
 
       <mat-tab>
-	    <ng-template mat-tab-label>
+        <ng-template mat-tab-label>
           <mat-icon class="tab-icon">assignment</mat-icon>
           Proyecto
         </ng-template>
-		<div class="tab-top-margin center-card-fields">
-	      <mat-form-field appearance="outline">
+        <div class="tab-top-margin center-card-fields">
+          <mat-form-field appearance="outline">
             <mat-label>Nombre del proyecto</mat-label>
             <input matInput [(ngModel)]="project.name" required name="name">
-		  </mat-form-field>
-		  <mat-form-field appearance="outline">
-            <mat-label>Descripción</mat-label>
-              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15"></textarea>
           </mat-form-field>
-		</div>
+          <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15"></textarea>
+          </mat-form-field>
+        </div>
       </mat-tab>
 
       <mat-tab>
@@ -33,33 +33,125 @@
           <mat-icon class="tab-icon">build</mat-icon>
           Configuración
         </ng-template>
-	    <mat-card class="center-card-content">
-		  <mat-card-header>
-		    <mat-card-title>
-			  <mat-slide-toggle [checked]="projectConfiguration.hasDB" class="tab-icon" (change)="projectConfiguration.hasDB = !projectConfiguration.hasDB"></mat-slide-toggle>
-			  <span [ngClass]="{'disabled-title':!projectConfiguration.hasDB}">Base de datos</span>
-			</mat-card-title>
-		  </mat-card-header>
-          <mat-card-content class="center-card-fields">
-		    <mat-form-field appearance="outline">
+        <div class="project-line" (click)="deploy('general')">
+          <span>General</span>
+          <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.general}">expand_more</mat-icon>
+        </div>
+        <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.general}">
+          <mat-form-field appearance="outline">
+            <mat-label>Base URL</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.baseUrl" name="base_url">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Admin email</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.adminEmail" name="admin_email">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Título por defecto</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.defaultTitle" name="default_title">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Idioma del sitio</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.lang" name="lang">
+          </mat-form-field>
+        </div>
+        <div class="project-line" (click)="deploy('db')">
+          <span>Base de datos</span>
+          <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.db}">expand_more</mat-icon>
+        </div>
+        <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.db}">
+          <div class="project-line-title">
+            <span>Acceso a Base de datos</span>
+            <mat-slide-toggle [checked]="projectConfiguration.hasDB" (change)="changeHasDB()"></mat-slide-toggle>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Host</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.dbHost" name="db_host" [disabled]="!projectConfiguration.hasDB">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre de la BD</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.dbName" name="db_name" [disabled]="!projectConfiguration.hasDB">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.dbUser" name="db_user" [disabled]="!projectConfiguration.hasDB">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput [(ngModel)]="projectConfiguration.dbPass" name="db_pass" [disabled]="!projectConfiguration.hasDB">
+          </mat-form-field>
+        </div>
+        <div class="project-line" (click)="deploy('cookies')">
+          <span>Cookies</span>
+          <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.cookies}">expand_more</mat-icon>
+        </div>
+        <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.cookies}">
+          <mat-form-field appearance="outline">
+            <mat-label>Prefijo de las cookies</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.cookiesPrefix" name="cookies_prefix">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>URL de las cookies</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.cookiesUrl" name="cookies_url">
+          </mat-form-field>
+        </div>
+        <div class="project-line" (click)="deploy('baseModules')">
+          <span>Módulos base</span>
+          <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.baseModules}">expand_more</mat-icon>
+        </div>
+        <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.baseModules}">
+          <div class="project-line-title">
+            <span>Browser</span>
+            <mat-slide-toggle [checked]="projectConfiguration.modBrowser" (change)="changeModule('modBrowser')"></mat-slide-toggle>
+          </div>
+          <div class="project-line-title">
+            <span>Email</span>
+            <mat-slide-toggle [checked]="projectConfiguration.modEmail" (change)="changeModule('modEmail')"></mat-slide-toggle>
+          </div>
+          <div class="project-line-title">
+            <span>Email SMTP</span>
+            <mat-slide-toggle [checked]="projectConfiguration.modEmailSmtp" (change)="changeModule('modEmailSmtp')" [disabled]="!projectConfiguration.modEmail"></mat-slide-toggle>
+          </div>
+          <div class="sub-fields" [ngClass]="{'sub-fields-deployed': projectConfiguration.modEmailSmtp}">
+            <mat-form-field appearance="outline">
               <mat-label>Host</mat-label>
-              <input matInput [(ngModel)]="projectConfiguration.dbHost" name="db_host" [disabled]="!projectConfiguration.hasDB">
-		    </mat-form-field>
-			<mat-form-field appearance="outline">
-              <mat-label>Nombre de la BD</mat-label>
-              <input matInput [(ngModel)]="projectConfiguration.dbName" name="db_name" [disabled]="!projectConfiguration.hasDB">
-		    </mat-form-field>
-			<mat-form-field appearance="outline">
+              <input matInput [(ngModel)]="projectConfiguration.smtpHost" name="smtp_host">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Puerto</mat-label>
+              <input matInput [(ngModel)]="projectConfiguration.smtpPort" name="smtp_port">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Seguridad</mat-label>
+              <input matInput [(ngModel)]="projectConfiguration.smtpSecure" name="smtp_secure">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>Usuario</mat-label>
-              <input matInput [(ngModel)]="projectConfiguration.dbUser" name="db_user" [disabled]="!projectConfiguration.hasDB">
-		    </mat-form-field>
-			<mat-form-field appearance="outline">
+              <input matInput [(ngModel)]="projectConfiguration.smtpUser" name="smtp_user">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>Contraseña</mat-label>
-              <input type="password" matInput [(ngModel)]="projectConfiguration.dbPass" name="db_pass" [disabled]="!projectConfiguration.hasDB">
-		    </mat-form-field>
-		  </mat-card-content>
-		</mat-card>
-	  </mat-tab>
+              <input matInput [(ngModel)]="projectConfiguration.smtpPass" name="smtp_pass">
+            </mat-form-field>
+          </div>
+          <div class="project-line-title">
+            <span>FTP</span>
+            <mat-slide-toggle [checked]="projectConfiguration.modFtp" (change)="changeModule('modFtp')"></mat-slide-toggle>
+          </div>
+          <div class="project-line-title">
+            <span>Image</span>
+            <mat-slide-toggle [checked]="projectConfiguration.modImage" (change)="changeModule('modImage')"></mat-slide-toggle>
+          </div>
+          <div class="project-line-title">
+            <span>PDF</span>
+            <mat-slide-toggle [checked]="projectConfiguration.modPdf" (change)="changeModule('modPdf')"></mat-slide-toggle>
+          </div>
+          <div class="project-line-title">
+            <span>Translate</span>
+            <mat-slide-toggle [checked]="projectConfiguration.modTranslate" (change)="changeModule('modTranslate')"></mat-slide-toggle>
+          </div>
+        </div>
+      </mat-tab>
 
       <mat-tab>
 	    <ng-template mat-tab-label>

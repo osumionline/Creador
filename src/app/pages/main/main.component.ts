@@ -23,14 +23,15 @@ export class MainComponent implements OnInit {
     this.as.getProjects().subscribe(result => {
       if (result.status=='ok'){
         this.projects = result.list;
+		this.loading = false;
       }
       else{
         
       }
     },
-  		error => {
-    		this.loading    = false;
-    		this.loadError  = true;
-  		});
+	error => {
+		this.loading    = false;
+		this.loadError  = true;
+	});
   }
 }

@@ -18,6 +18,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 	margin: 50px auto;
 }
 
+.center-card-big {
+	width: 90%;
+	margin: 50px auto;
+}
+
+.center-card-content {
+	width: 95%;
+	margin: 20px auto;
+}
+
 .center-card-fields > * {
 	width: 100%;
 }
@@ -45,4 +55,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .flex-space{
   flex: 1 1 auto;
+}
+
+.tab-icon {
+  margin-right: 8px;
+}
+
+.tab-top-margin {
+  margin-top: 20px;
+}
+
+.disabled-title {
+  color: #ccc;
 }

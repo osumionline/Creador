@@ -1,3 +1,82 @@
-<p>
-  project works!
-</p>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button routerLink="/main">
+		<mat-icon>arrow_back</mat-icon>
+	</button>
+	<span>Creador: {{project.name}}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card class="center-card-big">
+  <mat-card-content>
+    <mat-tab-group>
+
+      <mat-tab>
+	    <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">assignment</mat-icon>
+          Proyecto
+        </ng-template>
+		<div class="tab-top-margin center-card-fields">
+	      <mat-form-field appearance="outline">
+            <mat-label>Nombre del proyecto</mat-label>
+            <input matInput [(ngModel)]="project.name" required name="name">
+		  </mat-form-field>
+		  <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15"></textarea>
+          </mat-form-field>
+		</div>
+      </mat-tab>
+
+      <mat-tab>
+	    <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">build</mat-icon>
+          Configuración
+        </ng-template>
+	    <mat-card class="center-card-content">
+		  <mat-card-header>
+		    <mat-card-title>
+			  <mat-slide-toggle [checked]="projectConfiguration.hasDB" class="tab-icon" (change)="projectConfiguration.hasDB = !projectConfiguration.hasDB"></mat-slide-toggle>
+			  <span [ngClass]="{'disabled-title':!projectConfiguration.hasDB}">Base de datos</span>
+			</mat-card-title>
+		  </mat-card-header>
+          <mat-card-content class="center-card-fields">
+		    <mat-form-field appearance="outline">
+              <mat-label>Host</mat-label>
+              <input matInput [(ngModel)]="projectConfiguration.dbHost" name="db_host" [disabled]="!projectConfiguration.hasDB">
+		    </mat-form-field>
+			<mat-form-field appearance="outline">
+              <mat-label>Nombre de la BD</mat-label>
+              <input matInput [(ngModel)]="projectConfiguration.dbName" name="db_name" [disabled]="!projectConfiguration.hasDB">
+		    </mat-form-field>
+			<mat-form-field appearance="outline">
+              <mat-label>Usuario</mat-label>
+              <input matInput [(ngModel)]="projectConfiguration.dbUser" name="db_user" [disabled]="!projectConfiguration.hasDB">
+		    </mat-form-field>
+			<mat-form-field appearance="outline">
+              <mat-label>Contraseña</mat-label>
+              <input type="password" matInput [(ngModel)]="projectConfiguration.dbPass" name="db_pass" [disabled]="!projectConfiguration.hasDB">
+		    </mat-form-field>
+		  </mat-card-content>
+		</mat-card>
+	  </mat-tab>
+
+      <mat-tab>
+	    <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">view_list</mat-icon>
+          Modelo
+        </ng-template>
+	    Content 3
+	  </mat-tab>
+
+	  <mat-tab>
+	    <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">library_add</mat-icon>
+          Incluir
+        </ng-template>
+	    Content 4
+	  </mat-tab>
+
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

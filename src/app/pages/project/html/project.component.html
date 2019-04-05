@@ -177,20 +177,26 @@
           <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.css}">expand_more</mat-icon>
         </div>
         <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.css}">
-          <mat-form-field appearance="outline">
-            <mat-label>CSS</mat-label>
-            <input matInput [(ngModel)]="newCSS" name="new_css">
-          </mat-form-field>
+          <div>
+            <mat-form-field appearance="outline" class="field-value">
+              <mat-label>CSS</mat-label>
+              <input matInput [(ngModel)]="newCSS" name="new_css">
+            </mat-form-field>
+            <button mat-raised-button color="primary" class="field-button">Añadir</button>
+          </div>
           <div class="project-list">
             <div class="project-list-item" *ngFor="let item of projectConfigurationLists.css">
               {{item}}
               <mat-icon class="project-list-item-icon">close</mat-icon>
             </div>
           </div>
-		  <mat-form-field appearance="outline">
-            <mat-label>CSS Externos</mat-label>
-            <input matInput [(ngModel)]="newCSSExt" name="new_css_ext">
-          </mat-form-field>
+          <div>
+		    <mat-form-field appearance="outline" class="field-value">
+              <mat-label>CSS Externos</mat-label>
+              <input matInput [(ngModel)]="newCSSExt" name="new_css_ext">
+            </mat-form-field>
+            <button mat-raised-button color="primary" class="field-button">Añadir</button>
+          </div>
           <div class="project-list">
             <div class="project-list-item" *ngFor="let item of projectConfigurationLists.cssExt">
               {{item}}
@@ -203,20 +209,26 @@
           <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.js}">expand_more</mat-icon>
         </div>
         <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.js}">
-          <mat-form-field appearance="outline">
-            <mat-label>JS</mat-label>
-            <input matInput [(ngModel)]="newJS" name="new_js">
-          </mat-form-field>
+          <div>
+            <mat-form-field appearance="outline" class="field-value">
+              <mat-label>JS</mat-label>
+              <input matInput [(ngModel)]="newJS" name="new_js">
+            </mat-form-field>
+			<button mat-raised-button color="primary" class="field-button">Añadir</button>
+          </div>
           <div class="project-list">
             <div class="project-list-item" *ngFor="let item of projectConfigurationLists.js">
               {{item}}
               <mat-icon class="project-list-item-icon">close</mat-icon>
             </div>
           </div>
-		  <mat-form-field appearance="outline">
-            <mat-label>JS Externos</mat-label>
-            <input matInput [(ngModel)]="newJSExt" name="new_js_ext">
-          </mat-form-field>
+          <div>
+		    <mat-form-field appearance="outline" class="field-value">
+              <mat-label>JS Externos</mat-label>
+              <input matInput [(ngModel)]="newJSExt" name="new_js_ext">
+            </mat-form-field>
+			<button mat-raised-button color="primary" class="field-button">Añadir</button>
+          </div>
           <div class="project-list">
             <div class="project-list-item" *ngFor="let item of projectConfigurationLists.jsExt">
               {{item}}
@@ -229,10 +241,13 @@
           <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.libs}">expand_more</mat-icon>
         </div>
         <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.libs}">
-          <mat-form-field appearance="outline">
-            <mat-label>Librería</mat-label>
-            <input matInput [(ngModel)]="newLib" name="new_lib">
-          </mat-form-field>
+          <div>
+            <mat-form-field appearance="outline" class="field-value">
+              <mat-label>Librería</mat-label>
+              <input matInput [(ngModel)]="newLib" name="new_lib">
+            </mat-form-field>
+			<button mat-raised-button color="primary" class="field-button">Añadir</button>
+          </div>
           <div class="project-list">
             <div class="project-list-item" *ngFor="let item of projectConfigurationLists.libs">
               {{item}}
@@ -246,17 +261,41 @@
         </div>
         <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.extra}">
           <div>
-            <mat-form-field appearance="outline" class="width20">
+            <mat-form-field appearance="outline" class="field-key">
               <mat-label>Clave</mat-label>
               <input matInput [(ngModel)]="newExtraKey" name="new_extra_key">
             </mat-form-field>
-			<mat-form-field appearance="outline" class="width80">
+			<mat-form-field appearance="outline" class="field-value">
               <mat-label>Valor</mat-label>
               <input matInput [(ngModel)]="newExtraValue" name="new_extra_value">
             </mat-form-field>
+			<button mat-raised-button color="primary" class="field-button">Añadir</button>
           </div>
           <div class="project-list">
             <div class="project-list-item" *ngFor="let item of projectConfigurationLists.extra">
+              <strong>{{item.key}}</strong> {{item.value}}
+              <mat-icon class="project-list-item-icon">close</mat-icon>
+            </div>
+          </div>
+        </div>
+		<div class="project-line" (click)="deploy('dir')">
+          <span>Directorios</span>
+          <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.dir}">expand_more</mat-icon>
+        </div>
+        <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.dir}">
+          <div>
+            <mat-form-field appearance="outline" class="field-key">
+              <mat-label>Clave</mat-label>
+              <input matInput [(ngModel)]="newDirKey" name="new_dir_key">
+            </mat-form-field>
+			<mat-form-field appearance="outline" class="field-value">
+              <mat-label>Valor</mat-label>
+              <input matInput [(ngModel)]="newDirValue" name="new_dir_value">
+            </mat-form-field>
+			<button mat-raised-button color="primary" class="field-button">Añadir</button>
+          </div>
+          <div class="project-list">
+            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.dir">
               <strong>{{item.key}}</strong> {{item.value}}
               <mat-icon class="project-list-item-icon">close</mat-icon>
             </div>

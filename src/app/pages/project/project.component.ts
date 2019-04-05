@@ -16,6 +16,7 @@ export class ProjectComponent implements OnInit {
     slug: 'nuevo-proyecto',
     description: ''
   } as Project;
+
   projectConfiguration = {
     baseUrl: '',
     adminEmail: '',
@@ -44,6 +45,7 @@ export class ProjectComponent implements OnInit {
 	error404: '',
 	error500: ''
   } as ProjectConfiguration;
+
   projectConfigurationLists = {
     css: [],
     cssExt: [],
@@ -53,6 +55,17 @@ export class ProjectComponent implements OnInit {
     extra: [],
     dir: []
   } as ProjectConfigurationLists;
+
+  newCSS: string = '';
+  newCSSExt: string = '';
+  newJS: string = '';
+  newJSExt: string = '';
+  newLib: string = '';
+  newExtraKey: string = '';
+  newExtraValue: string = '';
+  newDirKey: string = '';
+  newDirValue: string = '';
+
   row = {
     general: true,
     db: false,

@@ -1,5 +1,8 @@
-import { Component, OnInit }             from '@angular/core';
-import { Project, ProjectConfiguration } from '../../interfaces/interfaces';
+import { Component, OnInit } from '@angular/core';
+import { Project,
+         ProjectConfiguration,
+         ProjectConfigurationLists
+       } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-project',
@@ -41,12 +44,25 @@ export class ProjectComponent implements OnInit {
 	error404: '',
 	error500: ''
   } as ProjectConfiguration;
+  projectConfigurationLists = {
+    css: [],
+    cssExt: [],
+    js: [],
+    jsExt: [],
+    libs: [],
+    extra: [],
+    dir: []
+  } as ProjectConfigurationLists;
   row = {
     general: true,
     db: false,
     cookies: false,
     baseModules: false,
-	errors: false
+	errors: false,
+	css: false,
+	js: false,
+	libs: false,
+	extra: false
   };
 
   constructor() {}

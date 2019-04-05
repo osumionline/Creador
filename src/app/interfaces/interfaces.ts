@@ -75,3 +75,18 @@ export interface ProjectConfiguration {
   error404: string;
   error500: string;
 }
+
+export interface KeyValue {
+  key: string;
+  value: string;
+}
+
+export interface ProjectConfigurationLists {
+  css: string[];
+  cssExt: string[];
+  js: string[];
+  jsExt: string[];
+  libs: string[];
+  extra: KeyValue[];
+  dir: KeyValue[];
+}

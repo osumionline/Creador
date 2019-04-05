@@ -154,7 +154,7 @@
             <mat-slide-toggle [checked]="projectConfiguration.modTranslate" (change)="changeModule('modTranslate')"></mat-slide-toggle>
           </div>
         </div>
-		<div class="project-line" (click)="deploy('errors')">
+        <div class="project-line" (click)="deploy('errors')">
           <span>Errores</span>
           <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.errors}">expand_more</mat-icon>
         </div>
@@ -167,12 +167,12 @@
             <mat-label>URL página de error 404</mat-label>
             <input matInput [(ngModel)]="projectConfiguration.error404" name="error_404">
           </mat-form-field>
-		  <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline">
             <mat-label>URL página de error 500</mat-label>
             <input matInput [(ngModel)]="projectConfiguration.error500" name="error_500">
           </mat-form-field>
         </div>
-		<div class="project-line" (click)="deploy('css')">
+        <div class="project-line" (click)="deploy('css')">
           <span>CSS</span>
           <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.css}">expand_more</mat-icon>
         </div>
@@ -180,31 +180,37 @@
           <div>
             <mat-form-field appearance="outline" class="field-value">
               <mat-label>CSS</mat-label>
-              <input matInput [(ngModel)]="newCSS" name="new_css">
+              <input matInput [(ngModel)]="newItem.css" name="new_css">
             </mat-form-field>
-            <button mat-raised-button color="primary" class="field-button">Añadir</button>
+            <button mat-raised-button color="primary" class="field-button" (click)="addNew('css')" [disabled]="newItem.css==''">Añadir</button>
           </div>
           <div class="project-list">
-            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.css">
+            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.css; let i = index">
               {{item}}
-              <mat-icon class="project-list-item-icon">close</mat-icon>
+              <mat-icon class="project-list-item-icon" (click)="deleteNew('css', i)">close</mat-icon>
+            </div>
+            <div class="project-list-item" *ngIf="projectConfigurationLists.css.length==0">
+              No hay ningún elemento.
             </div>
           </div>
           <div>
-		    <mat-form-field appearance="outline" class="field-value">
+		        <mat-form-field appearance="outline" class="field-value">
               <mat-label>CSS Externos</mat-label>
-              <input matInput [(ngModel)]="newCSSExt" name="new_css_ext">
+              <input matInput [(ngModel)]="newItem.cssExt" name="new_css_ext">
             </mat-form-field>
-            <button mat-raised-button color="primary" class="field-button">Añadir</button>
+            <button mat-raised-button color="primary" class="field-button" (click)="addNew('cssExt')" [disabled]="newItem.cssExt==''">Añadir</button>
           </div>
           <div class="project-list">
-            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.cssExt">
+            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.cssExt; let i = index">
               {{item}}
-              <mat-icon class="project-list-item-icon">close</mat-icon>
+              <mat-icon class="project-list-item-icon" (click)="deleteNew('cssExt', i)">close</mat-icon>
+            </div>
+            <div class="project-list-item" *ngIf="projectConfigurationLists.cssExt.length==0">
+              No hay ningún elemento.
             </div>
           </div>
         </div>
-		<div class="project-line" (click)="deploy('js')">
+        <div class="project-line" (click)="deploy('js')">
           <span>JS</span>
           <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.js}">expand_more</mat-icon>
         </div>
@@ -212,31 +218,37 @@
           <div>
             <mat-form-field appearance="outline" class="field-value">
               <mat-label>JS</mat-label>
-              <input matInput [(ngModel)]="newJS" name="new_js">
+              <input matInput [(ngModel)]="newItem.js" name="new_js">
             </mat-form-field>
-			<button mat-raised-button color="primary" class="field-button">Añadir</button>
+            <button mat-raised-button color="primary" class="field-button" (click)="addNew('js')" [disabled]="newItem.js==''">Añadir</button>
           </div>
           <div class="project-list">
-            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.js">
+            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.js; let i = index">
               {{item}}
-              <mat-icon class="project-list-item-icon">close</mat-icon>
+              <mat-icon class="project-list-item-icon" (click)="deleteNew('js', i)">close</mat-icon>
+            </div>
+            <div class="project-list-item" *ngIf="projectConfigurationLists.js.length==0">
+              No hay ningún elemento.
             </div>
           </div>
           <div>
-		    <mat-form-field appearance="outline" class="field-value">
+            <mat-form-field appearance="outline" class="field-value">
               <mat-label>JS Externos</mat-label>
-              <input matInput [(ngModel)]="newJSExt" name="new_js_ext">
+              <input matInput [(ngModel)]="newItem.jsExt" name="new_js_ext">
             </mat-form-field>
-			<button mat-raised-button color="primary" class="field-button">Añadir</button>
+            <button mat-raised-button color="primary" class="field-button" (click)="addNew('jsExt')" [disabled]="newItem.jsExt==''">Añadir</button>
           </div>
           <div class="project-list">
-            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.jsExt">
+            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.jsExt; let i = index">
               {{item}}
-              <mat-icon class="project-list-item-icon">close</mat-icon>
+              <mat-icon class="project-list-item-icon" (click)="deleteNew('jsExt', i)">close</mat-icon>
+            </div>
+            <div class="project-list-item" *ngIf="projectConfigurationLists.jsExt.length==0">
+              No hay ningún elemento.
             </div>
           </div>
         </div>
-		<div class="project-line" (click)="deploy('libs')">
+        <div class="project-line" (click)="deploy('libs')">
           <span>Librerías</span>
           <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.libs}">expand_more</mat-icon>
         </div>
@@ -244,18 +256,21 @@
           <div>
             <mat-form-field appearance="outline" class="field-value">
               <mat-label>Librería</mat-label>
-              <input matInput [(ngModel)]="newLib" name="new_lib">
+              <input matInput [(ngModel)]="newItem.libs" name="new_lib">
             </mat-form-field>
-			<button mat-raised-button color="primary" class="field-button">Añadir</button>
+            <button mat-raised-button color="primary" class="field-button" (click)="addNew('libs')" [disabled]="newItem.libs==''">Añadir</button>
           </div>
           <div class="project-list">
-            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.libs">
+            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.libs; let i = index">
               {{item}}
-              <mat-icon class="project-list-item-icon">close</mat-icon>
+              <mat-icon class="project-list-item-icon" (click)="deleteNew('libs', i)">close</mat-icon>
+            </div>
+            <div class="project-list-item" *ngIf="projectConfigurationLists.libs.length==0">
+              No hay ningún elemento.
             </div>
           </div>
         </div>
-		<div class="project-line" (click)="deploy('extra')">
+        <div class="project-line" (click)="deploy('extra')">
           <span>Valores extra</span>
           <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.extra}">expand_more</mat-icon>
         </div>
@@ -263,22 +278,25 @@
           <div>
             <mat-form-field appearance="outline" class="field-key">
               <mat-label>Clave</mat-label>
-              <input matInput [(ngModel)]="newExtraKey" name="new_extra_key">
+              <input matInput [(ngModel)]="newItem.extraKey" name="new_extra_key">
             </mat-form-field>
-			<mat-form-field appearance="outline" class="field-value">
+            <mat-form-field appearance="outline" class="field-value">
               <mat-label>Valor</mat-label>
-              <input matInput [(ngModel)]="newExtraValue" name="new_extra_value">
+              <input matInput [(ngModel)]="newItem.extraValue" name="new_extra_value">
             </mat-form-field>
-			<button mat-raised-button color="primary" class="field-button">Añadir</button>
+            <button mat-raised-button color="primary" class="field-button" (click)="addNew('extra')" [disabled]="newItem.extraKey=='' || newItem.extraValue==''">Añadir</button>
           </div>
           <div class="project-list">
-            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.extra">
+            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.extra; let i = index">
               <strong>{{item.key}}</strong> {{item.value}}
-              <mat-icon class="project-list-item-icon">close</mat-icon>
+              <mat-icon class="project-list-item-icon" (click)="deleteNew('extra', i)">close</mat-icon>
+            </div>
+            <div class="project-list-item" *ngIf="projectConfigurationLists.extra.length==0">
+              No hay ningún elemento.
             </div>
           </div>
         </div>
-		<div class="project-line" (click)="deploy('dir')">
+        <div class="project-line" (click)="deploy('dir')">
           <span>Directorios</span>
           <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.dir}">expand_more</mat-icon>
         </div>
@@ -286,18 +304,21 @@
           <div>
             <mat-form-field appearance="outline" class="field-key">
               <mat-label>Clave</mat-label>
-              <input matInput [(ngModel)]="newDirKey" name="new_dir_key">
+              <input matInput [(ngModel)]="newItem.dirKey" name="new_dir_key">
             </mat-form-field>
-			<mat-form-field appearance="outline" class="field-value">
+            <mat-form-field appearance="outline" class="field-value">
               <mat-label>Valor</mat-label>
-              <input matInput [(ngModel)]="newDirValue" name="new_dir_value">
+              <input matInput [(ngModel)]="newItem.dirValue" name="new_dir_value">
             </mat-form-field>
-			<button mat-raised-button color="primary" class="field-button">Añadir</button>
+            <button mat-raised-button color="primary" class="field-button" (click)="addNew('dir')" [disabled]="newItem.dirKey=='' || newItem.dirValue==''">Añadir</button>
           </div>
           <div class="project-list">
-            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.dir">
+            <div class="project-list-item" *ngFor="let item of projectConfigurationLists.dir; let i = index">
               <strong>{{item.key}}</strong> {{item.value}}
-              <mat-icon class="project-list-item-icon">close</mat-icon>
+              <mat-icon class="project-list-item-icon" (click)="deleteNew('dir', i)">close</mat-icon>
+            </div>
+            <div class="project-list-item" *ngIf="projectConfigurationLists.dir.length==0">
+              No hay ningún elemento.
             </div>
           </div>
         </div>

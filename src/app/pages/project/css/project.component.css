@@ -71,3 +71,41 @@
   margin-bottom: 20px;
   max-height: 1000px;
 }
+
+.field-key {
+  width: 20%;
+  margin-right: 16px;
+}
+
+.field-value{
+  width: 70%;
+}
+
+.field-button{
+  float: right;
+  margin-top: 12px;
+}
+
+.project-list {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.project-list-item {
+  line-height: 40px;
+  padding-left: 16px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-list-item:last-children {
+  border-bottom: 0;
+}
+
+.project-list-item-icon {
+  margin-top: 12px;
+  margin-right: 16px;
+  cursor: pointer;
+}

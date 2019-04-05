@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Project,
          ProjectConfiguration,
-         ProjectConfigurationLists
+         ProjectConfigurationLists,
+         KeyValue
        } from '../../interfaces/interfaces';
 
 @Component({
@@ -41,9 +42,9 @@ export class ProjectComponent implements OnInit {
     smtpSecure: '',
     smtpUser: '',
     smtpPass: '',
-	error403: '',
-	error404: '',
-	error500: ''
+    error403: '',
+    error404: '',
+    error500: ''
   } as ProjectConfiguration;
 
   projectConfigurationLists = {
@@ -56,26 +57,29 @@ export class ProjectComponent implements OnInit {
     dir: []
   } as ProjectConfigurationLists;
 
-  newCSS: string = '';
-  newCSSExt: string = '';
-  newJS: string = '';
-  newJSExt: string = '';
-  newLib: string = '';
-  newExtraKey: string = '';
-  newExtraValue: string = '';
-  newDirKey: string = '';
-  newDirValue: string = '';
+  newItem = {
+    css: '',
+    cssExt: '',
+    js: '',
+    jsExt: '',
+    libs: '',
+    extraKey: '',
+    extraValue: '',
+    dirKey: '',
+    dirValue: ''
+  };
 
   row = {
     general: true,
     db: false,
     cookies: false,
     baseModules: false,
-	errors: false,
-	css: false,
-	js: false,
-	libs: false,
-	extra: false
+    errors: false,
+    css: false,
+    js: false,
+    libs: false,
+    extra: false,
+    dir: false
   };
 
   constructor() {}
@@ -94,5 +98,32 @@ export class ProjectComponent implements OnInit {
     if (!this.projectConfiguration.modEmail){
       this.projectConfiguration.modEmailSmtp = false;
     }
+  }
+  
+  addNew(type) {
+    switch(type) {
+      case 'css':
+      case 'cssExt':
+      case 'js':
+      case 'jsExt':
+      case 'libs':
+        this.projectConfigurationLists[type].push( this.newItem[type] );
+        this.newItem[type] = '';
+        break;
+      case 'extra':
+        this.projectConfigurationLists.extra.push( {key: this.newItem.extraKey, value: this.newItem.extraValue } as KeyValue );
+        this.newItem.extraKey = '';
+        this.newItem.extraValue = '';
+        break;
+      case 'dir':
+        this.projectConfigurationLists.dir.push( {key: this.newItem.dirKey, value: this.newItem.dirValue } as KeyValue );
+        this.newItem.dirKey = '';
+        this.newItem.dirValue = '';
+        break;
+    }
+  }
+
+  deleteNew(type, ind) {
+    this.projectConfigurationLists[type].splice(ind, 1);
   }
 }

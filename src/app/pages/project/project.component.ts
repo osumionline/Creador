@@ -36,13 +36,17 @@ export class ProjectComponent implements OnInit {
     smtpPort: '',
     smtpSecure: '',
     smtpUser: '',
-    smtpPass: ''
+    smtpPass: '',
+	error403: '',
+	error404: '',
+	error500: ''
   } as ProjectConfiguration;
   row = {
     general: true,
     db: false,
     cookies: false,
-    baseModules: false
+    baseModules: false,
+	errors: false
   };
 
   constructor() {}

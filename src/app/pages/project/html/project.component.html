@@ -113,6 +113,9 @@
             <mat-slide-toggle [checked]="projectConfiguration.modEmailSmtp" (change)="changeModule('modEmailSmtp')" [disabled]="!projectConfiguration.modEmail"></mat-slide-toggle>
           </div>
           <div class="sub-fields" [ngClass]="{'sub-fields-deployed': projectConfiguration.modEmailSmtp}">
+            <div class="project-line-title">
+              <span>Parámetros para el envío de emails mediante SMTP</span>
+            </div>
             <mat-form-field appearance="outline">
               <mat-label>Host</mat-label>
               <input matInput [(ngModel)]="projectConfiguration.smtpHost" name="smtp_host">
@@ -150,6 +153,24 @@
             <span>Translate</span>
             <mat-slide-toggle [checked]="projectConfiguration.modTranslate" (change)="changeModule('modTranslate')"></mat-slide-toggle>
           </div>
+        </div>
+		<div class="project-line" (click)="deploy('errors')">
+          <span>Errores</span>
+          <mat-icon class="project-line-icon" [ngClass]="{'project-line-icon-rotate': row.errors}">expand_more</mat-icon>
+        </div>
+        <div class="project-sub-line" [ngClass]="{'project-sub-line-deployed': row.errors}">
+          <mat-form-field appearance="outline">
+            <mat-label>URL página de error 403</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.error403" name="error_403">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>URL página de error 404</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.error404" name="error_404">
+          </mat-form-field>
+		  <mat-form-field appearance="outline">
+            <mat-label>URL página de error 500</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.error500" name="error_500">
+          </mat-form-field>
         </div>
       </mat-tab>
 

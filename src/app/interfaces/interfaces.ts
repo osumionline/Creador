@@ -71,4 +71,7 @@ export interface ProjectConfiguration {
   smtpSecure: string;
   smtpUser: string;
   smtpPass: string;
+  error403: string;
+  error404: string;
+  error500: string;
 }

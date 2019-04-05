@@ -35,6 +35,8 @@
 .project-sub-line-deployed {
   padding: 20px;
   border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
   max-height: 1000px;
 }
 
@@ -53,9 +55,19 @@
 }
 
 .sub-fields {
-  
+  overflow: hidden;
+  max-height: 0;
+  transition: 0.4s all;
+}
+
+.sub-fields > * {
+  width: 100%;
 }
 
 .sub-fields-deployed {
-  
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-height: 1000px;
 }

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Project,
          ProjectConfiguration,
          ProjectConfigurationLists,
-         KeyValue
+         KeyValue,
+         Model,
+         ModelRow
        } from '../../interfaces/interfaces';
 
 @Component({
@@ -81,6 +83,8 @@ export class ProjectComponent implements OnInit {
     extra: false,
     dir: false
   };
+  
+  projectModel = [];
 
   constructor() {}
   ngOnInit() {}

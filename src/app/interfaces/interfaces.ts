@@ -90,3 +90,20 @@ export interface ProjectConfigurationLists {
   extra: KeyValue[];
   dir: KeyValue[];
 }
+
+export interface ModelRow {
+  name: string;
+  type: number;
+  size: number;
+  autoIncrement: boolean;
+  nullable: boolean;
+  defaultValue: string;
+  ref: string;
+  comment: string;
+}
+
+export interface Model {
+  name: string;
+  tableName: string;
+  rows: ModelRow[];
+}

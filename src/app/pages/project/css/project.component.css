@@ -13,7 +13,9 @@
   display: inline-block;
   line-height: 50px;
   margin-left: 32px;
-  font-size: 1.3em;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .project-line-icon {

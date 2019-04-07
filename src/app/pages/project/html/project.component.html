@@ -329,7 +329,27 @@
           <mat-icon class="tab-icon">view_list</mat-icon>
           Modelo
         </ng-template>
-        Content 3
+        <div class="project-header">
+          <button mat-raised-button color="primary" (click)="addModel()">Añadir modelo</button>
+        </div>
+
+        <mat-card class="center-card-big" *ngFor="let model of projectModel">
+          <mat-card-content>
+            <div class="project-model-header">
+              <mat-form-field appearance="outline" class="field-key">
+                <mat-label>Nombre</mat-label>
+                <input matInput [(ngModel)]="model.name" name="model_name">
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="field-key">
+                <mat-label>Nombre de la tabla</mat-label>
+                <input matInput [(ngModel)]="model.tableName" name="model_table_name">
+              </mat-form-field>
+              <button mat-raised-button color="warn">Borrar</button>
+              <button mat-raised-button color="primary">Añadir campo</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
       </mat-tab>
 
       <mat-tab>

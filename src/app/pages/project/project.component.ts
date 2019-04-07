@@ -130,4 +130,12 @@ export class ProjectComponent implements OnInit {
   deleteNew(type, ind) {
     this.projectConfigurationLists[type].splice(ind, 1);
   }
+  
+  addModel() {
+    this.projectModel.push({
+      name: '',
+      tableName: '',
+      rows: []
+    } as Model);
+  }
 }

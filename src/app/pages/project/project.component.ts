@@ -138,4 +138,17 @@ export class ProjectComponent implements OnInit {
       rows: []
     } as Model);
   }
+  
+  addModelRow(ind: number) {
+    this.projectModel[ind].rows.push({
+      name: '',
+      type: null,
+      size: null,
+      autoIncrement: false,
+      nullable: true,
+      defaultValue: '',
+      ref: '',
+      comment: ''
+	} as ModelRow);
+  }
 }

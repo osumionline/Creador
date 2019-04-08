@@ -333,7 +333,7 @@
           <button mat-raised-button color="primary" (click)="addModel()">Añadir modelo</button>
         </div>
 
-        <mat-card class="center-card-big" *ngFor="let model of projectModel">
+        <mat-card class="project-card" *ngFor="let model of projectModel; let i = index">
           <mat-card-content>
             <div class="project-model-header">
               <mat-form-field appearance="outline" class="field-key">
@@ -345,7 +345,7 @@
                 <input matInput [(ngModel)]="model.tableName" name="model_table_name">
               </mat-form-field>
               <button mat-raised-button color="warn">Borrar</button>
-              <button mat-raised-button color="primary">Añadir campo</button>
+              <button mat-raised-button color="primary" (click)="addModelRow(i)">Añadir campo</button>
             </div>
           </mat-card-content>
         </mat-card>

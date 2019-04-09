@@ -107,3 +107,18 @@ export interface Model {
   tableName: string;
   rows: ModelRow[];
 }
+
+export interface IncludeVersion {
+  id: number;
+  version: string;
+}
+
+export interface IncludeType {
+  id: number;
+  versions: IncludeVersion[];
+}
+
+export interface IncludeResult {
+  status: string;
+  list: IncludeType[];
+}

@@ -7,7 +7,8 @@ import {
   LoginData,
   LoginResult,
   RegisterData,
-  ProjectResult
+  ProjectResult,
+  IncludeResult
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -28,5 +29,9 @@ export class ApiService {
 	
 	getProjects(): Observable<ProjectResult> {
 		return this.http.post<ProjectResult>(this.apiUrl + 'get-projects', {});
+	}
+	
+	getIncludes(): Observable<IncludeResult> {
+		return this.http.post<IncludeResult>(this.apiUrl + 'get-includes', {});
 	}
 }

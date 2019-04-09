@@ -4,8 +4,11 @@ import { Project,
          ProjectConfigurationLists,
          KeyValue,
          Model,
-         ModelRow
+         ModelRow,
+		 IncludeType,
+		 IncludeVersion
        } from '../../interfaces/interfaces';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-project',
@@ -85,9 +88,15 @@ export class ProjectComponent implements OnInit {
   };
   
   projectModel = [];
+  
+  includeTypes: IncludeType[] = [];
 
-  constructor() {}
-  ngOnInit() {}
+  constructor(private as: ApiService) {}
+  ngOnInit() {
+    this.as.getIncludes().subscribe(result => {
+      this.includeTypes = result.list;
+	});
+  }
   
   deploy(ind) {
     this.row[ind] = !this.row[ind];

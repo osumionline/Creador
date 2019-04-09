@@ -69,6 +69,7 @@ import { MatDialogModule }      from '@angular/material/dialog';
 import { MatSelectModule }      from '@angular/material/select';
 import { MatTabsModule }        from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule }    from '@angular/material/checkbox';
 
 export const MATERIAL: any[] = [
 	MatToolbarModule,
@@ -82,5 +83,6 @@ export const MATERIAL: any[] = [
 	MatDialogModule,
 	MatSelectModule,
 	MatTabsModule,
-	MatSlideToggleModule
+	MatSlideToggleModule,
+	MatCheckboxModule
 ];

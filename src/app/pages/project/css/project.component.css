@@ -133,3 +133,22 @@
   margin-right: 16px;
   margin-top: 12px;
 }
+
+.project-model-row {
+  border-top: 1px solid #ccc;
+  padding-top: 16px;
+}
+
+.project-model-row > * {
+  margin-right: 10px;
+  width: 16%;
+}
+
+.project-model-row-delete {
+  float: right;
+  width: auto !important;
+}
+
+.project-model-comment {
+  width: 100% !important;
+}

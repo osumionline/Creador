@@ -151,4 +151,12 @@ export class ProjectComponent implements OnInit {
       comment: ''
 	} as ModelRow);
   }
+  
+  deleteModel(ind: number) {
+    this.projectModel.splice(ind, 1);
+  }
+  
+  deleteModelRow(ind: number, field: number) {
+    this.projectModel[ind].rows.splice(field, 1);
+  }
 }

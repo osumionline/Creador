@@ -152,3 +152,7 @@
 .project-model-comment {
   width: 100% !important;
 }
+
+.project-include {
+  border-color: #eee;
+}

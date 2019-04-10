@@ -405,7 +405,14 @@
           <mat-icon class="tab-icon">library_add</mat-icon>
           Incluir
         </ng-template>
-        Content 4
+        <fieldset *ngFor="let inc of includeTypes" class="project-include">
+          <legend>{{inc.name | urldecode}}</legend>
+          <mat-selection-list #includes>
+            <mat-list-option *ngFor="let version of inc.versions">
+              {{version.version}}
+            </mat-list-option>
+          </mat-selection-list>
+        </fieldset>
       </mat-tab>
 
     </mat-tab-group>

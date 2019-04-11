@@ -155,4 +155,13 @@
 
 .project-include {
   border-color: #eee;
+  border-radius: 6px;
+  margin: 8px 0;
+}
+
+.project-include > legend{
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0,0,0,.6);
 }

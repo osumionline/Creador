@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 import { Project,
          ProjectConfiguration,
          ProjectConfigurationLists,
@@ -90,6 +90,7 @@ export class ProjectComponent implements OnInit {
   projectModel = [];
   
   includeTypes: IncludeType[] = [];
+  @ViewChildren('includes') includes;
 
   constructor(private as: ApiService) {}
   ngOnInit() {
@@ -167,5 +168,9 @@ export class ProjectComponent implements OnInit {
   
   deleteModelRow(ind: number, field: number) {
     this.projectModel[ind].rows.splice(field, 1);
+  }
+  
+  prueba(){
+    this.includes.map(inc => console.log(inc.selectedOptions.selected));
   }
 }

@@ -407,11 +407,14 @@
         </ng-template>
         <fieldset *ngFor="let inc of includeTypes" class="project-include">
           <legend>{{inc.name | urldecode}}</legend>
-          <mat-selection-list #includes>
-            <mat-list-option *ngFor="let version of inc.versions">
-              {{version.version}}
-            </mat-list-option>
-          </mat-selection-list>
+          <mat-radio-group aria-label="Select an option">
+            <mat-list role="list">
+              <mat-list-item *ngFor="let version of inc.versions">
+                {{version.version}}
+                <mat-radio-button [value]="version.id"></mat-radio-button>
+              </mat-list-item>
+            </mat-list>
+          </mat-radio-group>
         </fieldset>
       </mat-tab>
 

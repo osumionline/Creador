@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router }            from '@angular/router';
 import { Project,
          ProjectConfiguration,
          ProjectConfigurationLists,
@@ -8,7 +9,8 @@ import { Project,
 		 IncludeType,
 		 IncludeVersion
        } from '../../interfaces/interfaces';
-import { ApiService } from '../../services/api.service';
+import { ApiService }    from '../../services/api.service';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-project',
@@ -87,12 +89,13 @@ export class ProjectComponent implements OnInit {
     dir: false
   };
   
-  projectModel = [];
+  projectModel: Model[] = [];
   
   includeTypes: IncludeType[] = [];
-  @ViewChildren('includes') includes;
+  
+  savingProject = false;
 
-  constructor(private as: ApiService) {}
+  constructor(private as: ApiService, private dialog: DialogService, private router: Router) {}
   ngOnInit() {
     this.as.getIncludes().subscribe(result => {
       this.includeTypes = result.list;
@@ -170,7 +173,59 @@ export class ProjectComponent implements OnInit {
     this.projectModel[ind].rows.splice(field, 1);
   }
   
-  prueba(){
-    this.includes.map(inc => console.log(inc.selectedOptions.selected));
+  saveProject() {
+    if (this.project.name==''){
+      this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre del proyecto en blanco!', ok: 'Continuar'}).subscribe(result => {});
+	  return false;
+	}
+	
+	if (this.projectConfiguration.hasDB && (this.projectConfiguration.dbHost=='' || this.projectConfiguration.dbName=='' || this.projectConfiguration.dbUser=='' || this.projectConfiguration.dbPass=='')){
+      this.dialog.alert({title: 'Error', content: 'Has marcado que quieres usar una base de datos, ¡pero has dejado alguno de los campos en blanco!', ok: 'Continuar'}).subscribe(result => {});
+	  return false;
+    }
+	
+	if (this.projectConfiguration.modEmailSmtp && (this.projectConfiguration.smtpHost=='' || this.projectConfiguration.smtpPort=='' || this.projectConfiguration.smtpSecure=='' || this.projectConfiguration.smtpUser=='' || this.projectConfiguration.smtpPass=='')){
+      this.dialog.alert({title: 'Error', content: 'Has marcado que quieres usar envío de emails mediante SMTP, ¡pero has dejado alguno de los campos en blanco!', ok: 'Continuar'}).subscribe(result => {});
+      return false;
+    }
+	
+    for (let model of this.projectModel){
+      if (model.name==''){
+        this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre de un modelo en blanco!', ok: 'Continuar'}).subscribe(result => {});
+        return false;
+      }
+      if (model.tableName==''){
+        this.dialog.alert({title: 'Error', content: '¡No puedes dejar en blanco el nombre de la tabla en el modelo "'+model.name+'"!', ok: 'Continuar'}).subscribe(result => {});
+        return false;
+      }
+      if (model.rows.length==0){
+        this.dialog.alert({title: 'Error', content: '¡No has añadido ningún campo en el modelo "'+model.name+'"!', ok: 'Continuar'}).subscribe(result => {});
+        return false;
+      }
+	  for (let modelRow of model.rows){
+        if (modelRow.name==''){
+          this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre del campo en blanco en el modelo "'+model.name+'"!', ok: 'Continuar'}).subscribe(result => {});
+          return false;
+        }
+        if (!modelRow.type){
+          this.dialog.alert({title: 'Error', content: '¡No has elegido el tipo de campo para el campo "'+modelRow.name+'" en el modelo "'+model.name+'"!', ok: 'Continuar'}).subscribe(result => {});
+          return false;
+        }
+	  }
+    }
+	
+	this.savingProject = true;
+	this.as.saveProject(this.project, this.projectConfiguration, this.projectConfigurationLists, this.projectModel, this.includeTypes).subscribe(result => {
+      if (result.status=='ok'){
+        this.dialog.alert({title: 'Info', content: 'El proyecto "'+this.project.name+'" ha sido correctamente guardado.', ok: 'Continuar'}).subscribe(result => {
+          this.router.navigate(['/main']);
+		});
+      }
+      else{
+        this.dialog.alert({title: 'Error', content: '¡Ocurrió un error al guardar el proyecto!', ok: 'Continuar'}).subscribe(result => {
+          this.savingProject = false;
+        });
+      }
+	});
   }
 }

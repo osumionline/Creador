@@ -116,9 +116,14 @@ export interface IncludeVersion {
 export interface IncludeType {
   id: number;
   versions: IncludeVersion[];
+  selected?: boolean;
 }
 
 export interface IncludeResult {
   status: string;
   list: IncludeType[];
+}
+
+export interface StatusResult {
+  status: string;
 }

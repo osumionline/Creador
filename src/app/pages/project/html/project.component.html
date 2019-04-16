@@ -4,6 +4,11 @@
 		<mat-icon>arrow_back</mat-icon>
 	</button>
 	<span>Creador: {{project.name}}</span>
+	<span class="flex-space"></span>
+	<button mat-icon-button (click)="saveProject()" *ngIf="!savingProject">
+		<mat-icon>save</mat-icon>
+	</button>
+	<img src="assets/loading.svg" class="loading-img" *ngIf="savingProject">
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -407,11 +412,13 @@
         </ng-template>
         <fieldset *ngFor="let inc of includeTypes" class="project-include">
           <legend>{{inc.name | urldecode}}</legend>
-          <mat-radio-group aria-label="Select an option">
+          <mat-radio-group aria-label="Select an option" [(ngModel)]="inc.selected">
             <mat-list role="list">
               <mat-list-item *ngFor="let version of inc.versions">
-                {{version.version}}
-                <mat-radio-button [value]="version.id"></mat-radio-button>
+			    <div class="project-include-row">
+                  {{version.version}}
+                  <mat-radio-button [value]="version.id"></mat-radio-button>
+				</div>
               </mat-list-item>
             </mat-list>
           </mat-radio-group>

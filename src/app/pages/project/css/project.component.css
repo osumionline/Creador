@@ -102,7 +102,7 @@
   justify-content: space-between;
 }
 
-.project-list-item:last-children {
+.project-list-item:last-child {
   border-bottom: 0;
 }
 
@@ -159,9 +159,21 @@
   margin: 8px 0;
 }
 
-.project-include > legend{
+.project-include > legend {
   font-family: Roboto,"Helvetica Neue",sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: rgba(0,0,0,.6);
+}
+
+.project-include-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.loading-img {
+  width: 20px;
+  background-color: #fff;
+  border-radius: 4px;
 }

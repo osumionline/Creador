@@ -93,6 +93,7 @@ export interface ProjectConfigurationLists {
 }
 
 export interface ModelRow {
+  id: number;
   name: string;
   type: number;
   size: number;

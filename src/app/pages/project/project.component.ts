@@ -155,6 +155,7 @@ export class ProjectComponent implements OnInit {
   
   addModelRow(ind: number) {
     this.projectModel[ind].rows.push({
+      id: null,
       name: '',
       type: null,
       size: null,

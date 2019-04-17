@@ -66,6 +66,7 @@ export interface ProjectConfiguration {
   modImage: boolean;
   modPdf: boolean;
   modTranslate: boolean;
+  modCrypt: boolean;
   smtpHost: string;
   smtpPort: string;
   smtpSecure: string;
@@ -103,6 +104,7 @@ export interface ModelRow {
 }
 
 export interface Model {
+  id: number;
   name: string;
   tableName: string;
   rows: ModelRow[];

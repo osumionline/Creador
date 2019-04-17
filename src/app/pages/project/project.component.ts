@@ -146,6 +146,7 @@ export class ProjectComponent implements OnInit {
   
   addModel() {
     this.projectModel.push({
+      id: null,
       name: '',
       tableName: '',
       rows: []

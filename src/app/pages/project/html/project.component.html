@@ -28,7 +28,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Descripción</mat-label>
-            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15"></textarea>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15" [(ngModel)]="project.description" ></textarea>
           </mat-form-field>
         </div>
       </mat-tab>
@@ -158,7 +158,7 @@
             <span>Translate</span>
             <mat-slide-toggle [checked]="projectConfiguration.modTranslate" (change)="changeModule('modTranslate')"></mat-slide-toggle>
           </div>
-		  <div class="project-line-title">
+          <div class="project-line-title">
             <span>Crypt</span>
             <mat-slide-toggle [checked]="projectConfiguration.modCrypt" (change)="changeModule('modCrypt')"></mat-slide-toggle>
           </div>
@@ -364,41 +364,32 @@
               <mat-form-field appearance="outline">
                 <mat-label>Tipo</mat-label>
                 <mat-select [(value)]="row.type">
-                  <mat-option value="1">PK</mat-option>
-				  <mat-option value="2">PK Str</mat-option>
-				  <mat-option value="3">Created</mat-option>
-				  <mat-option value="4">Updated</mat-option>
-				  <mat-option value="5">Númerico</mat-option>
-				  <mat-option value="6">Texto</mat-option>
-				  <mat-option value="7">Fecha</mat-option>
-				  <mat-option value="8">Booleano</mat-option>
-				  <mat-option value="9">Texto largo</mat-option>
-				  <mat-option value="10">Float</mat-option>
+                  <mat-option *ngFor="let opt of modelRowTypes" [value]="opt.id">{{opt.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
-			  <mat-form-field appearance="outline" *ngIf="row.type==6">
+              <mat-form-field appearance="outline" *ngIf="row.type==6">
                 <mat-label>Tamaño</mat-label>
                 <input matInput [(ngModel)]="row.size" name="row_size">
               </mat-form-field>
-			  <mat-checkbox [(ngModel)]="row.autoIncrement" *ngIf="row.type==1">Auto increment</mat-checkbox>
-			  <mat-checkbox [(ngModel)]="row.nullable" *ngIf="row.type==4 || row.type==5 || row.type==6 || row.type==7 || row.type==9 || row.type==10">Null?</mat-checkbox>
-			  <mat-form-field appearance="outline" *ngIf="row.type==5 || row.type==6 || row.type==7 || row.type==9 || row.type==10">
+              <mat-checkbox [(ngModel)]="row.autoIncrement" *ngIf="row.type==1">Auto increment</mat-checkbox>
+              <mat-checkbox [(ngModel)]="row.nullable" *ngIf="row.type==4 || row.type==5 || row.type==6 || row.type==7 || row.type==9 || row.type==10">Null?</mat-checkbox>
+              <mat-form-field appearance="outline" *ngIf="row.type==5 || row.type==6 || row.type==7 || row.type==9 || row.type==10">
                 <mat-label>Valor por defecto</mat-label>
                 <input matInput [(ngModel)]="row.defaultValue" name="row_default">
               </mat-form-field>
-			  <mat-form-field appearance="outline" *ngIf="row.type==8">
+              <mat-form-field appearance="outline" *ngIf="row.type==8">
                 <mat-label>Valor por defecto</mat-label>
                 <mat-select [(value)]="row.defaultValue">
-				  <mat-option [value]="true">True</mat-option>
-				  <mat-option [value]="false">False</mat-option>
-				</mat-select>
+                  <mat-option [value]="true">True</mat-option>
+                  <mat-option [value]="false">False</mat-option>
+                </mat-select>
               </mat-form-field>
-			  <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline">
                 <mat-label>Referencia</mat-label>
                 <input matInput [(ngModel)]="row.ref" name="row_ref">
               </mat-form-field>
-			  <button mat-raised-button color="warn" class="project-model-row-delete" (click)="deleteModelRow(i, j)">Borrar</button>
-			  <mat-form-field appearance="outline" class="project-model-comment">
+              <button mat-raised-button color="warn" class="project-model-row-delete" (click)="deleteModelRow(i, j)">Borrar</button>
+              <mat-form-field appearance="outline" class="project-model-comment">
                 <mat-label>Comentario</mat-label>
                 <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="15" [(ngModel)]="row.comment"></textarea>
               </mat-form-field>

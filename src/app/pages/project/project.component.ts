@@ -89,6 +89,19 @@ export class ProjectComponent implements OnInit {
     dir: false
   };
   
+  modelRowTypes = [
+    {id: 1, name: 'PK'},
+    {id: 2, name: 'PK Str'},
+    {id: 3, name: 'Created'},
+    {id: 4, name: 'Updated'},
+    {id: 5, name: 'Númerico'},
+    {id: 6, name: 'Texto'},
+    {id: 7, name: 'Fecha'},
+    {id: 8, name: 'Booleano'},
+    {id: 9, name: 'Texto largo'},
+    {id: 10, name: 'Float'}
+  ];
+  
   projectModel: Model[] = [];
   
   includeTypes: IncludeType[] = [];

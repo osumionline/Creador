@@ -130,3 +130,11 @@ export interface IncludeResult {
 export interface StatusResult {
   status: string;
 }
+
+export interface ProjectDataResult {
+  status: string;
+  project: Project;
+  configuration: ProjectConfiguration;
+  lists: ProjectConfigurationLists;
+  models: Model[];
+}

@@ -14,7 +14,8 @@ import {
   ProjectConfiguration,
   ProjectConfigurationLists,
   Model,
-  IncludeType
+  IncludeType,
+  ProjectDataResult
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -43,5 +44,9 @@ export class ApiService {
 	
 	saveProject(project: Project, projectConfiguration: ProjectConfiguration, projectConfigurationLists: ProjectConfigurationLists, projectModel: Model[], includeTypes: IncludeType[]): Observable<StatusResult> {
 		return this.http.post<StatusResult>(this.apiUrl + 'save-project', {project, projectConfiguration, projectConfigurationLists, projectModel, includeTypes});
+	}
+	
+	getProject(id: number): Observable<ProjectDataResult> {
+		return this.http.post<ProjectDataResult>(this.apiUrl + 'get-project', {id});
 	}
 }

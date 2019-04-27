@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Router }            from '@angular/router';
+import { Component, OnInit }              from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Project,
          ProjectConfiguration,
          ProjectConfigurationLists,
          KeyValue,
          Model,
          ModelRow,
-		 IncludeType,
-		 IncludeVersion
+         IncludeType,
+         IncludeVersion
        } from '../../interfaces/interfaces';
 import { ApiService }    from '../../services/api.service';
 import { DialogService } from '../../services/dialog.service';
@@ -108,11 +108,17 @@ export class ProjectComponent implements OnInit {
   
   savingProject = false;
 
-  constructor(private as: ApiService, private dialog: DialogService, private router: Router) {}
+  constructor(private as: ApiService, private dialog: DialogService, private router: Router, private activatedRoute: ActivatedRoute) {}
   ngOnInit() {
     this.as.getIncludes().subscribe(result => {
       this.includeTypes = result.list;
-	});
+      this.activatedRoute.params.subscribe((params: Params) => {
+        const id = params.id;
+        if (id){
+          console.log(id);
+        }
+      });
+    });
   }
   
   deploy(ind) {

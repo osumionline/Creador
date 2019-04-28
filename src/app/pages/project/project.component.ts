@@ -116,6 +116,9 @@ export class ProjectComponent implements OnInit {
         const id = params.id;
         if (id){
           console.log(id);
+          this.as.getProject(id).subscribe(result => {
+            console.log(result);
+          });
         }
       });
     });

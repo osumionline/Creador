@@ -11,6 +11,7 @@ import { Project,
        } from '../../interfaces/interfaces';
 import { ApiService }    from '../../services/api.service';
 import { DialogService } from '../../services/dialog.service';
+import { CommonService } from '../../services/common.service';
 
 @Component({
   selector: 'app-project',
@@ -44,6 +45,7 @@ export class ProjectComponent implements OnInit {
     modImage: false,
     modPdf: false,
     modTranslate: false,
+	modCrypt: false,
     smtpHost: '',
     smtpPort: '',
     smtpSecure: '',
@@ -108,7 +110,12 @@ export class ProjectComponent implements OnInit {
   
   savingProject = false;
 
-  constructor(private as: ApiService, private dialog: DialogService, private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private as: ApiService,
+              private dialog: DialogService,
+			  private cs: CommonService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {}
+
   ngOnInit() {
     this.as.getIncludes().subscribe(result => {
       this.includeTypes = result.list;
@@ -117,11 +124,47 @@ export class ProjectComponent implements OnInit {
         if (id){
           console.log(id);
           this.as.getProject(id).subscribe(result => {
-            console.log(result);
+			this.loadProject(result);
           });
         }
       });
     });
+  }
+  
+  loadProject(data) {
+    console.log(data);
+    this.project.id          = data.project.id;
+    this.project.name        = this.cs.urldecode(data.project.name);
+    this.project.slug        = data.project.slug;
+    this.project.description = this.cs.urldecode(data.project.description);
+	
+    this.projectConfiguration.baseUrl       = this.cs.urldecode(data.configuration.baseUrl);
+    this.projectConfiguration.adminEmail    = this.cs.urldecode(data.configuration.adminEmail);
+    this.projectConfiguration.defaultTitle  = this.cs.urldecode(data.configuration.defaultTitle);
+    this.projectConfiguration.lang          = this.cs.urldecode(data.configuration.lang);
+    this.projectConfiguration.hasDB         = data.configuration.hasDB;
+    this.projectConfiguration.dbHost        = this.cs.urldecode(data.configuration.dbHost);
+    this.projectConfiguration.dbName        = this.cs.urldecode(data.configuration.dbName);
+    this.projectConfiguration.dbUser        = this.cs.urldecode(data.configuration.dbUser);
+    this.projectConfiguration.dbPass        = null;
+    this.projectConfiguration.cookiesPrefix = this.cs.urldecode(data.configuration.cookiesPrefix);
+    this.projectConfiguration.cookiesUrl    = this.cs.urldecode(data.configuration.cookiesUrl);
+    this.projectConfiguration.modBrowser    = data.configuration.modBrowser;
+    this.projectConfiguration.modEmail      = data.configuration.modEmail;
+    this.projectConfiguration.modEmailSmtp  = data.configuration.modEmailSmtp;
+    this.projectConfiguration.modFtp        = data.configuration.modFtp;
+    this.projectConfiguration.modImage      = data.configuration.modImage;
+    this.projectConfiguration.modPdf        = data.configuration.modPdf;
+    this.projectConfiguration.modTranslate  = data.configuration.modTranslate;
+	this.projectConfiguration.modCrypt      = data.configuration.modCrypt;
+    this.projectConfiguration.smtpHost      = this.cs.urldecode(data.configuration.smtpHost);
+    this.projectConfiguration.smtpPort      = this.cs.urldecode(data.configuration.smtpPort);
+    this.projectConfiguration.smtpSecure    = this.cs.urldecode(data.configuration.smtpSecure);
+    this.projectConfiguration.smtpUser      = this.cs.urldecode(data.configuration.smtpUser);
+    this.projectConfiguration.smtpPass      = null;
+    this.projectConfiguration.error403      = this.cs.urldecode(data.configuration.error403);
+    this.projectConfiguration.error404      = this.cs.urldecode(data.configuration.error404);
+    this.projectConfiguration.error500      = this.cs.urldecode(data.configuration.error500);
   }
   
   deploy(ind) {

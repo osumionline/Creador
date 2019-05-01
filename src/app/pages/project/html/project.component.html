@@ -410,10 +410,10 @@
           <mat-radio-group aria-label="Select an option" [(ngModel)]="inc.selected">
             <mat-list role="list">
               <mat-list-item *ngFor="let version of inc.versions">
-			    <div class="project-include-row">
+                <div class="project-include-row">
                   {{version.version}}
                   <mat-radio-button [value]="version.id"></mat-radio-button>
-				</div>
+                </div>
               </mat-list-item>
             </mat-list>
           </mat-radio-group>

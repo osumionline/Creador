@@ -45,7 +45,7 @@ export class ProjectComponent implements OnInit {
     modImage: false,
     modPdf: false,
     modTranslate: false,
-	modCrypt: false,
+    modCrypt: false,
     smtpHost: '',
     smtpPort: '',
     smtpSecure: '',
@@ -112,7 +112,7 @@ export class ProjectComponent implements OnInit {
 
   constructor(private as: ApiService,
               private dialog: DialogService,
-			  private cs: CommonService,
+              private cs: CommonService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {}
 
@@ -124,7 +124,7 @@ export class ProjectComponent implements OnInit {
         if (id){
           console.log(id);
           this.as.getProject(id).subscribe(result => {
-			this.loadProject(result);
+            this.loadProject(result);
           });
         }
       });
@@ -156,7 +156,7 @@ export class ProjectComponent implements OnInit {
     this.projectConfiguration.modImage      = data.configuration.modImage;
     this.projectConfiguration.modPdf        = data.configuration.modPdf;
     this.projectConfiguration.modTranslate  = data.configuration.modTranslate;
-	this.projectConfiguration.modCrypt      = data.configuration.modCrypt;
+    this.projectConfiguration.modCrypt      = data.configuration.modCrypt;
     this.projectConfiguration.smtpHost      = this.cs.urldecode(data.configuration.smtpHost);
     this.projectConfiguration.smtpPort      = this.cs.urldecode(data.configuration.smtpPort);
     this.projectConfiguration.smtpSecure    = this.cs.urldecode(data.configuration.smtpSecure);
@@ -165,6 +165,26 @@ export class ProjectComponent implements OnInit {
     this.projectConfiguration.error403      = this.cs.urldecode(data.configuration.error403);
     this.projectConfiguration.error404      = this.cs.urldecode(data.configuration.error404);
     this.projectConfiguration.error500      = this.cs.urldecode(data.configuration.error500);
+    
+    this.projectConfigurationLists.css    = data.lists.css.map(this.cs.urldecode);
+    this.projectConfigurationLists.cssExt = data.lists.cssExt.map(this.cs.urldecode);
+    this.projectConfigurationLists.js     = data.lists.js.map(this.cs.urldecode);
+    this.projectConfigurationLists.jsExt  = data.lists.jsExt.map(this.cs.urldecode);
+    this.projectConfigurationLists.libs   = data.lists.libs.map(this.cs.urldecode);
+    this.projectConfigurationLists.extra  = data.lists.extra.map((item) => { return this.urldecodeKeyValue(item); });
+    this.projectConfigurationLists.dir    = data.lists.dir.map((item) => { return this.urldecodeKeyValue(item); });
+    
+    this.projectModel = data.models;
+    
+    for (let i in this.includeTypes){
+      if (data.includes.indexOf(this.includeTypes[i].id)!=-1){
+        this.includeTypes[i].selected = true;
+      }
+    }
+  }
+  
+  urldecodeKeyValue(item){
+    return {key: this.cs.urldecode(item.key), value: this.cs.urldecode(item.value)};
   }
   
   deploy(ind) {

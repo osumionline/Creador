@@ -122,7 +122,6 @@ export class ProjectComponent implements OnInit {
       this.activatedRoute.params.subscribe((params: Params) => {
         const id = params.id;
         if (id){
-          console.log(id);
           this.as.getProject(id).subscribe(result => {
             this.loadProject(result);
           });
@@ -132,12 +131,11 @@ export class ProjectComponent implements OnInit {
   }
   
   loadProject(data) {
-    console.log(data);
     this.project.id          = data.project.id;
     this.project.name        = this.cs.urldecode(data.project.name);
     this.project.slug        = data.project.slug;
     this.project.description = this.cs.urldecode(data.project.description);
-	
+
     this.projectConfiguration.baseUrl       = this.cs.urldecode(data.configuration.baseUrl);
     this.projectConfiguration.adminEmail    = this.cs.urldecode(data.configuration.adminEmail);
     this.projectConfiguration.defaultTitle  = this.cs.urldecode(data.configuration.defaultTitle);
@@ -165,7 +163,7 @@ export class ProjectComponent implements OnInit {
     this.projectConfiguration.error403      = this.cs.urldecode(data.configuration.error403);
     this.projectConfiguration.error404      = this.cs.urldecode(data.configuration.error404);
     this.projectConfiguration.error500      = this.cs.urldecode(data.configuration.error500);
-    
+
     this.projectConfigurationLists.css    = data.lists.css.map(this.cs.urldecode);
     this.projectConfigurationLists.cssExt = data.lists.cssExt.map(this.cs.urldecode);
     this.projectConfigurationLists.js     = data.lists.js.map(this.cs.urldecode);
@@ -173,12 +171,13 @@ export class ProjectComponent implements OnInit {
     this.projectConfigurationLists.libs   = data.lists.libs.map(this.cs.urldecode);
     this.projectConfigurationLists.extra  = data.lists.extra.map((item) => { return this.urldecodeKeyValue(item); });
     this.projectConfigurationLists.dir    = data.lists.dir.map((item) => { return this.urldecodeKeyValue(item); });
-    
+
     this.projectModel = data.models;
-    
+
     for (let i in this.includeTypes){
       if (data.includes.indexOf(this.includeTypes[i].id)!=-1){
-        this.includeTypes[i].selected = true;
+        const opt_ind = data.includes.indexOf(this.includeTypes[i].id);
+        this.includeTypes[i].selected = data.includes[opt_ind];
       }
     }
   }
@@ -238,18 +237,19 @@ export class ProjectComponent implements OnInit {
     } as Model);
   }
   
-  addModelRow(ind: number) {
+  addModelRow(ind: number, model) {
     this.projectModel[ind].rows.push({
       id: null,
-      name: '',
+      name: null,
       type: null,
       size: null,
       autoIncrement: false,
       nullable: true,
-      defaultValue: '',
-      ref: '',
-      comment: ''
+      defaultValue: null,
+      ref: null,
+      comment: null
 	} as ModelRow);
+	model.open = true;
   }
   
   deleteModel(ind: number) {
@@ -259,7 +259,16 @@ export class ProjectComponent implements OnInit {
   deleteModelRow(ind: number, field: number) {
     this.projectModel[ind].rows.splice(field, 1);
   }
-  
+
+  openModel(model) {
+    model.open = !model.open;
+  }
+
+  removeSelectedInclude(ev, inc) {
+    ev.preventDefault();
+    delete inc.selected;
+  }
+
   saveProject() {
     if (this.project.name==''){
       this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre del proyecto en blanco!', ok: 'Continuar'}).subscribe(result => {});

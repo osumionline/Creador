@@ -134,6 +134,28 @@
   margin-top: 12px;
 }
 
+.project-model-rows-title{
+  padding-bottom: 16px
+}
+
+.project-model-rows-icon{
+  transition: all .4s;
+}
+
+.project-model-rows-icon-open{
+  transform: rotate(90deg);
+}
+
+.project-model-rows{
+  transition: all .4s;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.project-model-rows-open{
+  max-height: 5000px;
+}
+
 .project-model-row {
   border-top: 1px solid #ccc;
   padding-top: 16px;
@@ -176,4 +198,16 @@
   width: 20px;
   background-color: #fff;
   border-radius: 4px;
+}
+
+.remove-selected-include{
+  color: rgba(0,0,0,.4);
+  display: inline-block;
+  margin: 0 8px;
+  text-decoration: none;
+  transition: all .4s;
+}
+
+.remove-selected-include:hover{
+  color: #f00;
 }

@@ -109,6 +109,7 @@ export class ProjectComponent implements OnInit {
   includeTypes: IncludeType[] = [];
   
   savingProject = false;
+  deletingProject = false;
 
   constructor(private as: ApiService,
               private dialog: DialogService,
@@ -323,5 +324,21 @@ export class ProjectComponent implements OnInit {
         });
       }
 	});
+  }
+  
+  deleteProject() {
+    this.deletingProject = true;
+    this.as.deleteProject(this.project.id).subscribe(result => {
+      if (result.status=='ok'){
+        this.dialog.alert({title: 'Info', content: 'El proyecto "'+this.project.name+'" ha sido correctamente borrado.', ok: 'Continuar'}).subscribe(result => {
+          this.router.navigate(['/main']);
+        });
+      }
+      else{
+        this.dialog.alert({title: 'Error', content: '¡Ocurrió un error al borrar el proyecto!', ok: 'Continuar'}).subscribe(result => {
+          this.deletingProject = false;
+        });
+      }
+    });
   }
 }

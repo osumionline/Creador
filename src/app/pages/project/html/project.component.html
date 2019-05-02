@@ -436,6 +436,14 @@
           <mat-icon class="tab-icon">delete_forever</mat-icon>
           Borrar
         </ng-template>
+        <div class="project-delete">
+          ¿Estás seguro de querer borrar este proyecto? Esta es una acción irreversible.
+          <br>
+          <button mat-raised-button color="warn" [disabled]="deletingProject" (click)="deleteProject()">
+            <mat-icon class="tab-icon">delete_forever</mat-icon>
+            Confirmar
+          </button>
+        </div>
       </mat-tab>
 
     </mat-tab-group>

@@ -5,10 +5,10 @@
 	</button>
 	<span>Creador: {{project.name}}</span>
 	<span class="flex-space"></span>
-	<button mat-icon-button (click)="saveProject()" *ngIf="!savingProject">
+	<button mat-icon-button (click)="saveProject()" *ngIf="!savingProject && !generatingProject">
 		<mat-icon>save</mat-icon>
 	</button>
-	<img src="assets/loading.svg" class="loading-img" *ngIf="savingProject">
+	<img src="assets/loading.svg" class="loading-img" *ngIf="savingProject || generatingProject">
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -444,9 +444,23 @@
           <mat-icon class="tab-icon">cloud_download</mat-icon>
           Descargar
         </ng-template>
+        <div class="project-download">
+          <h3>Descargar proyecto</h3>
+          <p>Fecha de última modificación del proyecto: {{project.updatedAt}}</p>
+          <p *ngIf="project.lastCompilationDate">Fecha de última compilación: {{project.lastCompilationDate}}</p>
+          <p>
+            <button mat-raised-button color="primary" [disabled]="generatingProject" (click)="generateProject()">Compilar proyecto</button>
+          </p>
+          <ul *ngIf="generateSteps.length>0">
+            <li *ngFor="let step of generateSteps">{{step}}</li>
+          </ul>
+          <p>
+            <button mat-raised-button color="primary" [disabled]="generatingProject || !project.lastCompilationDate">Descargar proyecto</button>
+          </p>
+        </div>
       </mat-tab>
 	  
-	  <mat-tab *ngIf="project.id">
+	  <mat-tab *ngIf="project.id && !generatingProject">
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">delete_forever</mat-icon>
           Borrar

@@ -23,7 +23,9 @@ export class ProjectComponent implements OnInit {
     id: null,
     name: 'Nuevo proyecto',
     slug: 'nuevo-proyecto',
-    description: ''
+    description: '',
+	updatedAt: '',
+	lastCompilationDate: ''
   } as Project;
 
   projectConfiguration = {
@@ -110,6 +112,10 @@ export class ProjectComponent implements OnInit {
   
   savingProject = false;
   deletingProject = false;
+  generatingProject = false;
+
+  generateStep: number = 0;
+  generateSteps: string[] = [];
 
   constructor(private as: ApiService,
               private dialog: DialogService,
@@ -136,6 +142,8 @@ export class ProjectComponent implements OnInit {
     this.project.name        = this.cs.urldecode(data.project.name);
     this.project.slug        = data.project.slug;
     this.project.description = this.cs.urldecode(data.project.description);
+	this.project.updatedAt   = data.project.updatedAt;
+	this.project.lastCompilationDate = data.project.lastCompilationDate;
 
     this.projectConfiguration.baseUrl       = this.cs.urldecode(data.configuration.baseUrl);
     this.projectConfiguration.adminEmail    = this.cs.urldecode(data.configuration.adminEmail);
@@ -371,5 +379,10 @@ export class ProjectComponent implements OnInit {
         });
       }
     });
+  }
+
+  generateProject() {
+    this.generatingProject = true;
+	this.as.generateProject(this.generateStep).subscribe(result => {});
   }
 }

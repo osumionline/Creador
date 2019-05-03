@@ -53,4 +53,8 @@ export class ApiService {
   deleteProject(id: number): Observable<StatusResult> {
     return this.http.post<StatusResult>(this.apiUrl + 'delete-project', {id});
   }
+  
+  generateProject(step: number): Observable<StatusResult> {
+    return this.http.post<StatusResult>(this.apiUrl + 'generate-project', {step});
+  }
 }

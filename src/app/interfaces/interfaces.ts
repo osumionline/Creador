@@ -40,6 +40,7 @@ export interface Project {
   name: string;
   slug: string;
   description: string;
+  updatedAt: string;
   lastCompilationDate: string;
 }
 

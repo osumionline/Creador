@@ -40,6 +40,7 @@ export interface Project {
   name: string;
   slug: string;
   description: string;
+  lastCompilationDate: string;
 }
 
 export interface ProjectResult {
@@ -102,6 +103,7 @@ export interface ModelRow {
   defaultValue: string;
   ref: string;
   comment: string;
+  order: number;
 }
 
 export interface Model {

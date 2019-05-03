@@ -265,6 +265,29 @@ export class ProjectComponent implements OnInit {
     model.open = !model.open;
   }
 
+  moveRow(ind_model, ind, sent) {
+	let new_order;
+	if (sent=='down'){
+		if (ind<(this.projectModel[ind_model].rows.length-1)){
+			new_order= ind +1;
+		}
+		else{
+			return false;
+		}
+	}
+	else{
+		if (ind>0){
+			new_order = ind -1;
+		}
+		else{
+			return false;
+		}
+	}
+	const aux = this.projectModel[ind_model].rows[ind];
+	this.projectModel[ind_model].rows[ind] = this.projectModel[ind_model].rows[new_order];
+	this.projectModel[ind_model].rows[new_order] = aux;
+  }
+
   removeSelectedInclude(ev, inc) {
     ev.preventDefault();
     delete inc.selected;

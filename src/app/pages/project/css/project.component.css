@@ -166,6 +166,10 @@
   width: 16%;
 }
 
+.project-model-row-name {
+  font-weight: bold;
+}
+
 .project-model-row-delete {
   float: right;
   width: auto !important;

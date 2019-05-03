@@ -366,7 +366,7 @@
 			  <div class="project-model-row" *ngFor="let row of model.rows; let j = index">
 			    <mat-form-field appearance="outline">
                   <mat-label>Nombre</mat-label>
-                  <input matInput [(ngModel)]="row.name" name="row_name">
+                  <input matInput [(ngModel)]="row.name" name="row_name" class="project-model-row-name">
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                   <mat-label>Tipo</mat-label>
@@ -395,7 +395,15 @@
                   <mat-label>Referencia</mat-label>
                   <input matInput [(ngModel)]="row.ref" name="row_ref">
                 </mat-form-field>
-                <button mat-raised-button color="warn" class="project-model-row-delete" (click)="deleteModelRow(i, j)">Borrar</button>
+				<button mat-raised-button color="warn" class="project-model-row-delete" (click)="deleteModelRow(i, j)">Borrar</button>
+                <span class="project-model-row-delete">
+                  <button mat-icon-button (click)="moveRow(i, j, 'down')">
+                    <mat-icon>expand_more</mat-icon>
+                  </button>
+				  <button mat-icon-button (click)="moveRow(i, j, 'up')">
+                    <mat-icon>expand_less</mat-icon>
+                  </button>
+                </span>
                 <mat-form-field appearance="outline" class="project-model-comment">
                   <mat-label>Comentario</mat-label>
                   <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="15" [(ngModel)]="row.comment"></textarea>

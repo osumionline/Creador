@@ -430,6 +430,13 @@
           </mat-radio-group>
         </fieldset>
       </mat-tab>
+
+      <mat-tab *ngIf="project.id">
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">cloud_download</mat-icon>
+          Descargar
+        </ng-template>
+      </mat-tab>
 	  
 	  <mat-tab *ngIf="project.id">
         <ng-template mat-tab-label>

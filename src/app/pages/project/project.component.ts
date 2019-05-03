@@ -315,7 +315,15 @@ export class ProjectComponent implements OnInit {
 	this.as.saveProject(this.project, this.projectConfiguration, this.projectConfigurationLists, this.projectModel, this.includeTypes).subscribe(result => {
       if (result.status=='ok'){
         this.dialog.alert({title: 'Info', content: 'El proyecto "'+this.project.name+'" ha sido correctamente guardado.', ok: 'Continuar'}).subscribe(result => {
-          this.router.navigate(['/main']);
+          if (this.project.id==null){
+            this.router.navigate(['/main']);
+		  }
+          else{
+            this.as.getProject(this.project.id).subscribe(result => {
+              this.loadProject(result);
+			  this.savingProject = false;
+            });
+          }
 		});
       }
       else{

@@ -142,3 +142,8 @@ export interface ProjectDataResult {
   models: Model[];
   includes: number[];
 }
+
+export interface ProjectDownloadResult {
+  status: string;
+  date: string;
+}

@@ -15,7 +15,8 @@ import {
   ProjectConfigurationLists,
   Model,
   IncludeType,
-  ProjectDataResult
+  ProjectDataResult,
+  ProjectDownloadResult
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -54,7 +55,7 @@ export class ApiService {
     return this.http.post<StatusResult>(this.apiUrl + 'delete-project', {id});
   }
   
-  generateProject(step: number): Observable<StatusResult> {
-    return this.http.post<StatusResult>(this.apiUrl + 'generate-project', {step});
+  generateProject(id: number, step: number): Observable<ProjectDownloadResult> {
+    return this.http.post<ProjectDownloadResult>(this.apiUrl + 'generate-project', {id, step});
   }
 }

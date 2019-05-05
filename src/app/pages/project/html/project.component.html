@@ -451,8 +451,27 @@
           <p>
             <button mat-raised-button color="primary" [disabled]="generatingProject" (click)="generateProject()">Compilar proyecto</button>
           </p>
-          <ul *ngIf="generateSteps.length>0">
-            <li *ngFor="let step of generateSteps">{{step}}</li>
+          <ul class="project-download-tasks" *ngIf="generatingProject || generatedProject">
+            <li class="project-download-working" [ngClass]="{'project-download-done':generateStep>0}">
+              <mat-icon *ngIf="generateStep>0">check_circle_outline</mat-icon>
+              Crear estructura básica
+            </li>
+            <li [ngClass]="{'project-download-working':generateStep==1, 'project-download-done':generateStep>1}">
+              <mat-icon *ngIf="generateStep>1">check_circle_outline</mat-icon>
+              Crear archivo de configuración
+            </li>
+            <li [ngClass]="{'project-download-working':generateStep==2, 'project-download-done':generateStep>2}">
+              <mat-icon *ngIf="generateStep>2">check_circle_outline</mat-icon>
+              Crear modelos
+            </li>
+            <li [ngClass]="{'project-download-working':generateStep==3, 'project-download-done':generateStep>3}">
+              <mat-icon *ngIf="generateStep>3">check_circle_outline</mat-icon>
+              Añadir archivos
+            </li>
+            <li [ngClass]="{'project-download-working':generateStep==4, 'project-download-done':generateStep>4}">
+              <mat-icon *ngIf="generateStep>4">check_circle_outline</mat-icon>
+              Comprimir en Zip
+            </li>
           </ul>
           <p>
             <button mat-raised-button color="primary" [disabled]="generatingProject || !project.lastCompilationDate">Descargar proyecto</button>

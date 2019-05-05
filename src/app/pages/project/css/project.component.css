@@ -204,7 +204,7 @@
   border-radius: 4px;
 }
 
-.remove-selected-include{
+.remove-selected-include {
   color: rgba(0,0,0,.4);
   display: inline-block;
   margin: 0 8px;
@@ -212,13 +212,30 @@
   transition: all .4s;
 }
 
-.remove-selected-include:hover{
+.remove-selected-include:hover {
   color: #f00;
 }
 
-.project-delete{
+.project-delete {
   text-align: center;
   margin: 50px 0;
   line-height: 50px;
   font-weight: bold;
+}
+
+.project-download-tasks > li {
+  line-height: 40px;
+  color: #888;
+}
+
+.project-download-tasks > li > mat-icon {
+  vertical-align: middle;
+}
+
+.project-download-working {
+  font-size: 1.1em;
+}
+
+.project-download-done {
+  color: #000 !important;
 }

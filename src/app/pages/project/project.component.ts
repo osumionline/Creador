@@ -94,16 +94,16 @@ export class ProjectComponent implements OnInit {
   };
   
   modelRowTypes = [
-    {id: 1, name: 'PK'},
-    {id: 2, name: 'PK Str'},
-    {id: 3, name: 'Created'},
-    {id: 4, name: 'Updated'},
-    {id: 5, name: 'Númerico'},
-    {id: 6, name: 'Texto'},
-    {id: 7, name: 'Fecha'},
-    {id: 8, name: 'Booleano'},
-    {id: 9, name: 'Texto largo'},
-    {id: 10, name: 'Float'}
+    {id: 1,  name: 'PK'},
+    {id: 10, name: 'PK Str'},
+    {id: 2,  name: 'Created'},
+    {id: 3,  name: 'Updated'},
+    {id: 4,  name: 'Númerico'},
+    {id: 5,  name: 'Texto'},
+    {id: 6,  name: 'Fecha'},
+    {id: 7,  name: 'Booleano'},
+    {id: 8,  name: 'Texto largo'},
+    {id: 9,  name: 'Float'}
   ];
   
   projectModel: Model[] = [];

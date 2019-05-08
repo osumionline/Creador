@@ -374,17 +374,17 @@
                     <mat-option *ngFor="let opt of modelRowTypes" [value]="opt.id">{{opt.name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <mat-form-field appearance="outline" *ngIf="row.type==6">
+                <mat-form-field appearance="outline" *ngIf="row.type==5">
                   <mat-label>Tamaño</mat-label>
                   <input matInput [(ngModel)]="row.size" name="row_size">
                 </mat-form-field>
                 <mat-checkbox [(ngModel)]="row.autoIncrement" *ngIf="row.type==1">Auto increment</mat-checkbox>
-                <mat-checkbox [(ngModel)]="row.nullable" *ngIf="row.type==4 || row.type==5 || row.type==6 || row.type==7 || row.type==9 || row.type==10">Null?</mat-checkbox>
-                <mat-form-field appearance="outline" *ngIf="row.type==5 || row.type==6 || row.type==7 || row.type==9 || row.type==10">
+                <mat-checkbox [(ngModel)]="row.nullable" *ngIf="row.type==3 || row.type==4 || row.type==5 || row.type==6 || row.type==8 || row.type==9">Null?</mat-checkbox>
+                <mat-form-field appearance="outline" *ngIf="row.type==4 || row.type==5 || row.type==6 || row.type==8 || row.type==9">
                   <mat-label>Valor por defecto</mat-label>
                   <input matInput [(ngModel)]="row.defaultValue" name="row_default">
                 </mat-form-field>
-                <mat-form-field appearance="outline" *ngIf="row.type==8">
+                <mat-form-field appearance="outline" *ngIf="row.type==7">
                   <mat-label>Valor por defecto</mat-label>
                   <mat-select [(value)]="row.defaultValue">
                     <mat-option [value]="true">True</mat-option>

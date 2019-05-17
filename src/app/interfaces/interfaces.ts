@@ -69,6 +69,7 @@ export interface ProjectConfiguration {
   modPdf: boolean;
   modTranslate: boolean;
   modCrypt: boolean;
+  modFile: boolean;
   smtpHost: string;
   smtpPort: string;
   smtpSecure: string;

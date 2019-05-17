@@ -48,6 +48,7 @@ export class ProjectComponent implements OnInit {
     modPdf: false,
     modTranslate: false,
     modCrypt: false,
+	modFile: false,
     smtpHost: '',
     smtpPort: '',
     smtpSecure: '',
@@ -164,6 +165,7 @@ export class ProjectComponent implements OnInit {
     this.projectConfiguration.modPdf        = data.configuration.modPdf;
     this.projectConfiguration.modTranslate  = data.configuration.modTranslate;
     this.projectConfiguration.modCrypt      = data.configuration.modCrypt;
+	this.projectConfiguration.modFile       = data.configuration.modFile;
     this.projectConfiguration.smtpHost      = this.cs.urldecode(data.configuration.smtpHost);
     this.projectConfiguration.smtpPort      = this.cs.urldecode(data.configuration.smtpPort);
     this.projectConfiguration.smtpSecure    = this.cs.urldecode(data.configuration.smtpSecure);

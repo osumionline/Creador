@@ -162,6 +162,10 @@
             <span>Crypt</span>
             <mat-slide-toggle [checked]="projectConfiguration.modCrypt" (change)="changeModule('modCrypt')"></mat-slide-toggle>
           </div>
+		  <div class="project-line-title">
+            <span>File</span>
+            <mat-slide-toggle [checked]="projectConfiguration.modFile" (change)="changeModule('modFile')"></mat-slide-toggle>
+          </div>
         </div>
         <div class="project-line" (click)="deploy('errors')">
           <span>Errores</span>

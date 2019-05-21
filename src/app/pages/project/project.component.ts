@@ -12,6 +12,7 @@ import { Project,
 import { ApiService }    from '../../services/api.service';
 import { DialogService } from '../../services/dialog.service';
 import { CommonService } from '../../services/common.service';
+import { environment }   from '../../../environments/environment';
 
 @Component({
   selector: 'app-project',
@@ -397,5 +398,9 @@ export class ProjectComponent implements OnInit {
         this.generatingProject = false;
       }
     });
+  }
+  
+  downloadProject() {
+    window.location.href = environment.apiUrl + 'downloadProject/' + this.project.id;
   }
 }

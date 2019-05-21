@@ -478,7 +478,7 @@
             </li>
           </ul>
           <p>
-            <button mat-raised-button color="primary" [disabled]="generatingProject || !project.lastCompilationDate">Descargar proyecto</button>
+            <button mat-raised-button color="primary" [disabled]="generatingProject || !project.lastCompilationDate" (click)="downloadProject()">Descargar proyecto</button>
           </p>
         </div>
       </mat-tab>

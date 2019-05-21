@@ -401,6 +401,6 @@ export class ProjectComponent implements OnInit {
   }
   
   downloadProject() {
-    window.location.href = environment.apiUrl + 'downloadProject/' + this.project.id;
+    window.location.href = environment.apiUrl + 'download-project/' + this.project.id;
   }
 }

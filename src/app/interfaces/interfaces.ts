@@ -59,6 +59,7 @@ export interface ProjectConfiguration {
   dbName: string;
   dbUser: string;
   dbPass: string;
+  dbCharset: string;
   cookiesPrefix: string;
   cookiesUrl: string;
   modBrowser: boolean;

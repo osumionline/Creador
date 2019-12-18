@@ -39,7 +39,7 @@ export class ProjectComponent implements OnInit {
     dbName: '',
     dbUser: '',
     dbPass: '',
-    dbCharset: '',
+    dbCharset: 'utf8mb4_unicode_ci',
     cookiesPrefix: '',
     cookiesUrl: '',
     modBrowser: false,

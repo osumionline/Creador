@@ -39,7 +39,8 @@ export class ProjectComponent implements OnInit {
     dbName: '',
     dbUser: '',
     dbPass: '',
-    dbCharset: 'utf8mb4_unicode_ci',
+    dbCharset: 'utf8mb4',
+	dbCollate: 'utf8mb4_unicode_ci',
     cookiesPrefix: '',
     cookiesUrl: '',
     modBrowser: false,
@@ -158,6 +159,7 @@ export class ProjectComponent implements OnInit {
     this.projectConfiguration.dbUser        = this.cs.urldecode(data.configuration.dbUser);
     this.projectConfiguration.dbPass        = null;
     this.projectConfiguration.dbCharset     = this.cs.urldecode(data.configuration.dbCharset);
+	this.projectConfiguration.dbCollate     = this.cs.urldecode(data.configuration.dbCollate);
     this.projectConfiguration.cookiesPrefix = this.cs.urldecode(data.configuration.cookiesPrefix);
     this.projectConfiguration.cookiesUrl    = this.cs.urldecode(data.configuration.cookiesUrl);
     this.projectConfiguration.modBrowser    = data.configuration.modBrowser;
@@ -312,7 +314,7 @@ export class ProjectComponent implements OnInit {
 	  return false;
 	}
 	
-	if (this.projectConfiguration.hasDB && (this.projectConfiguration.dbHost=='' || this.projectConfiguration.dbName=='' || this.projectConfiguration.dbUser=='' || (!this.project.id && this.projectConfiguration.dbPass=='') || this.projectConfiguration.dbCharset=='')){
+	if (this.projectConfiguration.hasDB && (this.projectConfiguration.dbHost=='' || this.projectConfiguration.dbName=='' || this.projectConfiguration.dbUser=='' || (!this.project.id && this.projectConfiguration.dbPass=='') || this.projectConfiguration.dbCharset=='' || this.projectConfiguration.dbCollate=='')){
       this.dialog.alert({title: 'Error', content: 'Has marcado que quieres usar una base de datos, ¡pero has dejado alguno de los campos en blanco!', ok: 'Continuar'}).subscribe(result => {});
 	  return false;
     }

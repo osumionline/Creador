@@ -89,6 +89,10 @@
             <mat-label>Charset</mat-label>
             <input matInput [(ngModel)]="projectConfiguration.dbCharset" name="db_charset" [disabled]="!projectConfiguration.hasDB">
           </mat-form-field>
+		  <mat-form-field appearance="outline">
+            <mat-label>Collate</mat-label>
+            <input matInput [(ngModel)]="projectConfiguration.dbCollate" name="db_collate" [disabled]="!projectConfiguration.hasDB">
+          </mat-form-field>
         </div>
         <div class="project-line" (click)="deploy('cookies')">
           <span>Cookies</span>

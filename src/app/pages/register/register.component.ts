@@ -7,7 +7,7 @@ import { CommonService }     from '../../services/common.service';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './html/register.component.html',
+  templateUrl: './register.component.html',
   styleUrls: []
 })
 export class RegisterComponent implements OnInit {

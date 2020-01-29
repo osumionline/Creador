@@ -7,8 +7,8 @@ import { Project }           from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-main',
-  templateUrl: './html/main.component.html',
-  styleUrls: ['./css/main.component.css']
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
   projects: Project[]  = [];

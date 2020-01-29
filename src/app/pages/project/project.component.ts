@@ -16,8 +16,8 @@ import { environment }   from '../../../environments/environment';
 
 @Component({
   selector: 'app-project',
-  templateUrl: './html/project.component.html',
-  styleUrls: ['./css/project.component.css']
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
   project = {

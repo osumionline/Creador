@@ -15,6 +15,7 @@ import { CommonService } from '../../services/common.service';
 import { environment }   from '../../../environments/environment';
 import { ConfigurationComponent } from '../../components/configuration/configuration.component';
 import { ModelComponent } from '../../components/model/model.component';
+import { IncludesComponent } from '../../components/includes/includes.component';
 
 @Component({
 	selector: 'app-project',
@@ -33,6 +34,7 @@ export class ProjectComponent implements OnInit {
 	
 	@ViewChild('configuration', { static: true }) configuration:ConfigurationComponent;
 	@ViewChild('model', { static: true }) model:ModelComponent;
+	@ViewChild('includes', { static: true }) includes:IncludesComponent;
 
 	savingProject: boolean = false;
 	deletingProject: boolean = false;
@@ -49,7 +51,7 @@ export class ProjectComponent implements OnInit {
 
 	ngOnInit() {
 		this.as.getIncludes().subscribe(result => {
-			this.includeTypes = result.list;
+			this.includes.setIncludeTypes(result.list);
 			this.activatedRoute.params.subscribe((params: Params) => {
 				const id = params.id;
 				if (id) {
@@ -71,6 +73,7 @@ export class ProjectComponent implements OnInit {
 		
 		this.configuration.load(data);
 		this.model.load(data);
+		this.includes.load(data);
 	}
 
 	removeSelectedInclude(ev, inc) {
@@ -87,6 +90,7 @@ export class ProjectComponent implements OnInit {
 		const projectConfiguration: ProjectConfiguration = this.configuration.getConfiguration();
 		const projectConfigurationLists: ProjectConfigurationLists = this.configuration.getConfigurationLists();
 		const projectModel: Model[] = this.model.getModel();
+		const includeTypes: IncludeType[] = this.includes.getIncludeTypes();
 
 		if (projectConfiguration.hasDB && (projectConfiguration.dbHost=='' || projectConfiguration.dbName=='' || projectConfiguration.dbUser=='' || (!this.project.id && projectConfiguration.dbPass=='') || projectConfiguration.dbCharset=='' || projectConfiguration.dbCollate=='')) {
 			this.dialog.alert({title: 'Error', content: 'Has marcado que quieres usar una base de datos, ¡pero has dejado alguno de los campos en blanco!', ok: 'Continuar'}).subscribe(result => {});
@@ -124,7 +128,7 @@ export class ProjectComponent implements OnInit {
 		}
 
 		this.savingProject = true;
-		this.as.saveProject(this.project, projectConfiguration, projectConfigurationLists, projectModel, this.includeTypes).subscribe(result => {
+		this.as.saveProject(this.project, projectConfiguration, projectConfigurationLists, projectModel, includeTypes).subscribe(result => {
 			if (result.status=='ok'){
 				this.dialog.alert({title: 'Info', content: 'El proyecto "'+this.project.name+'" ha sido correctamente guardado.', ok: 'Continuar'}).subscribe(result => {
 					if (this.project.id==null) {

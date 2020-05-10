@@ -1,1 +1,16 @@
-<p>includes works!</p>
+<fieldset *ngFor="let inc of includeTypes" class="project-include">
+	<legend>
+		{{inc.name | urldecode}}
+		<a *ngIf="inc.selected" href="#" class="remove-selected-include" (click)="removeSelectedInclude($event,inc)">Quitar</a>
+	</legend>
+	<mat-radio-group aria-label="Select an option" [(ngModel)]="inc.selected">
+		<mat-list role="list">
+			<mat-list-item *ngFor="let version of inc.versions">
+				<div class="project-include-row">
+					{{version.version}}
+					<mat-radio-button [value]="version.id"></mat-radio-button>
+				</div>
+			</mat-list-item>
+		</mat-list>
+	</mat-radio-group>
+</fieldset>

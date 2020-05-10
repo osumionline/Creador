@@ -34,8 +34,6 @@ export class ProjectComponent implements OnInit {
 	@ViewChild('configuration', { static: true }) configuration:ConfigurationComponent;
 	@ViewChild('model', { static: true }) model:ModelComponent;
 
-	includeTypes: IncludeType[] = [];
-
 	savingProject: boolean = false;
 	deletingProject: boolean = false;
 	generatingProject: boolean = false;
@@ -73,13 +71,6 @@ export class ProjectComponent implements OnInit {
 		
 		this.configuration.load(data);
 		this.model.load(data);
-
-		for (let i in this.includeTypes) {
-			if (data.includes.indexOf(this.includeTypes[i].id)!=-1) {
-				const opt_ind = data.includes.indexOf(this.includeTypes[i].id);
-				this.includeTypes[i].selected = true;
-			}
-		}
 	}
 
 	removeSelectedInclude(ev, inc) {

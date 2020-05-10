@@ -150,3 +150,13 @@ export interface ProjectDownloadResult {
   status: string;
   date: string;
 }
+
+export interface PluginsRep {
+	plugins: PluginRep[];
+}
+
+export interface PluginRep {
+	name: string;
+	version: string;
+	description: string;
+}

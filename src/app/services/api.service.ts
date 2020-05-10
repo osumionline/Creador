@@ -16,7 +16,8 @@ import {
   Model,
   IncludeType,
   ProjectDataResult,
-  ProjectDownloadResult
+  ProjectDownloadResult,
+  PluginsRep
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -57,5 +58,9 @@ export class ApiService {
   
   generateProject(id: number, step: number): Observable<ProjectDownloadResult> {
     return this.http.post<ProjectDownloadResult>(this.apiUrl + 'generate-project', {id, step});
+  }
+  
+  getPluginList(): Observable<PluginsRep> {
+	  return this.http.post<PluginsRep>(this.apiUrl + 'get-plugin-list', {});
   }
 }

@@ -14,6 +14,7 @@ import { DialogService } from '../../services/dialog.service';
 import { CommonService } from '../../services/common.service';
 import { environment }   from '../../../environments/environment';
 import { ConfigurationComponent } from '../../components/configuration/configuration.component';
+import { ModelComponent } from '../../components/model/model.component';
 
 @Component({
 	selector: 'app-project',
@@ -31,23 +32,7 @@ export class ProjectComponent implements OnInit {
 	} as Project;
 	
 	@ViewChild('configuration', { static: true }) configuration:ConfigurationComponent;
-
-	hasDB: boolean = false;
-
-	modelRowTypes = [
-		{id: 1,  name: 'PK'},
-		{id: 10, name: 'PK Str'},
-		{id: 2,  name: 'Created'},
-		{id: 3,  name: 'Updated'},
-		{id: 4,  name: 'Númerico'},
-		{id: 5,  name: 'Texto'},
-		{id: 6,  name: 'Fecha'},
-		{id: 7,  name: 'Booleano'},
-		{id: 8,  name: 'Texto largo'},
-		{id: 9,  name: 'Float'}
-	];
-
-	projectModel: Model[] = [];
+	@ViewChild('model', { static: true }) model:ModelComponent;
 
 	includeTypes: IncludeType[] = [];
 
@@ -87,9 +72,7 @@ export class ProjectComponent implements OnInit {
 		this.project.lastCompilationDate = data.project.lastCompilationDate;
 		
 		this.configuration.load(data);
-		this.hasDB = this.configuration.getHasDB();
-
-		this.projectModel = data.models;
+		this.model.load(data);
 
 		for (let i in this.includeTypes) {
 			if (data.includes.indexOf(this.includeTypes[i].id)!=-1) {
@@ -97,65 +80,6 @@ export class ProjectComponent implements OnInit {
 				this.includeTypes[i].selected = true;
 			}
 		}
-	}
-
-	addModel() {
-		this.projectModel.push({
-			id: null,
-			name: '',
-			tableName: '',
-			rows: []
-		} as Model);
-	}
-
-	addModelRow(ind: number, model) {
-		this.projectModel[ind].rows.push({
-			id: null,
-			name: null,
-			type: null,
-			size: null,
-			autoIncrement: false,
-			nullable: true,
-			defaultValue: null,
-			ref: null,
-			comment: null
-		} as ModelRow);
-		model.open = true;
-	}
-
-	deleteModel(ind: number) {
-		this.projectModel.splice(ind, 1);
-	}
-
-	deleteModelRow(ind: number, field: number) {
-		this.projectModel[ind].rows.splice(field, 1);
-	}
-
-	openModel(model) {
-		model.open = !model.open;
-	}
-
-	moveRow(ind_model, ind, sent) {
-		let new_order;
-		if (sent=='down') {
-			if (ind<(this.projectModel[ind_model].rows.length-1)) {
-				new_order= ind +1;
-			}
-			else {
-				return false;
-			}
-		}
-		else {
-			if (ind>0) {
-				new_order = ind -1;
-			}
-			else {
-				return false;
-			}
-		}
-		const aux = this.projectModel[ind_model].rows[ind];
-		this.projectModel[ind_model].rows[ind] = this.projectModel[ind_model].rows[new_order];
-		this.projectModel[ind_model].rows[new_order] = aux;
 	}
 
 	removeSelectedInclude(ev, inc) {
@@ -171,6 +95,7 @@ export class ProjectComponent implements OnInit {
 		
 		const projectConfiguration: ProjectConfiguration = this.configuration.getConfiguration();
 		const projectConfigurationLists: ProjectConfigurationLists = this.configuration.getConfigurationLists();
+		const projectModel: Model[] = this.model.getModel();
 
 		if (projectConfiguration.hasDB && (projectConfiguration.dbHost=='' || projectConfiguration.dbName=='' || projectConfiguration.dbUser=='' || (!this.project.id && projectConfiguration.dbPass=='') || projectConfiguration.dbCharset=='' || projectConfiguration.dbCollate=='')) {
 			this.dialog.alert({title: 'Error', content: 'Has marcado que quieres usar una base de datos, ¡pero has dejado alguno de los campos en blanco!', ok: 'Continuar'}).subscribe(result => {});
@@ -182,7 +107,7 @@ export class ProjectComponent implements OnInit {
 			return false;
 		}
 
-		for (let model of this.projectModel) {
+		for (let model of projectModel) {
 			if (model.name=='') {
 				this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre de un modelo en blanco!', ok: 'Continuar'}).subscribe(result => {});
 				return false;
@@ -208,7 +133,7 @@ export class ProjectComponent implements OnInit {
 		}
 
 		this.savingProject = true;
-		this.as.saveProject(this.project, projectConfiguration, projectConfigurationLists, this.projectModel, this.includeTypes).subscribe(result => {
+		this.as.saveProject(this.project, projectConfiguration, projectConfigurationLists, projectModel, this.includeTypes).subscribe(result => {
 			if (result.status=='ok'){
 				this.dialog.alert({title: 'Info', content: 'El proyecto "'+this.project.name+'" ha sido correctamente guardado.', ok: 'Continuar'}).subscribe(result => {
 					if (this.project.id==null) {

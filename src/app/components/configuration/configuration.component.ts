@@ -129,10 +129,6 @@ export class ConfigurationComponent {
 		return this.projectConfigurationLists;
 	}
 
-	getHasDB() {
-		return this.projectConfiguration.hasDB;
-	}
-
 	urldecodeKeyValue(item) {
 		return {key: this.cs.urldecode(item.key), value: this.cs.urldecode(item.value)};
 	}

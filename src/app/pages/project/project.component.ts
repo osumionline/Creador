@@ -97,11 +97,6 @@ export class ProjectComponent implements OnInit {
 			return false;
 		}
 
-		if (projectConfiguration.modEmailSmtp && (projectConfiguration.smtpHost=='' || projectConfiguration.smtpPort=='' || projectConfiguration.smtpSecure=='' || projectConfiguration.smtpUser=='' || projectConfiguration.smtpPass=='')) {
-			this.dialog.alert({title: 'Error', content: 'Has marcado que quieres usar envío de emails mediante SMTP, ¡pero has dejado alguno de los campos en blanco!', ok: 'Continuar'}).subscribe(result => {});
-			return false;
-		}
-
 		for (let model of projectModel) {
 			if (model.name=='') {
 				this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre de un modelo en blanco!', ok: 'Continuar'}).subscribe(result => {});

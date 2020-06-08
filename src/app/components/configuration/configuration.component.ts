@@ -27,20 +27,6 @@ export class ConfigurationComponent {
 		dbCollate: 'utf8mb4_unicode_ci',
 		cookiesPrefix: '',
 		cookiesUrl: '',
-		modBrowser: false,
-		modEmail: false,
-		modEmailSmtp: false,
-		modFtp: false,
-		modImage: false,
-		modPdf: false,
-		modTranslate: false,
-		modCrypt: false,
-		modFile: false,
-		smtpHost: '',
-		smtpPort: '',
-		smtpSecure: '',
-		smtpUser: '',
-		smtpPass: '',
 		error403: '',
 		error404: '',
 		error500: ''
@@ -69,7 +55,6 @@ export class ConfigurationComponent {
 		general: true,
 		db: false,
 		cookies: false,
-		baseModules: false,
 		errors: false,
 		css: false,
 		js: false,
@@ -94,20 +79,6 @@ export class ConfigurationComponent {
 		this.projectConfiguration.dbCollate     = this.cs.urldecode(data.configuration.dbCollate);
 		this.projectConfiguration.cookiesPrefix = this.cs.urldecode(data.configuration.cookiesPrefix);
 		this.projectConfiguration.cookiesUrl    = this.cs.urldecode(data.configuration.cookiesUrl);
-		this.projectConfiguration.modBrowser    = data.configuration.modBrowser;
-		this.projectConfiguration.modEmail      = data.configuration.modEmail;
-		this.projectConfiguration.modEmailSmtp  = data.configuration.modEmailSmtp;
-		this.projectConfiguration.modFtp        = data.configuration.modFtp;
-		this.projectConfiguration.modImage      = data.configuration.modImage;
-		this.projectConfiguration.modPdf        = data.configuration.modPdf;
-		this.projectConfiguration.modTranslate  = data.configuration.modTranslate;
-		this.projectConfiguration.modCrypt      = data.configuration.modCrypt;
-		this.projectConfiguration.modFile       = data.configuration.modFile;
-		this.projectConfiguration.smtpHost      = this.cs.urldecode(data.configuration.smtpHost);
-		this.projectConfiguration.smtpPort      = this.cs.urldecode(data.configuration.smtpPort);
-		this.projectConfiguration.smtpSecure    = this.cs.urldecode(data.configuration.smtpSecure);
-		this.projectConfiguration.smtpUser      = this.cs.urldecode(data.configuration.smtpUser);
-		this.projectConfiguration.smtpPass      = null;
 		this.projectConfiguration.error403      = this.cs.urldecode(data.configuration.error403);
 		this.projectConfiguration.error404      = this.cs.urldecode(data.configuration.error404);
 		this.projectConfiguration.error500      = this.cs.urldecode(data.configuration.error500);
@@ -139,13 +110,6 @@ export class ConfigurationComponent {
 
 	changeHasDB() {
 		this.projectConfiguration.hasDB = !this.projectConfiguration.hasDB;
-	}
-
-	changeModule(ind) {
-		this.projectConfiguration[ind] = !this.projectConfiguration[ind];
-		if (!this.projectConfiguration.modEmail) {
-			this.projectConfiguration.modEmailSmtp = false;
-		}
 	}
 
 	addNew(type) {

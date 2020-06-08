@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef }              from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Project,
 		 ProjectDataResult,
@@ -12,6 +12,7 @@ import { Project,
 import { ApiService }    from '../../services/api.service';
 import { DialogService } from '../../services/dialog.service';
 import { CommonService } from '../../services/common.service';
+import { UserService }   from '../../services/user.service';
 import { environment }   from '../../../environments/environment';
 import { ConfigurationComponent } from '../../components/configuration/configuration.component';
 import { ModelComponent } from '../../components/model/model.component';
@@ -46,6 +47,7 @@ export class ProjectComponent implements OnInit {
 	constructor(private as: ApiService,
 				private dialog: DialogService,
 				private cs: CommonService,
+				private user: UserService,
 				private router: Router,
 				private activatedRoute: ActivatedRoute) {}
 
@@ -178,6 +180,6 @@ export class ProjectComponent implements OnInit {
 	}
 
 	downloadProject() {
-		window.location.href = environment.apiUrl + 'download-project/' + this.project.id;
+		window.location.href = environment.apiUrl + 'download-project/' + this.project.id + '?tk=' + btoa(this.user.token);
 	}
 }

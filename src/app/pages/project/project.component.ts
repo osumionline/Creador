@@ -24,14 +24,14 @@ import { IncludesComponent } from '../../components/includes/includes.component'
 	styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
-	project = {
+	project: Project = {
 		id: null,
 		name: 'Nuevo proyecto',
 		slug: 'nuevo-proyecto',
 		description: '',
 		updatedAt: '',
 		lastCompilationDate: ''
-	} as Project;
+	};
 	
 	@ViewChild('configuration', { static: true }) configuration:ConfigurationComponent;
 	@ViewChild('model', { static: true }) model:ModelComponent;
@@ -44,12 +44,14 @@ export class ProjectComponent implements OnInit {
 	generateStep: number = 0;
 	generatedProject: boolean = false;
 
-	constructor(private as: ApiService,
-				private dialog: DialogService,
-				private cs: CommonService,
-				private user: UserService,
-				private router: Router,
-				private activatedRoute: ActivatedRoute) {}
+	constructor(
+		private as: ApiService,
+		private dialog: DialogService,
+		private cs: CommonService,
+		private user: UserService,
+		private router: Router,
+		private activatedRoute: ActivatedRoute
+	) {}
 
 	ngOnInit() {
 		this.as.getIncludes().subscribe(result => {
@@ -126,7 +128,7 @@ export class ProjectComponent implements OnInit {
 
 		this.savingProject = true;
 		this.as.saveProject(this.project, projectConfiguration, projectConfigurationLists, projectModel, includeTypes).subscribe(result => {
-			if (result.status=='ok'){
+			if (result.status=='ok') {
 				this.dialog.alert({title: 'Info', content: 'El proyecto "'+this.project.name+'" ha sido correctamente guardado.', ok: 'Continuar'}).subscribe(result => {
 					if (this.project.id==null) {
 						this.router.navigate(['/main']);

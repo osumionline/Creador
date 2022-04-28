@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router }            from '@angular/router';
-import { ApiService }        from '../../services/api.service';
-import { DataShareService }  from '../../services/data-share.service';
-import { Project }           from '../../interfaces/interfaces';
+import { ApiService }        from 'src/app/services/api.service';
+import { DataShareService }  from 'src/app/services/data-share.service';
+import { Project }           from 'src/app/interfaces/interfaces';
 
 @Component({
 	selector: 'app-main',

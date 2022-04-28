@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { ProjectDataResult, IncludeType } from '../../interfaces/interfaces';
-import { ApiService } from '../../services/api.service';
+import { ProjectDataResult, IncludeType } from 'src/app/interfaces/interfaces';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
 	selector: 'app-includes',
 	templateUrl: './includes.component.html',
-	styleUrls: ['../../pages/project/project.component.css']
+	styleUrls: ['src/app/pages/project/project.component.scss']
 })
 export class IncludesComponent {
 	includeTypes: IncludeType[] = [];
@@ -27,5 +27,9 @@ export class IncludesComponent {
 
 	getIncludeTypes() {
 		return this.includeTypes;
+	}
+
+	removeSelectedInclude(ev: MouseEvent, inc: IncludeType) {
+		
 	}
 }

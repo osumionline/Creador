@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router }            from '@angular/router';
-import { RegisterData }      from '../../interfaces/interfaces';
-import { ApiService }        from '../../services/api.service';
-import { UserService }       from '../../services/user.service';
-import { CommonService }     from '../../services/common.service';
+import { RegisterData }      from 'src/app/interfaces/interfaces';
+import { ApiService }        from 'src/app/services/api.service';
+import { UserService }       from 'src/app/services/user.service';
+import { CommonService }     from 'src/app/services/common.service';
 
 @Component({
 	selector: 'app-register',

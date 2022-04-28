@@ -1,11 +1,11 @@
 import { Component }    from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DialogField }  from '../../../interfaces/interfaces';
+import { DialogField }  from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-form-dialog',
   templateUrl: './html/form-dialog.component.html',
-  styleUrls: ['../css/dialog.component.css']
+  styleUrls: ['../scss/dialog.component.scss']
 })
 export class FormDialogComponent {
     public title: string;

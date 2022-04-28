@@ -4,13 +4,13 @@ import {
 	ProjectConfiguration,
 	ProjectConfigurationLists,
 	KeyValue
-} from '../../interfaces/interfaces';
-import { CommonService } from '../../services/common.service';
+} from 'src/app/interfaces/interfaces';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
 	selector: 'app-configuration',
 	templateUrl: './configuration.component.html',
-	styleUrls: ['../../pages/project/project.component.css']
+	styleUrls: ['../../pages/project/project.component.scss']
 })
 export class ConfigurationComponent {
 	projectConfiguration: ProjectConfiguration = {

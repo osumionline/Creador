@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CommonService } from '../services/common.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Pipe({
   name: 'urldecode'

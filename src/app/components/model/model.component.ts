@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Model, ModelRow, ProjectDataResult } from '../../interfaces/interfaces';
+import { Model, ModelRow, ProjectDataResult } from 'src/app/interfaces/interfaces';
 
 @Component({
 	selector: 'app-model',
 	templateUrl: './model.component.html',
-	styleUrls: ['../../pages/project/project.component.css']
+	styleUrls: ['src/app/pages/project/project.component.scss']
 })
 export class ModelComponent {
 	modelRowTypes = [

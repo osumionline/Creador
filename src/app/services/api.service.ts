@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable }              from '@angular/core';
 import { Observable }              from 'rxjs';
-import { environment }             from '../../environments/environment';
+import { environment }             from 'src/environments/environment';
 
 import {
   LoginData,
@@ -18,7 +18,7 @@ import {
   ProjectDataResult,
   ProjectDownloadResult,
   PluginsRep
-} from '../interfaces/interfaces';
+} from 'src/app/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'

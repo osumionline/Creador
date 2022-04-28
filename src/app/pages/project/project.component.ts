@@ -8,20 +8,20 @@ import { Project,
          ModelRow,
          IncludeType,
          IncludeVersion
-       } from '../../interfaces/interfaces';
-import { ApiService }    from '../../services/api.service';
-import { DialogService } from '../../services/dialog.service';
-import { CommonService } from '../../services/common.service';
-import { UserService }   from '../../services/user.service';
-import { environment }   from '../../../environments/environment';
-import { ConfigurationComponent } from '../../components/configuration/configuration.component';
-import { ModelComponent } from '../../components/model/model.component';
-import { IncludesComponent } from '../../components/includes/includes.component';
+       } from 'src/app/interfaces/interfaces';
+import { ApiService }    from 'src/app/services/api.service';
+import { DialogService } from 'src/app/services/dialog.service';
+import { CommonService } from 'src/app/services/common.service';
+import { UserService }   from 'src/app/services/user.service';
+import { environment }   from 'src/environments/environment';
+import { ConfigurationComponent } from 'src/app/components/configuration/configuration.component';
+import { ModelComponent } from 'src/app/components/model/model.component';
+import { IncludesComponent } from 'src/app/components/includes/includes.component';
 
 @Component({
 	selector: 'app-project',
 	templateUrl: './project.component.html',
-	styleUrls: ['./project.component.css']
+	styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent implements OnInit {
 	project: Project = {

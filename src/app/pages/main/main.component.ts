@@ -18,8 +18,9 @@ export class MainComponent implements OnInit {
 		private as: ApiService,
 		private dss: DataShareService,
 		private router: Router
-	) { }
-	ngOnInit() {
+	) {}
+
+	ngOnInit(): void {
 		this.as.getProjects().subscribe(result => {
 			if (result.status=='ok') {
 				this.projects = result.list;
@@ -27,8 +28,8 @@ export class MainComponent implements OnInit {
 			}
 		},
 		error => {
-			this.loading    = false;
-			this.loadError  = true;
+			this.loading   = false;
+			this.loadError = true;
 		});
 	}
 }

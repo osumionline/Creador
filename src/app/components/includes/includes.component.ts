@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 @Component({
 	selector: 'app-includes',
 	templateUrl: './includes.component.html',
-	styleUrls: ['src/app/pages/project/project.component.scss']
+	styleUrls: ['../../pages/project/project.component.scss']
 })
 export class IncludesComponent {
 	includeTypes: IncludeType[] = [];
@@ -30,6 +30,7 @@ export class IncludesComponent {
 	}
 
 	removeSelectedInclude(ev: MouseEvent, inc: IncludeType) {
-		
+		ev.preventDefault();
+		delete inc.selected;
 	}
 }

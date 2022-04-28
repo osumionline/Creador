@@ -32,10 +32,10 @@ export class ProjectComponent implements OnInit {
 		updatedAt: '',
 		lastCompilationDate: ''
 	};
-	
-	@ViewChild('configuration', { static: true }) configuration:ConfigurationComponent;
-	@ViewChild('model', { static: true }) model:ModelComponent;
-	@ViewChild('includes', { static: true }) includes:IncludesComponent;
+
+	@ViewChild('configuration', { static: true }) configuration: ConfigurationComponent;
+	@ViewChild('model', { static: true }) model: ModelComponent;
+	@ViewChild('includes', { static: true }) includes: IncludesComponent;
 
 	savingProject: boolean = false;
 	deletingProject: boolean = false;
@@ -48,16 +48,16 @@ export class ProjectComponent implements OnInit {
 		private as: ApiService,
 		private dialog: DialogService,
 		private cs: CommonService,
-		private user: UserService,
+		private us: UserService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute
 	) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.as.getIncludes().subscribe(result => {
 			this.includes.setIncludeTypes(result.list);
 			this.activatedRoute.params.subscribe((params: Params) => {
-				const id = params.id;
+				const id: number = params.id;
 				if (id) {
 					this.as.getProject(id).subscribe(result => {
 						this.loadProject(result);
@@ -67,28 +67,23 @@ export class ProjectComponent implements OnInit {
 		});
 	}
 
-	loadProject(data: ProjectDataResult) {
+	loadProject(data: ProjectDataResult): void {
 		this.project.id          = data.project.id;
 		this.project.name        = this.cs.urldecode(data.project.name);
 		this.project.slug        = data.project.slug;
 		this.project.description = this.cs.urldecode(data.project.description);
 		this.project.updatedAt   = data.project.updatedAt;
 		this.project.lastCompilationDate = data.project.lastCompilationDate;
-		
+
 		this.configuration.load(data);
 		this.model.load(data);
 		this.includes.load(data);
 	}
 
-	removeSelectedInclude(ev, inc) {
-		ev.preventDefault();
-		delete inc.selected;
-	}
-
-	saveProject() {
+	saveProject(): void {
 		if (this.project.name=='') {
 			this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre del proyecto en blanco!', ok: 'Continuar'}).subscribe(result => {});
-			return false;
+			return;
 		}
 		
 		const projectConfiguration: ProjectConfiguration = this.configuration.getConfiguration();
@@ -98,30 +93,30 @@ export class ProjectComponent implements OnInit {
 
 		if (projectConfiguration.hasDB && (projectConfiguration.dbHost=='' || projectConfiguration.dbName=='' || projectConfiguration.dbUser=='' || (!this.project.id && projectConfiguration.dbPass=='') || projectConfiguration.dbCharset=='' || projectConfiguration.dbCollate=='')) {
 			this.dialog.alert({title: 'Error', content: 'Has marcado que quieres usar una base de datos, ¡pero has dejado alguno de los campos en blanco!', ok: 'Continuar'}).subscribe(result => {});
-			return false;
+			return;
 		}
 
 		for (let model of projectModel) {
 			if (model.name=='') {
 				this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre de un modelo en blanco!', ok: 'Continuar'}).subscribe(result => {});
-				return false;
+				return;
 			}
 			if (model.tableName=='') {
 				this.dialog.alert({title: 'Error', content: '¡No puedes dejar en blanco el nombre de la tabla en el modelo "'+model.name+'"!', ok: 'Continuar'}).subscribe(result => {});
-				return false;
+				return;
 			}
 			if (model.rows.length==0) {
 				this.dialog.alert({title: 'Error', content: '¡No has añadido ningún campo en el modelo "'+model.name+'"!', ok: 'Continuar'}).subscribe(result => {});
-				return false;
+				return;
 			}
 			for (let modelRow of model.rows) {
 				if (modelRow.name=='') {
 					this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre del campo en blanco en el modelo "'+model.name+'"!', ok: 'Continuar'}).subscribe(result => {});
-					return false;
+					return;
 				}
 				if (!modelRow.type) {
 					this.dialog.alert({title: 'Error', content: '¡No has elegido el tipo de campo para el campo "'+modelRow.name+'" en el modelo "'+model.name+'"!', ok: 'Continuar'}).subscribe(result => {});
-					return false;
+					return;
 				}
 			}
 		}
@@ -149,7 +144,7 @@ export class ProjectComponent implements OnInit {
 		});
 	}
 
-	deleteProject() {
+	deleteProject(): void {
 		this.deletingProject = true;
 		this.as.deleteProject(this.project.id).subscribe(result => {
 			if (result.status=='ok') {
@@ -165,7 +160,7 @@ export class ProjectComponent implements OnInit {
 		});
 	}
 
-	generateProject() {
+	generateProject(): void {
 		this.generatingProject = true;
 		this.as.generateProject(this.project.id, this.generateStep).subscribe(result => {
 			this.generateStep++;
@@ -181,7 +176,7 @@ export class ProjectComponent implements OnInit {
 		});
 	}
 
-	downloadProject() {
-		window.location.href = environment.apiUrl + 'download-project/' + this.project.id + '?tk=' + btoa(this.user.token);
+	downloadProject(): void {
+		window.location.href = environment.apiUrl + 'download-project/' + this.project.id + '?tk=' + btoa(this.us.user.token);
 	}
 }

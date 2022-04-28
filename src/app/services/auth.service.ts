@@ -4,11 +4,11 @@ import { UserService }      from 'src/app/services/user.service';
 
 @Injectable()
 export class AuthService {
-	constructor(private user: UserService) {}
+	constructor(private us: UserService) {}
 
 	public isAuthenticated(): boolean {
-		this.user.loadLogin();
+		this.us.loadLogin();
 		const helper = new JwtHelperService();
-		return !helper.isTokenExpired(this.user.token);
+		return !helper.isTokenExpired(this.us.user.token);
 	}
 }

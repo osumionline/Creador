@@ -1,22 +1,25 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Project,
-		 ProjectDataResult,
-         ProjectConfiguration,
-         ProjectConfigurationLists,
-         Model,
-         ModelRow,
-         IncludeType,
-         IncludeVersion
-       } from 'src/app/interfaces/interfaces';
+import {
+	ProjectInterface,
+	ProjectDataResult,
+	ModelInterface,
+	ModelRowInterface,
+	IncludeType,
+	IncludeVersion
+} from 'src/app/interfaces/interfaces';
 import { ApiService }    from 'src/app/services/api.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { CommonService } from 'src/app/services/common.service';
 import { UserService }   from 'src/app/services/user.service';
+import { ClassMapperService } from 'src/app/services/class-mapper.service';
 import { environment }   from 'src/environments/environment';
 import { ConfigurationComponent } from 'src/app/components/configuration/configuration.component';
 import { ModelComponent } from 'src/app/components/model/model.component';
 import { IncludesComponent } from 'src/app/components/includes/includes.component';
+import { Project } from 'src/app/model/project.model';
+import { ProjectConfiguration } from 'src/app/model/project-configuration.model';
+import { ProjectConfigurationLists } from 'src/app/model/project-configuration-lists.model';
 
 @Component({
 	selector: 'app-project',
@@ -24,14 +27,7 @@ import { IncludesComponent } from 'src/app/components/includes/includes.componen
 	styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent implements OnInit {
-	project: Project = {
-		id: null,
-		name: 'Nuevo proyecto',
-		slug: 'nuevo-proyecto',
-		description: '',
-		updatedAt: '',
-		lastCompilationDate: ''
-	};
+	project: Project = new Project();
 
 	@ViewChild('configuration', { static: true }) configuration: ConfigurationComponent;
 	@ViewChild('model', { static: true }) model: ModelComponent;
@@ -49,6 +45,7 @@ export class ProjectComponent implements OnInit {
 		private dialog: DialogService,
 		private cs: CommonService,
 		private us: UserService,
+		private cms: ClassMapperService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute
 	) {}
@@ -68,12 +65,7 @@ export class ProjectComponent implements OnInit {
 	}
 
 	loadProject(data: ProjectDataResult): void {
-		this.project.id          = data.project.id;
-		this.project.name        = this.cs.urldecode(data.project.name);
-		this.project.slug        = data.project.slug;
-		this.project.description = this.cs.urldecode(data.project.description);
-		this.project.updatedAt   = data.project.updatedAt;
-		this.project.lastCompilationDate = data.project.lastCompilationDate;
+		this.project = this.cms.getProject(data.project);
 
 		this.configuration.load(data);
 		this.model.load(data);
@@ -88,7 +80,7 @@ export class ProjectComponent implements OnInit {
 		
 		const projectConfiguration: ProjectConfiguration = this.configuration.getConfiguration();
 		const projectConfigurationLists: ProjectConfigurationLists = this.configuration.getConfigurationLists();
-		const projectModel: Model[] = this.model.getModel();
+		const projectModel: ModelInterface[] = this.model.getModel();
 		const includeTypes: IncludeType[] = this.includes.getIncludeTypes();
 
 		if (projectConfiguration.hasDB && (projectConfiguration.dbHost=='' || projectConfiguration.dbName=='' || projectConfiguration.dbUser=='' || (!this.project.id && projectConfiguration.dbPass=='') || projectConfiguration.dbCharset=='' || projectConfiguration.dbCollate=='')) {
@@ -122,7 +114,7 @@ export class ProjectComponent implements OnInit {
 		}
 
 		this.savingProject = true;
-		this.as.saveProject(this.project, projectConfiguration, projectConfigurationLists, projectModel, includeTypes).subscribe(result => {
+		this.as.saveProject(this.project.toInterface(), projectConfiguration.toInterface(), projectConfigurationLists.toInterface(), projectModel, includeTypes).subscribe(result => {
 			if (result.status=='ok') {
 				this.dialog.alert({title: 'Info', content: 'El proyecto "'+this.project.name+'" ha sido correctamente guardado.', ok: 'Continuar'}).subscribe(result => {
 					if (this.project.id==null) {

@@ -8,7 +8,7 @@
 
 <mat-nav-list *ngIf="!loading && !loadError">
 	<a mat-list-item *ngFor="let project of projects" [routerLink]="['/project', project.id, project.slug]">
-		<h3 matLine> {{project.name | urldecode}} </h3>
+		<h3 matLine> {{project.name}} </h3>
 	</a>
 	<mat-list-item *ngIf="projects.length==0">
 		¡Todavía no hay ningún proyecto! Añade el primero pulsando el icono "+".

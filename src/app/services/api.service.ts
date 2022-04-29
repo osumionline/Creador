@@ -10,10 +10,10 @@ import {
 	ProjectResult,
 	IncludeResult,
 	StatusResult,
-	Project,
-	ProjectConfiguration,
-	ProjectConfigurationLists,
-	Model,
+	ProjectInterface,
+	ProjectConfigurationInterface,
+	ProjectConfigurationListsInterface,
+	ModelInterface,
 	IncludeType,
 	ProjectDataResult,
 	ProjectDownloadResult,
@@ -44,7 +44,7 @@ export class ApiService {
 		return this.http.post<IncludeResult>(this.apiUrl + 'get-includes', {});
 	}
 
-	saveProject(project: Project, projectConfiguration: ProjectConfiguration, projectConfigurationLists: ProjectConfigurationLists, projectModel: Model[], includeTypes: IncludeType[]): Observable<StatusResult> {
+	saveProject(project: ProjectInterface, projectConfiguration: ProjectConfigurationInterface, projectConfigurationLists: ProjectConfigurationListsInterface, projectModel: ModelInterface[], includeTypes: IncludeType[]): Observable<StatusResult> {
 		return this.http.post<StatusResult>(this.apiUrl + 'save-project', {project, projectConfiguration, projectConfigurationLists, projectModel, includeTypes});
 	}
 

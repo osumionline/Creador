@@ -9,6 +9,9 @@ export class AuthService {
 	public isAuthenticated(): boolean {
 		this.us.loadLogin();
 		const helper = new JwtHelperService();
-		return !helper.isTokenExpired(this.us.user.token);
+		if (this.us.user && this.us.user.token) {
+			return !helper.isTokenExpired(this.us.user.token);
+		}
+		return false;
 	}
 }

@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { Model, ModelRow, ProjectDataResult } from 'src/app/interfaces/interfaces';
+import {
+	ModelInterface,
+	ModelRowInterface,
+	ProjectDataResult
+} from 'src/app/interfaces/interfaces';
 
 @Component({
 	selector: 'app-model',
 	templateUrl: './model.component.html',
-	styleUrls: ['src/app/pages/project/project.component.scss']
+	styleUrls: ['../../pages/project/project.component.scss']
 })
 export class ModelComponent {
 	modelRowTypes = [
@@ -20,7 +24,7 @@ export class ModelComponent {
 		{id: 9,  name: 'Float'}
 	];
 
-	projectModel: Model[] = [];
+	projectModel: ModelInterface[] = [];
 
 	constructor() {}
 	
@@ -38,7 +42,7 @@ export class ModelComponent {
 			name: '',
 			tableName: '',
 			rows: []
-		} as Model);
+		});
 	}
 
 	addModelRow(ind: number, model) {
@@ -51,8 +55,9 @@ export class ModelComponent {
 			nullable: true,
 			defaultValue: null,
 			ref: null,
-			comment: null
-		} as ModelRow);
+			comment: null,
+			order: null
+		});
 		model.open = true;
 	}
 

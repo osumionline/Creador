@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router }            from '@angular/router';
-import { ApiService }        from 'src/app/services/api.service';
-import { DataShareService }  from 'src/app/services/data-share.service';
-import { Project }           from 'src/app/interfaces/interfaces';
+import { Component, OnInit }  from '@angular/core';
+import { Router }             from '@angular/router';
+import { ApiService }         from 'src/app/services/api.service';
+import { ClassMapperService } from 'src/app/services/class-mapper.service';
+import { Project }            from 'src/app/model/project.model';
 
 @Component({
 	selector: 'app-main',
@@ -16,14 +16,14 @@ export class MainComponent implements OnInit {
 
 	constructor(
 		private as: ApiService,
-		private dss: DataShareService,
+		private cms: ClassMapperService,
 		private router: Router
 	) {}
 
 	ngOnInit(): void {
 		this.as.getProjects().subscribe(result => {
 			if (result.status=='ok') {
-				this.projects = result.list;
+				this.projects = this.cms.getProjects(result.list);
 				this.loading = false;
 			}
 		},

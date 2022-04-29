@@ -39,7 +39,7 @@ export interface StatusResult {
 	status: string;
 }
 
-export interface Project {
+export interface ProjectInterface {
 	id: number;
 	name: string;
 	slug: string;
@@ -50,10 +50,10 @@ export interface Project {
 
 export interface ProjectResult {
 	status: string;
-	list: Project[];
+	list: ProjectInterface[];
 }
 
-export interface ProjectConfiguration {
+export interface ProjectConfigurationInterface {
 	baseUrl: string;
 	adminEmail: string;
 	defaultTitle: string;
@@ -72,22 +72,46 @@ export interface ProjectConfiguration {
 	error500: string;
 }
 
-export interface KeyValue {
+export interface KeyValueInterface {
 	key: string;
 	value: string;
 }
 
-export interface ProjectConfigurationLists {
+export interface ProjectConfigurationListsInterface {
 	css: string[];
 	cssExt: string[];
 	js: string[];
 	jsExt: string[];
 	libs: string[];
-	extra: KeyValue[];
-	dir: KeyValue[];
+	extra: KeyValueInterface[];
+	dir: KeyValueInterface[];
 }
 
-export interface ModelRow {
+export interface NewConfigurationItem {
+	css: string;
+	cssExt: string;
+	js: string;
+	jsExt: string;
+	libs: string;
+	extraKey: string;
+	extraValue: string;
+	dirKey: string;
+	dirValue: string;
+}
+
+export interface ConfigurationRow {
+	general: boolean;
+	db: boolean;
+	cookies: boolean;
+	errors: boolean;
+	css: boolean;
+	js: boolean;
+	libs: boolean;
+	extra: boolean;
+	dir: boolean;
+}
+
+export interface ModelRowInterface {
 	id: number;
 	name: string;
 	type: number;
@@ -100,11 +124,11 @@ export interface ModelRow {
 	order: number;
 }
 
-export interface Model {
+export interface ModelInterface {
 	id: number;
 	name: string;
 	tableName: string;
-	rows: ModelRow[];
+	rows: ModelRowInterface[];
 }
 
 export interface IncludeVersion {
@@ -125,10 +149,10 @@ export interface IncludeResult {
 
 export interface ProjectDataResult {
 	status: string;
-	project: Project;
-	configuration: ProjectConfiguration;
-	lists: ProjectConfigurationLists;
-	models: Model[];
+	project: ProjectInterface;
+	configuration: ProjectConfigurationInterface;
+	lists: ProjectConfigurationListsInterface;
+	models: ModelInterface[];
 	includes: number[];
 }
 

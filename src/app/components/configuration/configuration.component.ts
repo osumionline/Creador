@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import {
 	ProjectDataResult,
-	ProjectConfiguration,
-	ProjectConfigurationLists,
-	KeyValue
+	NewConfigurationItem,
+	ConfigurationRow
 } from 'src/app/interfaces/interfaces';
-import { CommonService } from 'src/app/services/common.service';
+import { ProjectConfiguration } from 'src/app/model/project-configuration.model';
+import { ProjectConfigurationLists } from 'src/app/model/project-configuration-lists.model';
+import { KeyValue } from 'src/app/model/key-value.model';
 
 @Component({
 	selector: 'app-configuration',
@@ -13,34 +14,9 @@ import { CommonService } from 'src/app/services/common.service';
 	styleUrls: ['../../pages/project/project.component.scss']
 })
 export class ConfigurationComponent {
-	projectConfiguration: ProjectConfiguration = {
-		baseUrl: '',
-		adminEmail: '',
-		defaultTitle: '',
-		lang: 'es',
-		hasDB: false,
-		dbHost: '',
-		dbName: '',
-		dbUser: '',
-		dbPass: '',
-		dbCharset: 'utf8mb4',
-		dbCollate: 'utf8mb4_unicode_ci',
-		cookiesPrefix: '',
-		cookiesUrl: '',
-		error403: '',
-		error404: '',
-		error500: ''
-	};
-	projectConfigurationLists: ProjectConfigurationLists = {
-		css: [],
-		cssExt: [],
-		js: [],
-		jsExt: [],
-		libs: [],
-		extra: [],
-		dir: []
-	};
-	newItem = {
+	projectConfiguration: ProjectConfiguration = new ProjectConfiguration();
+	projectConfigurationLists: ProjectConfigurationLists = new ProjectConfigurationLists();
+	newItem: NewConfigurationItem = {
 		css: '',
 		cssExt: '',
 		js: '',
@@ -51,7 +27,7 @@ export class ConfigurationComponent {
 		dirKey: '',
 		dirValue: ''
 	};
-	row = {
+	row: ConfigurationRow = {
 		general: true,
 		db: false,
 		cookies: false,
@@ -63,56 +39,30 @@ export class ConfigurationComponent {
 		dir: false
 	};
 
-	constructor(private cs: CommonService) {}
+	constructor() {}
 
-	load(data: ProjectDataResult) {
-		this.projectConfiguration.baseUrl       = this.cs.urldecode(data.configuration.baseUrl);
-		this.projectConfiguration.adminEmail    = this.cs.urldecode(data.configuration.adminEmail);
-		this.projectConfiguration.defaultTitle  = this.cs.urldecode(data.configuration.defaultTitle);
-		this.projectConfiguration.lang          = this.cs.urldecode(data.configuration.lang);
-		this.projectConfiguration.hasDB         = data.configuration.hasDB;
-		this.projectConfiguration.dbHost        = this.cs.urldecode(data.configuration.dbHost);
-		this.projectConfiguration.dbName        = this.cs.urldecode(data.configuration.dbName);
-		this.projectConfiguration.dbUser        = this.cs.urldecode(data.configuration.dbUser);
-		this.projectConfiguration.dbPass        = null;
-		this.projectConfiguration.dbCharset     = this.cs.urldecode(data.configuration.dbCharset);
-		this.projectConfiguration.dbCollate     = this.cs.urldecode(data.configuration.dbCollate);
-		this.projectConfiguration.cookiesPrefix = this.cs.urldecode(data.configuration.cookiesPrefix);
-		this.projectConfiguration.cookiesUrl    = this.cs.urldecode(data.configuration.cookiesUrl);
-		this.projectConfiguration.error403      = this.cs.urldecode(data.configuration.error403);
-		this.projectConfiguration.error404      = this.cs.urldecode(data.configuration.error404);
-		this.projectConfiguration.error500      = this.cs.urldecode(data.configuration.error500);
-
-		this.projectConfigurationLists.css    = data.lists.css.map(this.cs.urldecode);
-		this.projectConfigurationLists.cssExt = data.lists.cssExt.map(this.cs.urldecode);
-		this.projectConfigurationLists.js     = data.lists.js.map(this.cs.urldecode);
-		this.projectConfigurationLists.jsExt  = data.lists.jsExt.map(this.cs.urldecode);
-		this.projectConfigurationLists.libs   = data.lists.libs.map(this.cs.urldecode);
-		this.projectConfigurationLists.extra  = data.lists.extra.map((item) => { return this.urldecodeKeyValue(item); });
-		this.projectConfigurationLists.dir    = data.lists.dir.map((item) => { return this.urldecodeKeyValue(item); });
+	load(data: ProjectDataResult): void {
+		this.projectConfiguration = new ProjectConfiguration().fromInterface(data.configuration);
+		this.projectConfigurationLists = new ProjectConfigurationLists().fromInterface(data.lists);
 	}
 
-	getConfiguration() {
+	getConfiguration(): ProjectConfiguration {
 		return this.projectConfiguration;
 	}
 
-	getConfigurationLists() {
+	getConfigurationLists(): ProjectConfigurationLists {
 		return this.projectConfigurationLists;
 	}
 
-	urldecodeKeyValue(item) {
-		return {key: this.cs.urldecode(item.key), value: this.cs.urldecode(item.value)};
-	}
-
-	deploy(ind) {
+	deploy(ind: string): void {
 		this.row[ind] = !this.row[ind];
 	}
 
-	changeHasDB() {
+	changeHasDB(): void {
 		this.projectConfiguration.hasDB = !this.projectConfiguration.hasDB;
 	}
 
-	addNew(type) {
+	addNew(type: string): void {
 		switch(type) {
 			case 'css':
 			case 'cssExt':
@@ -123,19 +73,19 @@ export class ConfigurationComponent {
 				this.newItem[type] = '';
 			break;
 			case 'extra':
-				this.projectConfigurationLists.extra.push( {key: this.newItem.extraKey, value: this.newItem.extraValue } as KeyValue );
+				this.projectConfigurationLists.extra.push( new KeyValue(this.newItem.extraKey, this.newItem.extraValue) );
 				this.newItem.extraKey = '';
 				this.newItem.extraValue = '';
 			break;
 			case 'dir':
-				this.projectConfigurationLists.dir.push( {key: this.newItem.dirKey, value: this.newItem.dirValue } as KeyValue );
+				this.projectConfigurationLists.dir.push( new KeyValue(this.newItem.dirKey, this.newItem.dirValue) );
 				this.newItem.dirKey = '';
 				this.newItem.dirValue = '';
 			break;
 		}
 	}
 
-	deleteNew(type, ind) {
+	deleteNew(type: string, ind: number): void {
 		this.projectConfigurationLists[type].splice(ind, 1);
 	}
 }

@@ -1,5 +1,4 @@
 import { ModelRowInterface } from 'src/app/interfaces/interfaces';
-import { Utils } from 'src/app/model/utils.class';
 
 export class ModelRow {
 	constructor(
@@ -16,17 +15,32 @@ export class ModelRow {
 	) {}
 
 	fromInterface(mr: ModelRowInterface): ModelRow {
-		this.id: number;
-		this.name: string;
-		this.type: number;
-		this.size: number;
-		this.autoIncrement: boolean;
-		this.nullable: boolean;
-		this.defaultValue: string;
-		this.ref: string;
-		this.comment: string;
-		this.order: number;
+		this.id = mr.id;
+		this.name = mr.name
+		this.type = mr.type;
+		this.size = mr.size;
+		this.autoIncrement = mr.autoIncrement;
+		this.nullable = mr.nullable;
+		this.defaultValue = mr.defaultValue;
+		this.ref = mr.ref;
+		this.comment = mr.comment;
+		this.order = mr.order;
 
 		return this;
+	}
+
+	toInterface(): ModelRowInterface {
+		return {
+			id: this.id,
+			name: this.name,
+			type: this.type,
+			size: this.size,
+			autoIncrement: this.autoIncrement,
+			nullable: this.nullable,
+			defaultValue: this.defaultValue,
+			ref: this.ref,
+			comment: this.comment,
+			order: this.order
+		};
 	}
 }

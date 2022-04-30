@@ -131,20 +131,19 @@ export interface ModelInterface {
 	rows: ModelRowInterface[];
 }
 
-export interface IncludeVersion {
+export interface IncludeVersionInterface {
 	id: number;
 	version: string;
 }
 
-export interface IncludeType {
+export interface IncludeTypeInterface {
 	id: number;
-	versions: IncludeVersion[];
-	selected?: boolean;
+	versions: IncludeVersionInterface[];
 }
 
 export interface IncludeResult {
 	status: string;
-	list: IncludeType[];
+	list: IncludeTypeInterface[];
 }
 
 export interface ProjectDataResult {

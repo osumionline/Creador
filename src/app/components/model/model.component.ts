@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import {
 	ModelInterface,
-	ModelRowInterface,
 	ProjectDataResult
 } from 'src/app/interfaces/interfaces';
+import { Model } from 'src/app/model/model.model';
+import { ModelRow } from 'src/app/model/model-row.model';
+import { ClassMapperService } from 'src/app/services/class-mapper.service';
 
 @Component({
 	selector: 'app-model',
@@ -24,63 +26,47 @@ export class ModelComponent {
 		{id: 9,  name: 'Float'}
 	];
 
-	projectModel: ModelInterface[] = [];
+	projectModel: Model[] = [];
 
-	constructor() {}
-	
-	load(data: ProjectDataResult) {
-		this.projectModel = data.models;
+	constructor(private cms: ClassMapperService) {}
+
+	load(data: ProjectDataResult): void {
+		this.projectModel = this.cms.getModels(data.models);
 	}
-	
-	getModel() {
+
+	getModel(): Model[] {
 		return this.projectModel;
 	}
 
-	addModel() {
-		this.projectModel.push({
-			id: null,
-			name: '',
-			tableName: '',
-			rows: []
-		});
+	addModel(): void {
+		this.projectModel.push(new Model());
 	}
 
-	addModelRow(ind: number, model) {
-		this.projectModel[ind].rows.push({
-			id: null,
-			name: null,
-			type: null,
-			size: null,
-			autoIncrement: false,
-			nullable: true,
-			defaultValue: null,
-			ref: null,
-			comment: null,
-			order: null
-		});
+	addModelRow(ind: number, model: Model): void {
+		this.projectModel[ind].rows.push(new ModelRow());
 		model.open = true;
 	}
 
-	deleteModel(ind: number) {
+	deleteModel(ind: number): void {
 		this.projectModel.splice(ind, 1);
 	}
 
-	deleteModelRow(ind: number, field: number) {
+	deleteModelRow(ind: number, field: number): void {
 		this.projectModel[ind].rows.splice(field, 1);
 	}
 
-	openModel(model) {
+	openModel(model: Model): void {
 		model.open = !model.open;
 	}
 
-	moveRow(ind_model, ind, sent) {
-		let new_order;
+	moveRow(ind_model: number, ind: number, sent: string): void {
+		let new_order: number;
 		if (sent=='down') {
 			if (ind<(this.projectModel[ind_model].rows.length-1)) {
 				new_order= ind +1;
 			}
 			else {
-				return false;
+				return;
 			}
 		}
 		else {
@@ -88,7 +74,7 @@ export class ModelComponent {
 				new_order = ind -1;
 			}
 			else {
-				return false;
+				return;
 			}
 		}
 		const aux = this.projectModel[ind_model].rows[ind];

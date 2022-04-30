@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { ProjectDataResult, IncludeType } from 'src/app/interfaces/interfaces';
-import { ApiService } from 'src/app/services/api.service';
+import {
+	ProjectDataResult
+} from 'src/app/interfaces/interfaces';
+import { IncludeType } from 'src/app/model/include-type.model';
 
 @Component({
 	selector: 'app-includes',
@@ -9,14 +11,16 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class IncludesComponent {
 	includeTypes: IncludeType[] = [];
-	
-	constructor(private as: ApiService) {}
+
+	constructor() {}
 
 	load(data: ProjectDataResult) {
 		for (let i in this.includeTypes) {
 			if (data.includes.indexOf(this.includeTypes[i].id)!=-1) {
 				const opt_ind = data.includes.indexOf(this.includeTypes[i].id);
-				this.includeTypes[i].selected = true;
+				if (opt_ind !== -1) {
+					this.includeTypes[i].selected = true;
+				}
 			}
 		}
 	}

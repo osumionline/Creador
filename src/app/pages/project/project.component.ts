@@ -1,12 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {
-	ProjectInterface,
-	ProjectDataResult,
-	ModelInterface,
-	ModelRowInterface,
-	IncludeType,
-	IncludeVersion
+	ProjectDataResult
 } from 'src/app/interfaces/interfaces';
 import { ApiService }    from 'src/app/services/api.service';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -20,6 +15,8 @@ import { IncludesComponent } from 'src/app/components/includes/includes.componen
 import { Project } from 'src/app/model/project.model';
 import { ProjectConfiguration } from 'src/app/model/project-configuration.model';
 import { ProjectConfigurationLists } from 'src/app/model/project-configuration-lists.model';
+import { Model } from 'src/app/model/model.model';
+import { IncludeType } from 'src/app/model/include-type.model';
 
 @Component({
 	selector: 'app-project',
@@ -52,7 +49,7 @@ export class ProjectComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.as.getIncludes().subscribe(result => {
-			this.includes.setIncludeTypes(result.list);
+			this.includes.setIncludeTypes(this.cms.getIncludeTypes(result.list));
 			this.activatedRoute.params.subscribe((params: Params) => {
 				const id: number = params.id;
 				if (id) {
@@ -77,10 +74,10 @@ export class ProjectComponent implements OnInit {
 			this.dialog.alert({title: 'Error', content: '¡No puedes dejar el nombre del proyecto en blanco!', ok: 'Continuar'}).subscribe(result => {});
 			return;
 		}
-		
+
 		const projectConfiguration: ProjectConfiguration = this.configuration.getConfiguration();
 		const projectConfigurationLists: ProjectConfigurationLists = this.configuration.getConfigurationLists();
-		const projectModel: ModelInterface[] = this.model.getModel();
+		const projectModel: Model[] = this.model.getModel();
 		const includeTypes: IncludeType[] = this.includes.getIncludeTypes();
 
 		if (projectConfiguration.hasDB && (projectConfiguration.dbHost=='' || projectConfiguration.dbName=='' || projectConfiguration.dbUser=='' || (!this.project.id && projectConfiguration.dbPass=='') || projectConfiguration.dbCharset=='' || projectConfiguration.dbCollate=='')) {
@@ -114,7 +111,13 @@ export class ProjectComponent implements OnInit {
 		}
 
 		this.savingProject = true;
-		this.as.saveProject(this.project.toInterface(), projectConfiguration.toInterface(), projectConfigurationLists.toInterface(), projectModel, includeTypes).subscribe(result => {
+		this.as.saveProject(
+			this.project.toInterface(),
+			projectConfiguration.toInterface(),
+			projectConfigurationLists.toInterface(),
+			projectModel.map((item) => { return item.toInterface()}),
+			includeTypes.map((item) => { return item.toInterface()})
+		).subscribe(result => {
 			if (result.status=='ok') {
 				this.dialog.alert({title: 'Info', content: 'El proyecto "'+this.project.name+'" ha sido correctamente guardado.', ok: 'Continuar'}).subscribe(result => {
 					if (this.project.id==null) {

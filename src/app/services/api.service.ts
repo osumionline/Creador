@@ -36,6 +36,10 @@ export class ApiService {
 		return this.http.post<LoginResult>(this.apiUrl + 'register', data);
 	}
 
+	saveSettings(data: RegisterData): Observable<LoginResult> {
+		return this.http.post<LoginResult>(this.apiUrl + 'saveSettings', data);
+	}
+
 	getProjects(): Observable<ProjectResult> {
 		return this.http.post<ProjectResult>(this.apiUrl + 'get-projects', {});
 	}

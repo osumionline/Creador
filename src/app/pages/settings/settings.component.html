@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+	<mat-toolbar-row>
+		<button mat-icon-button routerLink="/main">
+			<mat-icon>arrow_back</mat-icon>
+		</button>
+		<span>Creador - Ajustes</span>
+	</mat-toolbar-row>
+</mat-toolbar>
+
+<form name="frm-settings" (ngSubmit)="saveSettings()">
+	<mat-card class="center-card">
+		<mat-card-header>
+			<mat-card-title>Cambiar ajustes</mat-card-title>
+		</mat-card-header>
+		<mat-card-content class="center-card-fields">
+			<mat-form-field>
+				<mat-label>Nombre de usuario</mat-label>
+				<input matInput [(ngModel)]="settingsData.name" [disabled]="settingsSending" required name="name">
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Contraseña</mat-label>
+				<input matInput type="password" [(ngModel)]="settingsData.pass" [disabled]="settingsSending" required name="pass">
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Confirmar contraseña</mat-label>
+				<input matInput type="password" [(ngModel)]="settingsData.conf" [disabled]="settingsSending" required name="conf">
+			</mat-form-field>
+			<fieldset *ngIf="settingsNameError" class="center-card-error">
+				<legend>Error</legend>
+				El nombre de usuario ya está en uso.
+			</fieldset>
+			<fieldset *ngIf="settingsPassError" class="center-card-error">
+				<legend>Error</legend>
+				Las contraseñas no coinciden.
+			</fieldset>
+		</mat-card-content>
+		<mat-card-actions class="center-card-buttons center-card-buttons-end">
+			<button mat-raised-button color="primary" [disabled]="settingsSending" type="submit">
+				<img *ngIf="settingsSending" src="/assets/loading.svg">
+				Continuar
+			</button>
+		</mat-card-actions>
+	</mat-card>
+</form>

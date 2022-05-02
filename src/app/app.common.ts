@@ -5,12 +5,14 @@ import { LoginComponent }    from 'src/app/pages/login/login.component';
 import { RegisterComponent } from 'src/app/pages/register/register.component';
 import { MainComponent }     from 'src/app/pages/main/main.component';
 import { ProjectComponent }  from 'src/app/pages/project/project.component';
+import { SettingsComponent } from 'src/app/pages/settings/settings.component';
 
 export const PAGES: any[] = [
 	LoginComponent,
 	RegisterComponent,
 	MainComponent,
-	ProjectComponent
+	ProjectComponent,
+	SettingsComponent
 ];
 
 /*

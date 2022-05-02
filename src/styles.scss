@@ -3,6 +3,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.toolbar-button-icon {
+	margin-right: 8px;
+}
+
 .btn-bottom-right {
 	position: fixed !important;
 	bottom: 36px;

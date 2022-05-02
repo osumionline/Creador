@@ -2,6 +2,7 @@ import { Component, OnInit }  from '@angular/core';
 import { Router }             from '@angular/router';
 import { ApiService }         from 'src/app/services/api.service';
 import { ClassMapperService } from 'src/app/services/class-mapper.service';
+import { UserService }        from 'src/app/services/user.service';
 import { Project }            from 'src/app/model/project.model';
 
 @Component({
@@ -17,6 +18,7 @@ export class MainComponent implements OnInit {
 	constructor(
 		private as: ApiService,
 		private cms: ClassMapperService,
+		private us: UserService,
 		private router: Router
 	) {}
 
@@ -31,5 +33,10 @@ export class MainComponent implements OnInit {
 			this.loading   = false;
 			this.loadError = true;
 		});
+	}
+
+	logout(): void {
+		this.us.logout();
+		this.router.navigate(['/']);
 	}
 }

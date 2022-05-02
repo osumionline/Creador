@@ -13,7 +13,7 @@
 		<span>Creador - {{project.name}}</span>
 		<span class="flex-space"></span>
 		<button mat-button (click)="saveProject()" *ngIf="!savingProject && !generatingProject">
-			<mat-icon class="save-button-icon">save</mat-icon>
+			<mat-icon class="toolbar-button-icon">save</mat-icon>
 			<span>Guardar proyecto</span>
 		</button>
 		<img src="assets/loading.svg" class="loading-img" *ngIf="savingProject || generatingProject">

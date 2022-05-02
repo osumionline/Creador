@@ -1,6 +1,15 @@
 <mat-toolbar color="primary">
 	<mat-toolbar-row>
 		<span>Creador</span>
+		<span class="flex-space"></span>
+		<button mat-button>
+			<mat-icon class="toolbar-button-icon">settings</mat-icon>
+			<span>Ajustes</span>
+		</button>
+		<button mat-button (click)="logout()">
+			<mat-icon class="toolbar-button-icon">logout</mat-icon>
+			<span>Salir</span>
+		</button>
 	</mat-toolbar-row>
 </mat-toolbar>
 

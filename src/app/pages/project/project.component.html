@@ -1,12 +1,20 @@
+<div *ngIf="loading" class="loading-bg">
+	<div class="loading-box">
+		<img src="/assets/loading.svg" alt="Cargando...">
+		Cargando...
+	</div>
+</div>
+
 <mat-toolbar color="primary">
 	<mat-toolbar-row>
 		<button mat-icon-button routerLink="/main">
 			<mat-icon>arrow_back</mat-icon>
 		</button>
-		<span>Creador: {{project.name}}</span>
+		<span>Creador - {{project.name}}</span>
 		<span class="flex-space"></span>
-		<button mat-icon-button (click)="saveProject()" *ngIf="!savingProject && !generatingProject">
-			<mat-icon>save</mat-icon>
+		<button mat-button (click)="saveProject()" *ngIf="!savingProject && !generatingProject">
+			<mat-icon class="save-button-icon">save</mat-icon>
+			<span>Guardar proyecto</span>
 		</button>
 		<img src="assets/loading.svg" class="loading-img" *ngIf="savingProject || generatingProject">
 	</mat-toolbar-row>
@@ -22,11 +30,11 @@
 					Proyecto
 				</ng-template>
 				<div class="tab-top-margin center-card-fields">
-					<mat-form-field appearance="outline">
+					<mat-form-field>
 						<mat-label>Nombre del proyecto</mat-label>
 						<input matInput [(ngModel)]="project.name" required name="name">
 					</mat-form-field>
-					<mat-form-field appearance="outline">
+					<mat-form-field>
 						<mat-label>Descripción</mat-label>
 						<textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15" [(ngModel)]="project.description" ></textarea>
 					</mat-form-field>

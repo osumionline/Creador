@@ -24,6 +24,7 @@ import { IncludeType } from 'src/app/model/include-type.model';
 	styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent implements OnInit {
+	loading: boolean = true;
 	project: Project = new Project();
 
 	@ViewChild('configuration', { static: true }) configuration: ConfigurationComponent;
@@ -67,6 +68,7 @@ export class ProjectComponent implements OnInit {
 		this.configuration.load(data);
 		this.model.load(data);
 		this.includes.load(data);
+		this.loading = false;
 	}
 
 	saveProject(): void {

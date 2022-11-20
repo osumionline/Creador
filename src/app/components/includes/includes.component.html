@@ -1,9 +1,14 @@
-<fieldset *ngFor="let inc of includeTypes" class="project-include">
+<fieldset *ngFor="let inc of includeTypes"
+		  class="project-include">
 	<legend>
-		{{inc.name | urldecode}}
-		<a *ngIf="inc.selected" href="#" class="remove-selected-include" (click)="removeSelectedInclude($event,inc)">Quitar</a>
+		{{inc.name}}
+		<a *ngIf="inc.selected"
+		   href="#"
+		   class="remove-selected-include"
+		   (click)="removeSelectedInclude($event,inc)">Quitar</a>
 	</legend>
-	<mat-radio-group aria-label="Select an option" [(ngModel)]="inc.selected">
+	<mat-radio-group aria-label="Select an option"
+					 [(ngModel)]="inc.selected">
 		<mat-list role="list">
 			<mat-list-item *ngFor="let version of inc.versions">
 				<div class="project-include-row">

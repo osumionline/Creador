@@ -1,22 +1,29 @@
-<div *ngIf="loading" class="loading-bg">
+<div *ngIf="loading"
+	 class="loading-bg">
 	<div class="loading-box">
-		<img src="/assets/loading.svg" alt="Cargando...">
+		<img src="/assets/loading.svg"
+			 alt="Cargando...">
 		Cargando...
 	</div>
 </div>
 
 <mat-toolbar color="primary">
 	<mat-toolbar-row>
-		<button mat-icon-button routerLink="/main">
+		<button mat-icon-button
+				routerLink="/main">
 			<mat-icon>arrow_back</mat-icon>
 		</button>
 		<span>Creador - {{project.name}}</span>
 		<span class="flex-space"></span>
-		<button mat-button (click)="saveProject()" *ngIf="!savingProject && !generatingProject">
+		<button mat-button
+				(click)="saveProject()"
+				*ngIf="!savingProject && !generatingProject">
 			<mat-icon class="toolbar-button-icon">save</mat-icon>
 			<span>Guardar proyecto</span>
 		</button>
-		<img src="assets/loading.svg" class="loading-img" *ngIf="savingProject || generatingProject">
+		<img src="assets/loading.svg"
+			 class="loading-img"
+			 *ngIf="savingProject || generatingProject">
 	</mat-toolbar-row>
 </mat-toolbar>
 
@@ -32,11 +39,19 @@
 				<div class="tab-top-margin center-card-fields">
 					<mat-form-field>
 						<mat-label>Nombre del proyecto</mat-label>
-						<input matInput [(ngModel)]="project.name" required name="name">
+						<input matInput
+							   [(ngModel)]="project.name"
+							   required
+							   name="name">
 					</mat-form-field>
 					<mat-form-field>
 						<mat-label>Descripción</mat-label>
-						<textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15" [(ngModel)]="project.description" ></textarea>
+						<textarea matInput
+								  cdkTextareaAutosize
+								  #autosize="cdkTextareaAutosize"
+								  cdkAutosizeMinRows="5"
+								  cdkAutosizeMaxRows="15"
+								  [(ngModel)]="project.description"></textarea>
 					</mat-form-field>
 				</div>
 			</mat-tab>
@@ -75,10 +90,15 @@
 					<p>Fecha de última modificación del proyecto: {{project.updatedAt}}</p>
 					<p *ngIf="project.lastCompilationDate">Fecha de última compilación: {{project.lastCompilationDate}}</p>
 					<p>
-						<button mat-raised-button color="primary" [disabled]="generatingProject" (click)="generateProject()">Compilar proyecto</button>
+						<button mat-raised-button
+								color="primary"
+								[disabled]="generatingProject"
+								(click)="generateProject()">Compilar proyecto</button>
 					</p>
-					<ul class="project-download-tasks" *ngIf="generatingProject || generatedProject">
-						<li class="project-download-working" [ngClass]="{'project-download-done':generateStep>0}">
+					<ul class="project-download-tasks"
+						*ngIf="generatingProject || generatedProject">
+						<li class="project-download-working"
+							[ngClass]="{'project-download-done':generateStep>0}">
 							<mat-icon *ngIf="generateStep>0">check_circle_outline</mat-icon>
 							Crear estructura básica
 						</li>
@@ -100,7 +120,10 @@
 						</li>
 					</ul>
 					<p>
-						<button mat-raised-button color="primary" [disabled]="generatingProject || !project.lastCompilationDate" (click)="downloadProject()">Descargar proyecto</button>
+						<button mat-raised-button
+								color="primary"
+								[disabled]="generatingProject || !project.lastCompilationDate"
+								(click)="downloadProject()">Descargar proyecto</button>
 					</p>
 				</div>
 			</mat-tab>
@@ -113,7 +136,10 @@
 				<div class="project-delete">
 					¿Estás seguro de querer borrar este proyecto? Esta es una acción irreversible.
 					<br>
-					<button mat-raised-button color="warn" [disabled]="deletingProject" (click)="deleteProject()">
+					<button mat-raised-button
+							color="warn"
+							[disabled]="deletingProject"
+							(click)="deleteProject()">
 						<mat-icon class="tab-icon">delete_forever</mat-icon>
 						Confirmar
 					</button>

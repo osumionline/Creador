@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://apicreador.osumi.es/api/'
+  apiUrl: "https://apicreador.osumi.dev/api/",
 };

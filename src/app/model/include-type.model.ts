@@ -1,4 +1,7 @@
-import { IncludeTypeInterface } from "src/app/interfaces/interfaces";
+import {
+  IncludeTypeInterface,
+  IncludeVersionInterface,
+} from "src/app/interfaces/interfaces";
 import { IncludeVersion } from "src/app/model/include-version.model";
 import { Utils } from "src/app/model/utils.class";
 
@@ -14,9 +17,11 @@ export class IncludeType {
   fromInterface(it: IncludeTypeInterface): IncludeType {
     this.id = it.id;
     this.name = Utils.urldecode(it.name);
-    this.versions = it.versions.map((item) => {
-      return new IncludeVersion().fromInterface(item);
-    });
+    this.versions = it.versions.map(
+      (item: IncludeVersionInterface): IncludeVersion => {
+        return new IncludeVersion().fromInterface(item);
+      }
+    );
 
     return this;
   }
@@ -25,7 +30,9 @@ export class IncludeType {
     return {
       id: this.id,
       name: Utils.urlencode(this.name),
-      versions: this.versions.map((item) => item.toInterface()),
+      versions: this.versions.map(
+        (item: IncludeVersion): IncludeVersionInterface => item.toInterface()
+      ),
     };
   }
 }

@@ -1,0 +1,113 @@
+<div class="project-header">
+  <button mat-raised-button
+          color="primary"
+          (click)="addModel()">Añadir modelo</button>
+</div>
+
+<mat-card class="project-card"
+          *ngFor="let model of projectModel; let i = index">
+  <mat-card-content>
+    <div class="project-model-header">
+      <mat-form-field class="field-key">
+        <mat-label>Nombre</mat-label>
+        <input matInput
+               [(ngModel)]="model.name"
+               name="model_name">
+      </mat-form-field>
+      <mat-form-field class="field-key">
+        <mat-label>Nombre de la tabla</mat-label>
+        <input matInput
+               [(ngModel)]="model.tableName"
+               name="model_table_name">
+      </mat-form-field>
+      <button mat-raised-button
+              color="warn"
+              (click)="deleteModel(i)">Borrar</button>
+      <button mat-raised-button
+              color="primary"
+              (click)="addModelRow(i, model)">Añadir campo</button>
+    </div>
+    <div class="project-model-rows-title">
+      <button mat-button
+              (click)="openModel(model)">
+        <mat-icon class="project-model-rows-icon"
+                  [ngClass]="{'project-model-rows-icon-open':model.open}">chevron_right</mat-icon>
+        Campos ({{model.rows.length}})
+      </button>
+    </div>
+    <div class="project-model-rows"
+         [ngClass]="{'project-model-rows-open':model.open}">
+      <div class="project-model-row"
+           *ngFor="let row of model.rows; let j = index">
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input matInput
+                 [(ngModel)]="row.name"
+                 name="row_name"
+                 class="project-model-row-name">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Tipo</mat-label>
+          <mat-select [(value)]="row.type">
+            <mat-option *ngFor="let opt of modelRowTypes"
+                        [value]="opt.id">{{opt.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="row.type==5">
+          <mat-label>Tamaño</mat-label>
+          <input matInput
+                 [(ngModel)]="row.size"
+                 name="row_size">
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="row.autoIncrement"
+                      *ngIf="row.type==1">Auto increment</mat-checkbox>
+        <mat-checkbox [(ngModel)]="row.nullable"
+                      *ngIf="row.type==3 || row.type==4 || row.type==5 || row.type==6 || row.type==8 || row.type==9">Null?</mat-checkbox>
+        <mat-form-field *ngIf="row.type==4 || row.type==5 || row.type==6 || row.type==8 || row.type==9">
+          <mat-label>Valor por defecto</mat-label>
+          <input matInput
+                 [(ngModel)]="row.defaultValue"
+                 name="row_default">
+        </mat-form-field>
+        <mat-form-field *ngIf="row.type==7">
+          <mat-label>Valor por defecto</mat-label>
+          <mat-select [(value)]="row.defaultValue">
+            <mat-option [value]="true">True</mat-option>
+            <mat-option [value]="false">False</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Referencia</mat-label>
+          <input matInput
+                 [(ngModel)]="row.ref"
+                 name="row_ref">
+        </mat-form-field>
+        <button mat-raised-button
+                color="warn"
+                class="project-model-row-delete"
+                (click)="deleteModelRow(i, j)">Borrar</button>
+        <span class="project-model-row-delete">
+          <button mat-icon-button
+                  (click)="moveRow(i, j, 'down')">
+            <mat-icon>expand_more</mat-icon>
+          </button>
+          <button mat-icon-button
+                  (click)="moveRow(i, j, 'up')">
+            <mat-icon>expand_less</mat-icon>
+          </button>
+        </span>
+        <mat-form-field class="project-model-comment">
+          <mat-label>Comentario</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2"
+                    cdkAutosizeMaxRows="15"
+                    [(ngModel)]="row.comment"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="project-model-row"
+           *ngIf="model.rows.length==0">Todavía no hay ningún campo en este modelo.</div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,22 +1,19 @@
-import { IncludeVersionInterface } from 'src/app/interfaces/interfaces';
+import { IncludeVersionInterface } from "src/app/interfaces/interfaces";
 
 export class IncludeVersion {
-	constructor(
-		public id: number = null,
-		public version: string = null
-	) {}
+  constructor(public id: number = null, public version: string = null) {}
 
-	fromInterface(iv: IncludeVersionInterface): IncludeVersion {
-		this.id = iv.id;
-		this.version = iv.version;
+  fromInterface(iv: IncludeVersionInterface): IncludeVersion {
+    this.id = iv.id;
+    this.version = iv.version;
 
-		return  this;
-	}
+    return this;
+  }
 
-	toInterface(): IncludeVersionInterface {
-		return {
-			id: this.id,
-			version: this.version
-		};
-	}
+  toInterface(): IncludeVersionInterface {
+    return {
+      id: this.id,
+      version: this.version,
+    };
+  }
 }

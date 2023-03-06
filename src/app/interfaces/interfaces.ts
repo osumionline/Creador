@@ -111,6 +111,11 @@ export interface ConfigurationRow {
   dir: boolean;
 }
 
+export interface ModelRowTypeInterface {
+  id: number;
+  name: string;
+}
+
 export interface ModelRowInterface {
   id: number;
   name: string;

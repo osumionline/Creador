@@ -1,64 +1,52 @@
-import { Injectable } from '@angular/core';
-import { User } from 'src/app/model/user.model';
-import { Project } from 'src/app/model/project.model';
-import { Model } from 'src/app/model/model.model';
-import { IncludeType } from 'src/app/model/include-type.model';
+import { Injectable } from "@angular/core";
 import {
-	UserInterface,
-	ProjectInterface,
-	ModelInterface,
-	IncludeTypeInterface
-} from 'src/app/interfaces/interfaces';
+  IncludeTypeInterface,
+  ModelInterface,
+  ProjectInterface,
+  UserInterface,
+} from "src/app/interfaces/interfaces";
+import { IncludeType } from "src/app/model/include-type.model";
+import { Model } from "src/app/model/model.model";
+import { Project } from "src/app/model/project.model";
+import { User } from "src/app/model/user.model";
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: "root",
 })
 export class ClassMapperService {
-	constructor() {}
+  constructor() {}
 
-	getUser(u: UserInterface): User {
-		return new User().fromInterface(u);
-	}
+  getUser(u: UserInterface): User {
+    return new User().fromInterface(u);
+  }
 
-	getProjects(ps: ProjectInterface[]): Project[] {
-		const projects: Project[] = [];
+  getProjects(ps: ProjectInterface[]): Project[] {
+    return ps.map((p: ProjectInterface): Project => {
+      return this.getProject(p);
+    });
+  }
 
-		for (let p of ps) {
-			projects.push(this.getProject(p));
-		}
+  getProject(p: ProjectInterface): Project {
+    return new Project().fromInterface(p);
+  }
 
-		return projects;
-	}
+  getModels(ms: ModelInterface[]): Model[] {
+    return ms.map((m: ModelInterface): Model => {
+      return this.getModel(m);
+    });
+  }
 
-	getProject(p: ProjectInterface): Project {
-		return new Project().fromInterface(p);
-	}
+  getModel(m: ModelInterface): Model {
+    return new Model().fromInterface(m);
+  }
 
-	getModels(ms: ModelInterface[]): Model[] {
-		const models: Model[] = [];
+  getIncludeTypes(its: IncludeTypeInterface[]): IncludeType[] {
+    return its.map((it: IncludeTypeInterface): IncludeType => {
+      return this.getIncludeType(it);
+    });
+  }
 
-		for (let m of ms) {
-			models.push(this.getModel(m));
-		}
-
-		return models;
-	}
-
-	getModel(m: ModelInterface): Model {
-		return new Model().fromInterface(m);
-	}
-
-	getIncludeTypes(its: IncludeTypeInterface[]): IncludeType[] {
-		const includeTypes: IncludeType[] = [];
-
-		for (let it of its) {
-			includeTypes.push(this.getIncludeType(it));
-		}
-
-		return includeTypes;
-	}
-
-	getIncludeType(it: IncludeTypeInterface): IncludeType {
-		return new IncludeType().fromInterface(it);
-	}
+  getIncludeType(it: IncludeTypeInterface): IncludeType {
+    return new IncludeType().fromInterface(it);
+  }
 }

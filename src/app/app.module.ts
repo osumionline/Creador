@@ -11,21 +11,20 @@ import { AppRoutingModule } from "src/app/app-routing.module";
 import { AppComponent } from "src/app/app.component";
 import { TokenInterceptor } from "src/app/interceptors/token.interceptor";
 
-import { COMPONENTS, MATERIAL, PAGES, PIPES, SERVICES } from "./app.common";
+import { SERVICES } from "./app.common";
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: "outline",
 };
 
 @NgModule({
-  declarations: [AppComponent, ...PAGES, ...COMPONENTS, ...PIPES],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    ...MATERIAL,
   ],
   providers: [
     ...SERVICES,

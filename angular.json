@@ -72,16 +72,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-		  "options": {
-            "browserTarget": "Creador:build",
-            "port": 5200
+      "options": {
+        "port": 5200,
+            "buildTarget": "Creador:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Creador:build:production"
+              "buildTarget": "Creador:build:production"
             },
             "development": {
-              "browserTarget": "Creador:build:development"
+              "buildTarget": "Creador:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Creador:build"
+            "buildTarget": "Creador:build"
           }
         },
         "test": {

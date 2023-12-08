@@ -1,13 +1,18 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatSelectModule } from "@angular/material/select";
 import {
   ModelRowTypeInterface,
   ProjectDataResult,
 } from "src/app/interfaces/interfaces";
 import { ModelRow } from "src/app/model/model-row.model";
 import { Model } from "src/app/model/model.model";
-import { MaterialModule } from "src/app/modules/material/material.module";
 import { ClassMapperService } from "src/app/services/class-mapper.service";
 
 @Component({
@@ -15,7 +20,16 @@ import { ClassMapperService } from "src/app/services/class-mapper.service";
   selector: "app-model",
   templateUrl: "./model.component.html",
   styleUrls: ["./../../../pages/project/project.component.scss"],
-  imports: [CommonModule, FormsModule, MaterialModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+  ],
 })
 export class ModelComponent {
   modelRowTypes: ModelRowTypeInterface[] = [

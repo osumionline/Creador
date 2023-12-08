@@ -1,6 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import {
   ConfigurationRow,
   NewConfigurationItem,
@@ -9,14 +13,20 @@ import {
 import { KeyValue } from "src/app/model/key-value.model";
 import { ProjectConfigurationLists } from "src/app/model/project-configuration-lists.model";
 import { ProjectConfiguration } from "src/app/model/project-configuration.model";
-import { MaterialModule } from "src/app/modules/material/material.module";
 
 @Component({
   standalone: true,
   selector: "app-configuration",
   templateUrl: "./configuration.component.html",
   styleUrls: ["./../../../pages/project/project.component.scss"],
-  imports: [CommonModule, MaterialModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatSlideToggleModule,
+  ],
 })
 export class ConfigurationComponent {
   projectConfiguration: ProjectConfiguration = new ProjectConfiguration();

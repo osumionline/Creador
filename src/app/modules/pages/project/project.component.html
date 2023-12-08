@@ -1,11 +1,12 @@
-<div *ngIf="loading"
-	 class="loading-bg">
+@if (loading) {
+<div class="loading-bg">
 	<div class="loading-box">
 		<img src="/assets/loading.svg"
 			 alt="Cargando...">
 		Cargando...
 	</div>
 </div>
+}
 
 <mat-toolbar color="primary">
 	<mat-toolbar-row>
@@ -15,15 +16,18 @@
 		</button>
 		<span>Creador - {{project.name}}</span>
 		<span class="flex-space"></span>
+		@if (!savingProject && !generatingProject) {
 		<button mat-button
-				(click)="saveProject()"
-				*ngIf="!savingProject && !generatingProject">
+				(click)="saveProject()">
 			<mat-icon class="toolbar-button-icon">save</mat-icon>
 			<span>Guardar proyecto</span>
 		</button>
+		}
+		@if (savingProject || generatingProject) {
 		<img src="assets/loading.svg"
 			 class="loading-img"
-			 *ngIf="savingProject || generatingProject">
+			 alt="">
+		}
 	</mat-toolbar-row>
 </mat-toolbar>
 
@@ -80,7 +84,8 @@
 				<app-includes #includes></app-includes>
 			</mat-tab>
 
-			<mat-tab *ngIf="project.id">
+			@if (project.id) {
+			<mat-tab>
 				<ng-template mat-tab-label>
 					<mat-icon class="tab-icon">cloud_download</mat-icon>
 					Descargar
@@ -88,37 +93,50 @@
 				<div class="project-download">
 					<h3>Descargar proyecto</h3>
 					<p>Fecha de última modificación del proyecto: {{project.updatedAt}}</p>
-					<p *ngIf="project.lastCompilationDate">Fecha de última compilación: {{project.lastCompilationDate}}</p>
+					@if (project.lastCompilationDate) {
+					<p>Fecha de última compilación: {{project.lastCompilationDate}}</p>
+					}
 					<p>
 						<button mat-raised-button
 								color="primary"
 								[disabled]="generatingProject"
 								(click)="generateProject()">Compilar proyecto</button>
 					</p>
-					<ul class="project-download-tasks"
-						*ngIf="generatingProject || generatedProject">
+					@if (generatingProject || generatedProject) {
+					<ul class="project-download-tasks">
 						<li class="project-download-working"
 							[ngClass]="{'project-download-done':generateStep>0}">
-							<mat-icon *ngIf="generateStep>0">check_circle_outline</mat-icon>
+							@if (generateStep>0) {
+							<mat-icon>check_circle_outline</mat-icon>
+							}
 							Crear estructura básica
 						</li>
-						<li [ngClass]="{'project-download-working':generateStep==1, 'project-download-done':generateStep>1}">
-							<mat-icon *ngIf="generateStep>1">check_circle_outline</mat-icon>
+						<li [ngClass]="{'project-download-working': generateStep === 1, 'project-download-done':generateStep>1}">
+							@if (generateStep>1) {
+							<mat-icon>check_circle_outline</mat-icon>
+							}
 							Crear archivo de configuración
 						</li>
-						<li [ngClass]="{'project-download-working':generateStep==2, 'project-download-done':generateStep>2}">
-							<mat-icon *ngIf="generateStep>2">check_circle_outline</mat-icon>
+						<li [ngClass]="{'project-download-working': generateStep === 2, 'project-download-done':generateStep>2}">
+							@if (generateStep>2) {
+							<mat-icon>check_circle_outline</mat-icon>
+							}
 							Crear modelos
 						</li>
-						<li [ngClass]="{'project-download-working':generateStep==3, 'project-download-done':generateStep>3}">
-							<mat-icon *ngIf="generateStep>3">check_circle_outline</mat-icon>
+						<li [ngClass]="{'project-download-working': generateStep === 3, 'project-download-done':generateStep>3}">
+							@if (generateStep>3) {
+							<mat-icon>check_circle_outline</mat-icon>
+							}
 							Añadir archivos
 						</li>
-						<li [ngClass]="{'project-download-working':generateStep==4, 'project-download-done':generateStep>4}">
-							<mat-icon *ngIf="generateStep>4">check_circle_outline</mat-icon>
+						<li [ngClass]="{'project-download-working': generateStep === 4, 'project-download-done':generateStep>4}">
+							@if (generateStep>4) {
+							<mat-icon>check_circle_outline</mat-icon>
+							}
 							Comprimir en Zip
 						</li>
 					</ul>
+					}
 					<p>
 						<button mat-raised-button
 								color="primary"
@@ -127,8 +145,10 @@
 					</p>
 				</div>
 			</mat-tab>
+			}
 
-			<mat-tab *ngIf="project.id && !generatingProject">
+			@if (project.id && !generatingProject) {
+			<mat-tab>
 				<ng-template mat-tab-label>
 					<mat-icon class="tab-icon">delete_forever</mat-icon>
 					Borrar
@@ -145,6 +165,7 @@
 					</button>
 				</div>
 			</mat-tab>
+			}
 
 		</mat-tab-group>
 	</mat-card-content>

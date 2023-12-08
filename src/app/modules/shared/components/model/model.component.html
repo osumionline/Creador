@@ -4,8 +4,8 @@
           (click)="addModel()">Añadir modelo</button>
 </div>
 
-<mat-card class="project-card"
-          *ngFor="let model of projectModel; let i = index">
+@for (model of projectModel; track model.id; let i = $index) {
+<mat-card class="project-card">
   <mat-card-content>
     <div class="project-model-header">
       <mat-form-field class="field-key">
@@ -37,8 +37,8 @@
     </div>
     <div class="project-model-rows"
          [ngClass]="{'project-model-rows-open':model.open}">
-      <div class="project-model-row"
-           *ngFor="let row of model.rows; let j = index">
+      @for (row of model.rows; track row.id; let j = $index) {
+      <div class="project-model-row">
         <mat-form-field>
           <mat-label>Nombre</mat-label>
           <input matInput
@@ -49,33 +49,42 @@
         <mat-form-field>
           <mat-label>Tipo</mat-label>
           <mat-select [(value)]="row.type">
-            <mat-option *ngFor="let opt of modelRowTypes"
-                        [value]="opt.id">{{opt.name}}</mat-option>
+            @for (opt of modelRowTypes; track opt.id) {
+            <mat-option [value]="opt.id">{{opt.name}}</mat-option>
+            }
           </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="row.type==5">
+        @if (row.type === 5) {
+        <mat-form-field>
           <mat-label>Tamaño</mat-label>
           <input matInput
                  [(ngModel)]="row.size"
                  name="row_size">
         </mat-form-field>
-        <mat-checkbox [(ngModel)]="row.autoIncrement"
-                      *ngIf="row.type==1">Auto increment</mat-checkbox>
-        <mat-checkbox [(ngModel)]="row.nullable"
-                      *ngIf="row.type==3 || row.type==4 || row.type==5 || row.type==6 || row.type==8 || row.type==9">Null?</mat-checkbox>
-        <mat-form-field *ngIf="row.type==4 || row.type==5 || row.type==6 || row.type==8 || row.type==9">
+        }
+        @if (row.type === 1) {
+        <mat-checkbox [(ngModel)]="row.autoIncrement">Auto increment</mat-checkbox>
+        }
+        @if (row.type === 3 || row.type === 4 || row.type === 5 || row.type === 6 || row.type === 8 || row.type === 9) {
+        <mat-checkbox [(ngModel)]="row.nullable">Null?</mat-checkbox>
+        }
+        @if (row.type === 4 || row.type === 5 || row.type === 6 || row.type === 8 || row.type === 9) {
+        <mat-form-field>
           <mat-label>Valor por defecto</mat-label>
           <input matInput
                  [(ngModel)]="row.defaultValue"
                  name="row_default">
         </mat-form-field>
-        <mat-form-field *ngIf="row.type==7">
+        }
+        @if (row.type === 7) {
+        <mat-form-field>
           <mat-label>Valor por defecto</mat-label>
           <mat-select [(value)]="row.defaultValue">
             <mat-option [value]="true">True</mat-option>
             <mat-option [value]="false">False</mat-option>
           </mat-select>
         </mat-form-field>
+        }
         <mat-form-field>
           <mat-label>Referencia</mat-label>
           <input matInput
@@ -106,8 +115,11 @@
                     [(ngModel)]="row.comment"></textarea>
         </mat-form-field>
       </div>
-      <div class="project-model-row"
-           *ngIf="model.rows.length==0">Todavía no hay ningún campo en este modelo.</div>
+      }
+      @empty {
+      <div class="project-model-row">Todavía no hay ningún campo en este modelo.</div>
+      }
     </div>
   </mat-card-content>
 </mat-card>
+}

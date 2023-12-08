@@ -155,19 +155,21 @@
 				color="primary"
 				class="field-button"
 				(click)="addNew('css')"
-				[disabled]="newItem.css==''">Añadir</button>
+				[disabled]="newItem.css === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		<div class="project-list-item"
-			 *ngFor="let item of projectConfigurationLists.css; let i = index">
+		@for (item of projectConfigurationLists.css; track item; let i = $index) {
+		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
 					  (click)="deleteNew('css', i)">close</mat-icon>
 		</div>
-		<div class="project-list-item"
-			 *ngIf="projectConfigurationLists.css.length==0">
+		}
+		@empty {
+		<div class="project-list-item">
 			No hay ningún elemento.
 		</div>
+		}
 	</div>
 	<div>
 		<mat-form-field class="field-value">
@@ -180,19 +182,21 @@
 				color="primary"
 				class="field-button"
 				(click)="addNew('cssExt')"
-				[disabled]="newItem.cssExt==''">Añadir</button>
+				[disabled]="newItem.cssExt === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		<div class="project-list-item"
-			 *ngFor="let item of projectConfigurationLists.cssExt; let i = index">
+		@for (item of projectConfigurationLists.cssExt; track item; let i = $index) {
+		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
 					  (click)="deleteNew('cssExt', i)">close</mat-icon>
 		</div>
-		<div class="project-list-item"
-			 *ngIf="projectConfigurationLists.cssExt.length==0">
+		}
+		@empty {
+		<div class="project-list-item">
 			No hay ningún elemento.
 		</div>
+		}
 	</div>
 </div>
 <div class="project-line"
@@ -214,19 +218,21 @@
 				color="primary"
 				class="field-button"
 				(click)="addNew('js')"
-				[disabled]="newItem.js==''">Añadir</button>
+				[disabled]="newItem.js === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		<div class="project-list-item"
-			 *ngFor="let item of projectConfigurationLists.js; let i = index">
+		@for (item of projectConfigurationLists.js; track item; let i = $index) {
+		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
 					  (click)="deleteNew('js', i)">close</mat-icon>
 		</div>
-		<div class="project-list-item"
-			 *ngIf="projectConfigurationLists.js.length==0">
+		}
+		@empty {
+		<div class="project-list-item">
 			No hay ningún elemento.
 		</div>
+		}
 	</div>
 	<div>
 		<mat-form-field class="field-value">
@@ -239,19 +245,21 @@
 				color="primary"
 				class="field-button"
 				(click)="addNew('jsExt')"
-				[disabled]="newItem.jsExt==''">Añadir</button>
+				[disabled]="newItem.jsExt === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		<div class="project-list-item"
-			 *ngFor="let item of projectConfigurationLists.jsExt; let i = index">
+		@for (item of projectConfigurationLists.jsExt; track item; let i = $index) {
+		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
 					  (click)="deleteNew('jsExt', i)">close</mat-icon>
 		</div>
-		<div class="project-list-item"
-			 *ngIf="projectConfigurationLists.jsExt.length==0">
+		}
+		@empty {
+		<div class="project-list-item">
 			No hay ningún elemento.
 		</div>
+		}
 	</div>
 </div>
 <div class="project-line"
@@ -273,19 +281,21 @@
 				color="primary"
 				class="field-button"
 				(click)="addNew('libs')"
-				[disabled]="newItem.libs==''">Añadir</button>
+				[disabled]="newItem.libs === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		<div class="project-list-item"
-			 *ngFor="let item of projectConfigurationLists.libs; let i = index">
+		@for (item of projectConfigurationLists.libs; track item; let i = $index) {
+		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
 					  (click)="deleteNew('libs', i)">close</mat-icon>
 		</div>
-		<div class="project-list-item"
-			 *ngIf="projectConfigurationLists.libs.length==0">
+		}
+		@empty {
+		<div class="project-list-item">
 			No hay ningún elemento.
 		</div>
+		}
 	</div>
 </div>
 <div class="project-line"
@@ -313,19 +323,21 @@
 				color="primary"
 				class="field-button"
 				(click)="addNew('extra')"
-				[disabled]="newItem.extraKey=='' || newItem.extraValue==''">Añadir</button>
+				[disabled]="newItem.extraKey === '' || newItem.extraValue === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		<div class="project-list-item"
-			 *ngFor="let item of projectConfigurationLists.extra; let i = index">
+		@for (item of projectConfigurationLists.extra; track item; let i = $index) {
+		<div class="project-list-item">
 			<strong>{{item.key}}</strong> {{item.value}}
 			<mat-icon class="project-list-item-icon"
 					  (click)="deleteNew('extra', i)">close</mat-icon>
 		</div>
-		<div class="project-list-item"
-			 *ngIf="projectConfigurationLists.extra.length==0">
+		}
+		@empty {
+		<div class="project-list-item">
 			No hay ningún elemento.
 		</div>
+		}
 	</div>
 </div>
 <div class="project-line"
@@ -353,18 +365,20 @@
 				color="primary"
 				class="field-button"
 				(click)="addNew('dir')"
-				[disabled]="newItem.dirKey=='' || newItem.dirValue==''">Añadir</button>
+				[disabled]="newItem.dirKey === '' || newItem.dirValue === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		<div class="project-list-item"
-			 *ngFor="let item of projectConfigurationLists.dir; let i = index">
+		@for (item of projectConfigurationLists.dir; track item; let i = $index) {
+		<div class="project-list-item">
 			<strong>{{item.key}}</strong> {{item.value}}
 			<mat-icon class="project-list-item-icon"
 					  (click)="deleteNew('dir', i)">close</mat-icon>
 		</div>
-		<div class="project-list-item"
-			 *ngIf="projectConfigurationLists.dir.length==0">
+		}
+		@empty {
+		<div class="project-list-item">
 			No hay ningún elemento.
 		</div>
+		}
 	</div>
 </div>

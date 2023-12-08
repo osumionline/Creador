@@ -1,9 +1,11 @@
-import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
+import { MatToolbarModule } from "@angular/material/toolbar";
 import { Router, RouterModule } from "@angular/router";
 import { ProjectResult } from "src/app/interfaces/interfaces";
 import { Project } from "src/app/model/project.model";
-import { MaterialModule } from "src/app/modules/material/material.module";
 import { ApiService } from "src/app/services/api.service";
 import { ClassMapperService } from "src/app/services/class-mapper.service";
 import { UserService } from "src/app/services/user.service";
@@ -12,7 +14,13 @@ import { UserService } from "src/app/services/user.service";
   standalone: true,
   selector: "app-main",
   templateUrl: "./main.component.html",
-  imports: [CommonModule, MaterialModule, RouterModule],
+  imports: [
+    RouterModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+  ],
 })
 export default class MainComponent implements OnInit {
   projects: Project[] = [];
@@ -34,7 +42,7 @@ export default class MainComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error: any): void => {
+      (error): void => {
         this.loading = false;
         this.loadError = true;
       }

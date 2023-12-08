@@ -41,24 +41,28 @@
 					   required
 					   name="conf">
 			</mat-form-field>
-			<fieldset *ngIf="settingsNameError"
-					  class="center-card-error">
+			@if (settingsNameError) {
+			<fieldset class="center-card-error">
 				<legend>Error</legend>
 				El nombre de usuario ya está en uso.
 			</fieldset>
-			<fieldset *ngIf="settingsPassError"
-					  class="center-card-error">
+			}
+			@if (settingsPassError) {
+			<fieldset class="center-card-error">
 				<legend>Error</legend>
 				Las contraseñas no coinciden.
 			</fieldset>
+			}
 		</mat-card-content>
 		<mat-card-actions class="center-card-buttons center-card-buttons-end">
 			<button mat-raised-button
 					color="primary"
 					[disabled]="settingsSending"
 					type="submit">
-				<img *ngIf="settingsSending"
-					 src="/assets/loading.svg">
+				@if (settingsSending) {
+				<img src="/assets/loading.svg"
+					 alt="">
+				}
 				Continuar
 			</button>
 		</mat-card-actions>

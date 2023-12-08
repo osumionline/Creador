@@ -15,22 +15,29 @@
 	</mat-toolbar-row>
 </mat-toolbar>
 
-<div class="loading"
-	 *ngIf="loading">Cargando...</div>
+@if (loading) {
+<div class="loading">Cargando...</div>
+}
 
-<mat-nav-list *ngIf="!loading && !loadError">
+@if (!loading && !loadError) {
+<mat-nav-list>
+	@for (project of projects; track project.id) {
 	<a mat-list-item
-	   *ngFor="let project of projects"
 	   [routerLink]="['/project', project.id, project.slug]">
 		<div matListItemTitle> {{project.name}} </div>
 	</a>
-	<mat-list-item *ngIf="projects.length==0">
+	}
+	@empty {
+	<mat-list-item>
 		¡Todavía no hay ningún proyecto! Añade el primero pulsando el icono "+".
 	</mat-list-item>
+	}
 </mat-nav-list>
+}
 
-<div class="loading"
-	 *ngIf="!loading && loadError">Ocurrió un error al cargar los proyectos.</div>
+@if (!loading && loadError) {
+<div class="loading">Ocurrió un error al cargar los proyectos.</div>
+}
 
 <button mat-fab
 		class="btn-bottom-right"

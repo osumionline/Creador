@@ -2,10 +2,10 @@
 	 (click)="deploy('general')">
 	<span>General</span>
 	<mat-icon class="project-line-icon"
-			  [ngClass]="{'project-line-icon-rotate': row.general}">expand_more</mat-icon>
+			  [class]="{'project-line-icon-rotate': row.general}">expand_more</mat-icon>
 </div>
 <div class="project-sub-line"
-	 [ngClass]="{'project-sub-line-deployed': row.general}">
+	 [class]="{'project-sub-line-deployed': row.general}">
 	<mat-form-field>
 		<mat-label>Base URL</mat-label>
 		<input matInput
@@ -35,10 +35,10 @@
 	 (click)="deploy('db')">
 	<span>Base de datos</span>
 	<mat-icon class="project-line-icon"
-			  [ngClass]="{'project-line-icon-rotate': row.db}">expand_more</mat-icon>
+			  [class]="{'project-line-icon-rotate': row.db}">expand_more</mat-icon>
 </div>
 <div class="project-sub-line"
-	 [ngClass]="{'project-sub-line-deployed': row.db}">
+	 [class]="{'project-sub-line-deployed': row.db}">
 	<div class="project-line-title">
 		<span>Acceso a Base de datos</span>
 		<mat-slide-toggle [checked]="projectConfiguration.hasDB"
@@ -92,10 +92,10 @@
 	 (click)="deploy('cookies')">
 	<span>Cookies</span>
 	<mat-icon class="project-line-icon"
-			  [ngClass]="{'project-line-icon-rotate': row.cookies}">expand_more</mat-icon>
+			  [class]="{'project-line-icon-rotate': row.cookies}">expand_more</mat-icon>
 </div>
 <div class="project-sub-line"
-	 [ngClass]="{'project-sub-line-deployed': row.cookies}">
+	 [class]="{'project-sub-line-deployed': row.cookies}">
 	<mat-form-field>
 		<mat-label>Prefijo de las cookies</mat-label>
 		<input matInput
@@ -113,10 +113,10 @@
 	 (click)="deploy('errors')">
 	<span>Errores</span>
 	<mat-icon class="project-line-icon"
-			  [ngClass]="{'project-line-icon-rotate': row.errors}">expand_more</mat-icon>
+			  [class]="{'project-line-icon-rotate': row.errors}">expand_more</mat-icon>
 </div>
 <div class="project-sub-line"
-	 [ngClass]="{'project-sub-line-deployed': row.errors}">
+	 [class]="{'project-sub-line-deployed': row.errors}">
 	<mat-form-field>
 		<mat-label>URL página de error 403</mat-label>
 		<input matInput
@@ -140,10 +140,10 @@
 	 (click)="deploy('css')">
 	<span>CSS</span>
 	<mat-icon class="project-line-icon"
-			  [ngClass]="{'project-line-icon-rotate': row.css}">expand_more</mat-icon>
+			  [class]="{'project-line-icon-rotate': row.css}">expand_more</mat-icon>
 </div>
 <div class="project-sub-line"
-	 [ngClass]="{'project-sub-line-deployed': row.css}">
+	 [class]="{'project-sub-line-deployed': row.css}">
 	<div>
 		<mat-form-field class="field-value">
 			<mat-label>CSS</mat-label>
@@ -151,7 +151,7 @@
 				   [(ngModel)]="newItem.css"
 				   name="new_css">
 		</mat-form-field>
-		<button mat-raised-button
+		<button mat-flat-button
 				color="primary"
 				class="field-button"
 				(click)="addNew('css')"
@@ -178,7 +178,7 @@
 				   [(ngModel)]="newItem.cssExt"
 				   name="new_css_ext">
 		</mat-form-field>
-		<button mat-raised-button
+		<button mat-flat-button
 				color="primary"
 				class="field-button"
 				(click)="addNew('cssExt')"
@@ -203,10 +203,10 @@
 	 (click)="deploy('js')">
 	<span>JS</span>
 	<mat-icon class="project-line-icon"
-			  [ngClass]="{'project-line-icon-rotate': row.js}">expand_more</mat-icon>
+			  [class]="{'project-line-icon-rotate': row.js}">expand_more</mat-icon>
 </div>
 <div class="project-sub-line"
-	 [ngClass]="{'project-sub-line-deployed': row.js}">
+	 [class]="{'project-sub-line-deployed': row.js}">
 	<div>
 		<mat-form-field class="field-value">
 			<mat-label>JS</mat-label>
@@ -214,7 +214,7 @@
 				   [(ngModel)]="newItem.js"
 				   name="new_js">
 		</mat-form-field>
-		<button mat-raised-button
+		<button mat-flat-button
 				color="primary"
 				class="field-button"
 				(click)="addNew('js')"
@@ -241,7 +241,7 @@
 				   [(ngModel)]="newItem.jsExt"
 				   name="new_js_ext">
 		</mat-form-field>
-		<button mat-raised-button
+		<button mat-flat-button
 				color="primary"
 				class="field-button"
 				(click)="addNew('jsExt')"
@@ -266,10 +266,10 @@
 	 (click)="deploy('libs')">
 	<span>Librerías</span>
 	<mat-icon class="project-line-icon"
-			  [ngClass]="{'project-line-icon-rotate': row.libs}">expand_more</mat-icon>
+			  [class]="{'project-line-icon-rotate': row.libs}">expand_more</mat-icon>
 </div>
 <div class="project-sub-line"
-	 [ngClass]="{'project-sub-line-deployed': row.libs}">
+	 [class]="{'project-sub-line-deployed': row.libs}">
 	<div>
 		<mat-form-field class="field-value">
 			<mat-label>Librería</mat-label>
@@ -277,7 +277,7 @@
 				   [(ngModel)]="newItem.libs"
 				   name="new_lib">
 		</mat-form-field>
-		<button mat-raised-button
+		<button mat-flat-button
 				color="primary"
 				class="field-button"
 				(click)="addNew('libs')"
@@ -302,10 +302,10 @@
 	 (click)="deploy('extra')">
 	<span>Valores extra</span>
 	<mat-icon class="project-line-icon"
-			  [ngClass]="{'project-line-icon-rotate': row.extra}">expand_more</mat-icon>
+			  [class]="{'project-line-icon-rotate': row.extra}">expand_more</mat-icon>
 </div>
 <div class="project-sub-line"
-	 [ngClass]="{'project-sub-line-deployed': row.extra}">
+	 [class]="{'project-sub-line-deployed': row.extra}">
 	<div>
 		<mat-form-field class="field-key">
 			<mat-label>Clave</mat-label>
@@ -319,7 +319,7 @@
 				   [(ngModel)]="newItem.extraValue"
 				   name="new_extra_value">
 		</mat-form-field>
-		<button mat-raised-button
+		<button mat-flat-button
 				color="primary"
 				class="field-button"
 				(click)="addNew('extra')"
@@ -344,10 +344,10 @@
 	 (click)="deploy('dir')">
 	<span>Directorios</span>
 	<mat-icon class="project-line-icon"
-			  [ngClass]="{'project-line-icon-rotate': row.dir}">expand_more</mat-icon>
+			  [class]="{'project-line-icon-rotate': row.dir}">expand_more</mat-icon>
 </div>
 <div class="project-sub-line"
-	 [ngClass]="{'project-sub-line-deployed': row.dir}">
+	 [class]="{'project-sub-line-deployed': row.dir}">
 	<div>
 		<mat-form-field class="field-key">
 			<mat-label>Clave</mat-label>
@@ -361,7 +361,7 @@
 				   [(ngModel)]="newItem.dirValue"
 				   name="new_dir_value">
 		</mat-form-field>
-		<button mat-raised-button
+		<button mat-flat-button
 				color="primary"
 				class="field-button"
 				(click)="addNew('dir')"

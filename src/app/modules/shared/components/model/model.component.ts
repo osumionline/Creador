@@ -1,37 +1,42 @@
-import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { CdkTextareaAutosize } from "@angular/cdk/text-field";
+import { Component, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatSelectModule } from "@angular/material/select";
+import { MatButton, MatIconButton } from "@angular/material/button";
+import { MatCard, MatCardContent } from "@angular/material/card";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
+import { MatInput } from "@angular/material/input";
+import { MatOption, MatSelect } from "@angular/material/select";
 import {
   ModelRowTypeInterface,
   ProjectDataResult,
-} from "src/app/interfaces/interfaces";
-import { ModelRow } from "src/app/model/model-row.model";
-import { Model } from "src/app/model/model.model";
-import { ClassMapperService } from "src/app/services/class-mapper.service";
+} from "@interfaces/interfaces";
+import ModelRow from "@model/model-row.model";
+import Model from "@model/model.model";
+import ClassMapperService from "@services/class-mapper.service";
 
 @Component({
-  standalone: true,
   selector: "app-model",
   templateUrl: "./model.component.html",
   styleUrls: ["./../../../pages/project/project.component.scss"],
   imports: [
-    CommonModule,
     FormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSelectModule,
+    MatCard,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    CdkTextareaAutosize,
+    MatIconButton,
+    MatButton,
+    MatIcon,
+    MatSelect,
+    MatOption,
   ],
 })
-export class ModelComponent {
+export default class ModelComponent {
+  private cms: ClassMapperService = inject(ClassMapperService);
+
   modelRowTypes: ModelRowTypeInterface[] = [
     { id: 1, name: "PK" },
     { id: 10, name: "PK Str" },
@@ -46,8 +51,6 @@ export class ModelComponent {
   ];
 
   projectModel: Model[] = [];
-
-  constructor(private cms: ClassMapperService) {}
 
   load(data: ProjectDataResult): void {
     this.projectModel = this.cms.getModels(data.models);

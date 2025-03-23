@@ -3,7 +3,9 @@ import {
   InMemoryScrollingFeature,
   InMemoryScrollingOptions,
   provideRouter,
+  withComponentInputBinding,
   withInMemoryScrolling,
+  withViewTransitions,
 } from "@angular/router";
 
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
@@ -12,9 +14,9 @@ import {
   MatFormFieldDefaultOptions,
 } from "@angular/material/form-field";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { routes } from "src/app/app.routes";
-import { TokenInterceptor } from "src/app/interceptors/token.interceptor";
-import { provideCore } from "src/app/modules/core";
+import routes from "@app/app.routes";
+import TokenInterceptor from "@app/interceptors/token.interceptor";
+import provideCore from "@app/modules/core";
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: "top",
@@ -26,15 +28,21 @@ const appearance: MatFormFieldDefaultOptions = {
   appearance: "outline",
 };
 
-export const appConfig: ApplicationConfig = {
+const appConfig: ApplicationConfig = {
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: appearance,
     },
-    provideRouter(routes, inMemoryScrollingFeature),
+    provideRouter(
+      routes,
+      inMemoryScrollingFeature,
+      withViewTransitions(),
+      withComponentInputBinding()
+    ),
     provideHttpClient(withInterceptors([TokenInterceptor])),
     provideCore(),
     provideAnimations(),
   ],
 };
+export default appConfig;

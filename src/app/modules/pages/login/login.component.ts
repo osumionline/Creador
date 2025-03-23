@@ -1,46 +1,62 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { Router, RouterModule } from "@angular/router";
-import { LoginDataInterface, LoginResult } from "src/app/interfaces/interfaces";
-import { ApiService } from "src/app/services/api.service";
-import { AuthService } from "src/app/services/auth.service";
-import { ClassMapperService } from "src/app/services/class-mapper.service";
-import { UserService } from "src/app/services/user.service";
+import { MatAnchor, MatButton } from "@angular/material/button";
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from "@angular/material/card";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import { Router, RouterLink } from "@angular/router";
+import { LoginDataInterface, LoginResult } from "@interfaces/interfaces";
+import ApiService from "@services/api.service";
+import AuthService from "@services/auth.service";
+import ClassMapperService from "@services/class-mapper.service";
+import UserService from "@services/user.service";
 
 @Component({
-  standalone: true,
   selector: "app-login",
   templateUrl: "./login.component.html",
   imports: [
+    MatToolbar,
+    MatToolbarRow,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatCardActions,
     FormsModule,
-    RouterModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
+    RouterLink,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatButton,
+    MatAnchor,
   ],
 })
-export class LoginComponent implements OnInit {
+export default class LoginComponent implements OnInit {
+  private as: ApiService = inject(ApiService);
+  private us: UserService = inject(UserService);
+  private router: Router = inject(Router);
+  private auth: AuthService = inject(AuthService);
+  private cms: ClassMapperService = inject(ClassMapperService);
+
   loginData: LoginDataInterface = {
     name: "",
     pass: "",
   };
-  loginError: boolean = false;
-  loginSending: boolean = false;
-
-  constructor(
-    private as: ApiService,
-    private us: UserService,
-    private router: Router,
-    private auth: AuthService,
-    private cms: ClassMapperService
-  ) {}
+  loginError: WritableSignal<boolean> = signal<boolean>(false);
+  loginSending: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
     if (this.auth.isAuthenticated()) {
@@ -53,9 +69,9 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loginSending = true;
+    this.loginSending.set(true);
     this.as.login(this.loginData).subscribe((result: LoginResult): void => {
-      this.loginSending = false;
+      this.loginSending.set(false);
       if (result.status === "ok") {
         this.us.logged = true;
         this.us.user = this.cms.getUser(result.user);
@@ -63,7 +79,7 @@ export class LoginComponent implements OnInit {
 
         this.router.navigate(["/main"]);
       } else {
-        this.loginError = true;
+        this.loginError.set(true);
       }
     });
   }

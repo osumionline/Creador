@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
 
-@Injectable()
-export class DataShareService {
+@Injectable({
+  providedIn: "root",
+})
+export default class DataShareService {
   saveLocalStorage: boolean = true;
   globals: {} = {};
 

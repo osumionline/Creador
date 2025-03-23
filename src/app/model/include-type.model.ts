@@ -1,11 +1,11 @@
 import {
   IncludeTypeInterface,
   IncludeVersionInterface,
-} from "src/app/interfaces/interfaces";
-import { IncludeVersion } from "src/app/model/include-version.model";
-import { Utils } from "src/app/model/utils.class";
+} from "@interfaces/interfaces";
+import IncludeVersion from "@model/include-version.model";
+import { urldecode, urlencode } from "@osumi/tools";
 
-export class IncludeType {
+export default class IncludeType {
   selected: boolean = false;
 
   constructor(
@@ -16,7 +16,7 @@ export class IncludeType {
 
   fromInterface(it: IncludeTypeInterface): IncludeType {
     this.id = it.id;
-    this.name = Utils.urldecode(it.name);
+    this.name = urldecode(it.name);
     this.versions = it.versions.map(
       (item: IncludeVersionInterface): IncludeVersion => {
         return new IncludeVersion().fromInterface(item);
@@ -29,7 +29,7 @@ export class IncludeType {
   toInterface(): IncludeTypeInterface {
     return {
       id: this.id,
-      name: Utils.urlencode(this.name),
+      name: urlencode(this.name),
       versions: this.versions.map(
         (item: IncludeVersion): IncludeVersionInterface => item.toInterface()
       ),

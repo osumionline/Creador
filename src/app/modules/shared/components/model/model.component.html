@@ -1,5 +1,5 @@
 <div class="project-header">
-  <button mat-raised-button
+  <button mat-flat-button
           color="primary"
           (click)="addModel()">Añadir modelo</button>
 </div>
@@ -20,10 +20,10 @@
                [(ngModel)]="model.tableName"
                name="model_table_name">
       </mat-form-field>
-      <button mat-raised-button
+      <button mat-flat-button
               color="warn"
               (click)="deleteModel(i)">Borrar</button>
-      <button mat-raised-button
+      <button mat-flat-button
               color="primary"
               (click)="addModelRow(i, model)">Añadir campo</button>
     </div>
@@ -31,12 +31,12 @@
       <button mat-button
               (click)="openModel(model)">
         <mat-icon class="project-model-rows-icon"
-                  [ngClass]="{'project-model-rows-icon-open':model.open}">chevron_right</mat-icon>
+                  [class]="{'project-model-rows-icon-open': model.open}">chevron_right</mat-icon>
         Campos ({{model.rows.length}})
       </button>
     </div>
     <div class="project-model-rows"
-         [ngClass]="{'project-model-rows-open':model.open}">
+         [class]="{'project-model-rows-open': model.open}">
       @for (row of model.rows; track row.id; let j = $index) {
       <div class="project-model-row">
         <mat-form-field>
@@ -91,7 +91,7 @@
                  [(ngModel)]="row.ref"
                  name="row_ref">
         </mat-form-field>
-        <button mat-raised-button
+        <button mat-flat-button
                 color="warn"
                 class="project-model-row-delete"
                 (click)="deleteModelRow(i, j)">Borrar</button>

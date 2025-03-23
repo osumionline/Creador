@@ -1,52 +1,64 @@
-import { Component, OnInit } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { MatListModule } from "@angular/material/list";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { Router, RouterModule } from "@angular/router";
-import { ProjectResult } from "src/app/interfaces/interfaces";
-import { Project } from "src/app/model/project.model";
-import { ApiService } from "src/app/services/api.service";
-import { ClassMapperService } from "src/app/services/class-mapper.service";
-import { UserService } from "src/app/services/user.service";
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from "@angular/core";
+import { MatButton, MatFabButton } from "@angular/material/button";
+import { MatIcon } from "@angular/material/icon";
+import {
+  MatListItem,
+  MatListItemTitle,
+  MatNavList,
+} from "@angular/material/list";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import { Router, RouterLink } from "@angular/router";
+import { ProjectResult } from "@interfaces/interfaces";
+import Project from "@model/project.model";
+import ApiService from "@services/api.service";
+import ClassMapperService from "@services/class-mapper.service";
+import UserService from "@services/user.service";
 
 @Component({
-  standalone: true,
   selector: "app-main",
   templateUrl: "./main.component.html",
   imports: [
-    RouterModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
+    RouterLink,
+    MatToolbar,
+    MatToolbarRow,
+    MatButton,
+    MatFabButton,
+    MatIcon,
+    MatNavList,
+    MatListItem,
+    MatListItemTitle,
   ],
 })
 export default class MainComponent implements OnInit {
-  projects: Project[] = [];
-  loading: boolean = true;
-  loadError: boolean = false;
+  private as: ApiService = inject(ApiService);
+  private cms: ClassMapperService = inject(ClassMapperService);
+  private us: UserService = inject(UserService);
+  private router: Router = inject(Router);
 
-  constructor(
-    private as: ApiService,
-    private cms: ClassMapperService,
-    private us: UserService,
-    private router: Router
-  ) {}
+  projects: WritableSignal<Project[]> = signal<Project[]>([]);
+  loading: WritableSignal<boolean> = signal<boolean>(true);
+  loadError: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
-    this.as.getProjects().subscribe(
-      (result: ProjectResult): void => {
+    this.as.getProjects().subscribe({
+      next: (result: ProjectResult): void => {
         if (result.status == "ok") {
-          this.projects = this.cms.getProjects(result.list);
-          this.loading = false;
+          this.projects.set(this.cms.getProjects(result.list));
+          this.loading.set(false);
         }
       },
-      (error): void => {
-        this.loading = false;
-        this.loadError = true;
-      }
-    );
+      error: (error): void => {
+        console.error(error);
+        this.loading.set(false);
+        this.loadError.set(true);
+      },
+    });
   }
 
   logout(): void {

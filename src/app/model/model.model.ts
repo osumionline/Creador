@@ -1,10 +1,7 @@
-import {
-  ModelInterface,
-  ModelRowInterface,
-} from "src/app/interfaces/interfaces";
-import { ModelRow } from "src/app/model/model-row.model";
+import { ModelInterface, ModelRowInterface } from "@interfaces/interfaces";
+import ModelRow from "@model/model-row.model";
 
-export class Model {
+export default class Model {
   open: boolean = false;
 
   constructor(

@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
+import { environment } from "@env/environment";
 import { Observable } from "rxjs";
-import { environment } from "src/environments/environment";
 
 import {
   IncludeResult,
@@ -23,10 +23,9 @@ import {
 @Injectable({
   providedIn: "root",
 })
-export class ApiService {
+export default class ApiService {
+  private http: HttpClient = inject(HttpClient);
   apiUrl: string = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
 
   login(data: LoginDataInterface): Observable<LoginResult> {
     return this.http.post<LoginResult>(this.apiUrl + "login", data);

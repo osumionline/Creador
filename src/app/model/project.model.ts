@@ -1,7 +1,7 @@
-import { ProjectInterface } from "src/app/interfaces/interfaces";
-import { Utils } from "src/app/model/utils.class";
+import { ProjectInterface } from "@interfaces/interfaces";
+import { urldecode, urlencode } from "@osumi/tools";
 
-export class Project {
+export default class Project {
   constructor(
     public id: number = null,
     public name: string = "Nuevo proyecto",
@@ -13,9 +13,9 @@ export class Project {
 
   fromInterface(p: ProjectInterface): Project {
     this.id = p.id;
-    this.name = Utils.urldecode(p.name);
+    this.name = urldecode(p.name);
     this.slug = p.slug;
-    this.description = Utils.urldecode(p.description);
+    this.description = urldecode(p.description);
     this.updatedAt = p.updatedAt;
     this.lastCompilationDate = p.lastCompilationDate;
 
@@ -25,9 +25,9 @@ export class Project {
   toInterface(): ProjectInterface {
     return {
       id: this.id,
-      name: Utils.urlencode(this.name),
+      name: urlencode(this.name),
       slug: this.slug,
-      description: Utils.urlencode(this.description),
+      description: urlencode(this.description),
       updatedAt: this.updatedAt,
       lastCompilationDate: this.lastCompilationDate,
     };

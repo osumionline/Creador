@@ -1,6 +1,6 @@
-import { ModelRowInterface } from "src/app/interfaces/interfaces";
+import { ModelRowInterface } from "@interfaces/interfaces";
 
-export class ModelRow {
+export default class ModelRow {
   constructor(
     public id: number = null,
     public name: string = null,

@@ -1,4 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+
+:root {
+	--color-blue: #005cbb;
+	--color-white: #fff;
+
+	@include mat.toolbar-overrides((container-background-color: var(--color-blue),
+			container-text-color: var(--color-white),
+		));
+}
 
 html,
 body {
@@ -70,4 +79,17 @@ body {
 
 .full-width {
 	width: 100%;
+}
+
+.mat-toolbar {
+
+	.mat-mdc-icon-button,
+	.mat-icon,
+	.material-icons {
+		color: var(--color-white) !important;
+	}
+
+	svg {
+		fill: var(--color-white);
+	}
 }

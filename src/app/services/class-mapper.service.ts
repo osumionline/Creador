@@ -4,16 +4,16 @@ import {
   ModelInterface,
   ProjectInterface,
   UserInterface,
-} from "src/app/interfaces/interfaces";
-import { IncludeType } from "src/app/model/include-type.model";
-import { Model } from "src/app/model/model.model";
-import { Project } from "src/app/model/project.model";
-import { User } from "src/app/model/user.model";
+} from "@interfaces/interfaces";
+import IncludeType from "@model/include-type.model";
+import Model from "@model/model.model";
+import Project from "@model/project.model";
+import User from "@model/user.model";
 
 @Injectable({
   providedIn: "root",
 })
-export class ClassMapperService {
+export default class ClassMapperService {
   getUser(u: UserInterface): User {
     return new User().fromInterface(u);
   }

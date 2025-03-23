@@ -1,19 +1,17 @@
-import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { MatListModule } from "@angular/material/list";
-import { MatRadioModule } from "@angular/material/radio";
-import { ProjectDataResult } from "src/app/interfaces/interfaces";
-import { IncludeType } from "src/app/model/include-type.model";
+import { MatList, MatListItem } from "@angular/material/list";
+import { MatRadioButton, MatRadioGroup } from "@angular/material/radio";
+import { ProjectDataResult } from "@interfaces/interfaces";
+import IncludeType from "@model/include-type.model";
 
 @Component({
-  standalone: true,
   selector: "app-includes",
   templateUrl: "./includes.component.html",
   styleUrls: ["./../../../pages/project/project.component.scss"],
-  imports: [CommonModule, FormsModule, MatListModule, MatRadioModule],
+  imports: [FormsModule, MatList, MatListItem, MatRadioGroup, MatRadioButton],
 })
-export class IncludesComponent {
+export default class IncludesComponent {
   includeTypes: IncludeType[] = [];
 
   load(data: ProjectDataResult): void {

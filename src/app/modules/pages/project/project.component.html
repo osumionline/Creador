@@ -1,14 +1,14 @@
-@if (loading) {
+@if (loading()) {
 <div class="loading-bg">
 	<div class="loading-box">
-		<img src="/assets/loading.svg"
+		<img src="/img/loading.svg"
 			 alt="Cargando...">
 		Cargando...
 	</div>
 </div>
 }
 
-<mat-toolbar color="primary">
+<mat-toolbar>
 	<mat-toolbar-row>
 		<button mat-icon-button
 				routerLink="/main">
@@ -16,15 +16,15 @@
 		</button>
 		<span>Creador - {{project.name}}</span>
 		<span class="flex-space"></span>
-		@if (!savingProject && !generatingProject) {
-		<button mat-button
+		@if (!savingProject() && !generatingProject()) {
+		<button mat-flat-button
 				(click)="saveProject()">
 			<mat-icon class="toolbar-button-icon">save</mat-icon>
 			<span>Guardar proyecto</span>
 		</button>
 		}
-		@if (savingProject || generatingProject) {
-		<img src="assets/loading.svg"
+		@if (savingProject() || generatingProject()) {
+		<img src="/img/loading.svg"
 			 class="loading-img"
 			 alt="">
 		}
@@ -97,39 +97,39 @@
 					<p>Fecha de última compilación: {{project.lastCompilationDate}}</p>
 					}
 					<p>
-						<button mat-raised-button
+						<button mat-flat-button
 								color="primary"
-								[disabled]="generatingProject"
+								[disabled]="generatingProject()"
 								(click)="generateProject()">Compilar proyecto</button>
 					</p>
-					@if (generatingProject || generatedProject) {
+					@if (generatingProject() || generatedProject()) {
 					<ul class="project-download-tasks">
 						<li class="project-download-working"
-							[ngClass]="{'project-download-done':generateStep>0}">
+							[class]="{'project-download-done': generateStep > 0}">
 							@if (generateStep>0) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
 							Crear estructura básica
 						</li>
-						<li [ngClass]="{'project-download-working': generateStep === 1, 'project-download-done':generateStep>1}">
+						<li [class]="{'project-download-working': generateStep === 1, 'project-download-done': generateStep > 1}">
 							@if (generateStep>1) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
 							Crear archivo de configuración
 						</li>
-						<li [ngClass]="{'project-download-working': generateStep === 2, 'project-download-done':generateStep>2}">
+						<li [class]="{'project-download-working': generateStep === 2, 'project-download-done': generateStep > 2}">
 							@if (generateStep>2) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
 							Crear modelos
 						</li>
-						<li [ngClass]="{'project-download-working': generateStep === 3, 'project-download-done':generateStep>3}">
+						<li [class]="{'project-download-working': generateStep === 3, 'project-download-done': generateStep > 3}">
 							@if (generateStep>3) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
 							Añadir archivos
 						</li>
-						<li [ngClass]="{'project-download-working': generateStep === 4, 'project-download-done':generateStep>4}">
+						<li [class]="{'project-download-working': generateStep === 4, 'project-download-done': generateStep > 4}">
 							@if (generateStep>4) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
@@ -138,16 +138,16 @@
 					</ul>
 					}
 					<p>
-						<button mat-raised-button
+						<button mat-flat-button
 								color="primary"
-								[disabled]="generatingProject || !project.lastCompilationDate"
+								[disabled]="generatingProject() || !project.lastCompilationDate"
 								(click)="downloadProject()">Descargar proyecto</button>
 					</p>
 				</div>
 			</mat-tab>
 			}
 
-			@if (project.id && !generatingProject) {
+			@if (project.id && !generatingProject()) {
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<mat-icon class="tab-icon">delete_forever</mat-icon>
@@ -156,9 +156,9 @@
 				<div class="project-delete">
 					¿Estás seguro de querer borrar este proyecto? Esta es una acción irreversible.
 					<br>
-					<button mat-raised-button
+					<button mat-flat-button
 							color="warn"
-							[disabled]="deletingProject"
+							[disabled]="deletingProject()"
 							(click)="deleteProject()">
 						<mat-icon class="tab-icon">delete_forever</mat-icon>
 						Confirmar

@@ -1,11 +1,11 @@
 import {
   KeyValueInterface,
   ProjectConfigurationListsInterface,
-} from "src/app/interfaces/interfaces";
-import { KeyValue } from "src/app/model/key-value.model";
-import { Utils } from "src/app/model/utils.class";
+} from "@interfaces/interfaces";
+import KeyValue from "@model/key-value.model";
+import { urldecode, urlencode } from "@osumi/tools";
 
-export class ProjectConfigurationLists {
+export default class ProjectConfigurationLists {
   constructor(
     public css: string[] = [],
     public cssExt: string[] = [],
@@ -19,11 +19,11 @@ export class ProjectConfigurationLists {
   fromInterface(
     pcl: ProjectConfigurationListsInterface
   ): ProjectConfigurationLists {
-    this.css = pcl.css.map(Utils.urldecode);
-    this.cssExt = pcl.cssExt.map(Utils.urldecode);
-    this.js = pcl.js.map(Utils.urldecode);
-    this.jsExt = pcl.jsExt.map(Utils.urldecode);
-    this.libs = pcl.libs.map(Utils.urldecode);
+    this.css = pcl.css.map(urldecode);
+    this.cssExt = pcl.cssExt.map(urldecode);
+    this.js = pcl.js.map(urldecode);
+    this.jsExt = pcl.jsExt.map(urldecode);
+    this.libs = pcl.libs.map(urldecode);
     this.extra = pcl.extra.map((item: KeyValueInterface): KeyValue => {
       return new KeyValue().fromInterface(item);
     });
@@ -36,11 +36,11 @@ export class ProjectConfigurationLists {
 
   toInterface(): ProjectConfigurationListsInterface {
     return {
-      css: this.css.map(Utils.urlencode),
-      cssExt: this.cssExt.map(Utils.urlencode),
-      js: this.js.map(Utils.urlencode),
-      jsExt: this.jsExt.map(Utils.urlencode),
-      libs: this.libs.map(Utils.urlencode),
+      css: this.css.map(urlencode),
+      cssExt: this.cssExt.map(urlencode),
+      js: this.js.map(urlencode),
+      jsExt: this.jsExt.map(urlencode),
+      libs: this.libs.map(urlencode),
       extra: this.extra.map((item: KeyValue): KeyValueInterface => {
         return item.toInterface();
       }),

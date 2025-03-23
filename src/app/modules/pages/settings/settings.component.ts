@@ -1,48 +1,64 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { Router, RouterModule } from "@angular/router";
-import { LoginResult, RegisterData } from "src/app/interfaces/interfaces";
-import { ApiService } from "src/app/services/api.service";
-import { ClassMapperService } from "src/app/services/class-mapper.service";
-import { UserService } from "src/app/services/user.service";
+import { MatButton, MatIconButton } from "@angular/material/button";
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from "@angular/material/card";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
+import { MatInput } from "@angular/material/input";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import { Router, RouterLink } from "@angular/router";
+import { LoginResult, RegisterData } from "@interfaces/interfaces";
+import ApiService from "@services/api.service";
+import ClassMapperService from "@services/class-mapper.service";
+import UserService from "@services/user.service";
 
 @Component({
-  standalone: true,
   selector: "app-settings",
   templateUrl: "./settings.component.html",
   imports: [
     FormsModule,
-    RouterModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
+    RouterLink,
+    MatToolbar,
+    MatToolbarRow,
+    MatIconButton,
+    MatButton,
+    MatIcon,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatCardActions,
+    MatFormField,
+    MatLabel,
+    MatInput,
   ],
 })
 export default class SettingsComponent implements OnInit {
+  private us: UserService = inject(UserService);
+  private as: ApiService = inject(ApiService);
+  private cms: ClassMapperService = inject(ClassMapperService);
+  private router: Router = inject(Router);
+
   settingsData: RegisterData = {
     name: "",
     pass: "",
     conf: "",
   };
-  settingsNameError: boolean = false;
-  settingsPassError: boolean = false;
-  settingsSending: boolean = false;
-
-  constructor(
-    private us: UserService,
-    private as: ApiService,
-    private cms: ClassMapperService,
-    private router: Router
-  ) {}
+  settingsNameError: WritableSignal<boolean> = signal<boolean>(false);
+  settingsPassError: WritableSignal<boolean> = signal<boolean>(false);
+  settingsSending: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
     this.settingsData.name = this.us.user.name;
@@ -57,18 +73,18 @@ export default class SettingsComponent implements OnInit {
       return;
     }
 
-    this.settingsNameError = false;
-    this.settingsPassError = false;
+    this.settingsNameError.set(false);
+    this.settingsPassError.set(false);
     if (this.settingsData.pass !== this.settingsData.conf) {
-      this.settingsPassError = true;
+      this.settingsPassError.set(true);
       return;
     }
 
-    this.settingsSending = true;
+    this.settingsSending.set(true);
     this.as
       .saveSettings(this.settingsData)
       .subscribe((result: LoginResult): void => {
-        this.settingsSending = false;
+        this.settingsSending.set(false);
         if (result.status === "ok") {
           this.us.logged = true;
           this.us.user = this.cms.getUser(result.user);
@@ -76,7 +92,7 @@ export default class SettingsComponent implements OnInit {
 
           this.router.navigate(["/main"]);
         } else {
-          this.settingsNameError = true;
+          this.settingsNameError.set(true);
         }
       });
   }

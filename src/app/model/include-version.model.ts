@@ -1,6 +1,6 @@
-import { IncludeVersionInterface } from "src/app/interfaces/interfaces";
+import { IncludeVersionInterface } from "@interfaces/interfaces";
 
-export class IncludeVersion {
+export default class IncludeVersion {
   constructor(public id: number = null, public version: string = null) {}
 
   fromInterface(iv: IncludeVersionInterface): IncludeVersion {

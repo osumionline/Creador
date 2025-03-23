@@ -1,34 +1,32 @@
-import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatInput } from "@angular/material/input";
+import { MatSlideToggle } from "@angular/material/slide-toggle";
 import {
   ConfigurationRow,
   NewConfigurationItem,
   ProjectDataResult,
-} from "src/app/interfaces/interfaces";
-import { KeyValue } from "src/app/model/key-value.model";
-import { ProjectConfigurationLists } from "src/app/model/project-configuration-lists.model";
-import { ProjectConfiguration } from "src/app/model/project-configuration.model";
+} from "@interfaces/interfaces";
+import KeyValue from "@model/key-value.model";
+import ProjectConfigurationLists from "@model/project-configuration-lists.model";
+import ProjectConfiguration from "@model/project-configuration.model";
 
 @Component({
-  standalone: true,
   selector: "app-configuration",
   templateUrl: "./configuration.component.html",
   styleUrls: ["./../../../pages/project/project.component.scss"],
   imports: [
-    CommonModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
     MatIconModule,
-    MatSlideToggleModule,
+    MatSlideToggle,
   ],
 })
-export class ConfigurationComponent {
+export default class ConfigurationComponent {
   projectConfiguration: ProjectConfiguration = new ProjectConfiguration();
   projectConfigurationLists: ProjectConfigurationLists =
     new ProjectConfigurationLists();

@@ -1,20 +1,20 @@
-import { KeyValueInterface } from "src/app/interfaces/interfaces";
-import { Utils } from "src/app/model/utils.class";
+import { KeyValueInterface } from "@interfaces/interfaces";
+import { urldecode, urlencode } from "@osumi/tools";
 
-export class KeyValue {
+export default class KeyValue {
   constructor(public key: string = null, public value: string = null) {}
 
   fromInterface(kv: KeyValueInterface): KeyValue {
-    this.key = Utils.urldecode(kv.key);
-    this.value = Utils.urldecode(kv.value);
+    this.key = urldecode(kv.key);
+    this.value = urldecode(kv.value);
 
     return this;
   }
 
   toInterface(): KeyValueInterface {
     return {
-      key: Utils.urlencode(this.key),
-      value: Utils.urlencode(this.value),
+      key: urlencode(this.key),
+      value: urlencode(this.value),
     };
   }
 }

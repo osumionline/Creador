@@ -1,8 +1,8 @@
 import { Routes } from "@angular/router";
-import { isLoggedGuardFn } from "src/app/guard/auth.guard.fn";
-import { LoginComponent } from "src/app/modules/pages/login/login.component";
+import isLoggedGuardFn from "@app/guard/auth.guard.fn";
+import LoginComponent from "@modules/pages/login/login.component";
 
-export const routes: Routes = [
+const routes: Routes = [
   { path: "", component: LoginComponent },
   {
     path: "register",
@@ -34,3 +34,4 @@ export const routes: Routes = [
   },
   { path: "**", redirectTo: "/", pathMatch: "full" },
 ];
+export default routes;

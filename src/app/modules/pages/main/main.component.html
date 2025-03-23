@@ -1,13 +1,13 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
 	<mat-toolbar-row>
 		<span>Creador</span>
 		<span class="flex-space"></span>
-		<button mat-button
+		<button mat-flat-button
 				routerLink="/settings">
 			<mat-icon class="toolbar-button-icon">settings</mat-icon>
 			<span>Ajustes</span>
 		</button>
-		<button mat-button
+		<button mat-flat-button
 				(click)="logout()">
 			<mat-icon class="toolbar-button-icon">logout</mat-icon>
 			<span>Salir</span>
@@ -15,13 +15,13 @@
 	</mat-toolbar-row>
 </mat-toolbar>
 
-@if (loading) {
+@if (loading()) {
 <div class="loading">Cargando...</div>
 }
 
-@if (!loading && !loadError) {
+@if (!loading() && !loadError()) {
 <mat-nav-list>
-	@for (project of projects; track project.id) {
+	@for (project of projects(); track project.id) {
 	<a mat-list-item
 	   [routerLink]="['/project', project.id, project.slug]">
 		<div matListItemTitle> {{project.name}} </div>
@@ -35,13 +35,13 @@
 </mat-nav-list>
 }
 
-@if (!loading && loadError) {
+@if (!loading() && loadError()) {
 <div class="loading">Ocurrió un error al cargar los proyectos.</div>
 }
 
 <button mat-fab
 		class="btn-bottom-right"
 		routerLink="/new-project"
-		[disabled]="loadError">
+		[disabled]="loadError()">
 	<mat-icon>add</mat-icon>
 </button>

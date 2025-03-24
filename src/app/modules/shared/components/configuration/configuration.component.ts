@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { MatButton } from "@angular/material/button";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInput } from "@angular/material/input";
@@ -24,6 +25,7 @@ import ProjectConfiguration from "@model/project-configuration.model";
     MatInput,
     MatIconModule,
     MatSlideToggle,
+    MatButton,
   ],
 })
 export default class ConfigurationComponent {

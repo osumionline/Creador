@@ -1,7 +1,11 @@
 <div class="project-header">
   <button mat-flat-button
           color="primary"
-          (click)="addModel()">Añadir modelo</button>
+          (click)="addModel()"
+          matTooltip="Añadir un nuevo modelo a este proyecto">
+    <mat-icon>add</mat-icon>
+    Añadir modelo
+  </button>
 </div>
 
 @for (model of projectModel; track model.id; let i = $index) {
@@ -22,14 +26,23 @@
       </mat-form-field>
       <button mat-flat-button
               color="warn"
-              (click)="deleteModel(i)">Borrar</button>
+              (click)="deleteModel(i)"
+              matTooltip="Borrar este modelo">
+        <mat-icon>delete</mat-icon>
+        Borrar
+      </button>
       <button mat-flat-button
               color="primary"
-              (click)="addModelRow(i, model)">Añadir campo</button>
+              (click)="addModelRow(i, model)"
+              matTooltip="Añadir un nuevo campo a este modelo">
+        <mat-icon>add</mat-icon>
+        Añadir campo
+      </button>
     </div>
     <div class="project-model-rows-title">
       <button mat-button
-              (click)="openModel(model)">
+              (click)="openModel(model)"
+              matTooltip="Mostrar/ocultar los campos de este modelo">
         <mat-icon class="project-model-rows-icon"
                   [class]="{'project-model-rows-icon-open': model.open}">chevron_right</mat-icon>
         Campos ({{model.rows.length}})
@@ -94,14 +107,20 @@
         <button mat-flat-button
                 color="warn"
                 class="project-model-row-delete"
-                (click)="deleteModelRow(i, j)">Borrar</button>
+                (click)="deleteModelRow(i, j)"
+                matTooltip="Borrar este campo">
+          <mat-icon>delete</mat-icon>
+          Borrar
+        </button>
         <span class="project-model-row-delete">
           <button mat-icon-button
-                  (click)="moveRow(i, j, 'down')">
+                  (click)="moveRow(i, j, 'down')"
+                  matTooltip="Mover este campo hacia abajo">
             <mat-icon>expand_more</mat-icon>
           </button>
           <button mat-icon-button
-                  (click)="moveRow(i, j, 'up')">
+                  (click)="moveRow(i, j, 'up')"
+                  matTooltip="Mover este campo hacia arriba">
             <mat-icon>expand_less</mat-icon>
           </button>
         </span>

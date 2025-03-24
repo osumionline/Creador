@@ -3,10 +3,12 @@ import { Component, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatCard, MatCardContent } from "@angular/material/card";
+import { MatCheckbox } from "@angular/material/checkbox";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatIcon } from "@angular/material/icon";
 import { MatInput } from "@angular/material/input";
 import { MatOption, MatSelect } from "@angular/material/select";
+import { MatTooltip } from "@angular/material/tooltip";
 import {
   ModelRowTypeInterface,
   ProjectDataResult,
@@ -32,6 +34,8 @@ import ClassMapperService from "@services/class-mapper.service";
     MatIcon,
     MatSelect,
     MatOption,
+    MatCheckbox,
+    MatTooltip,
   ],
 })
 export default class ModelComponent {

@@ -2,6 +2,9 @@ import { CdkTextareaAutosize } from "@angular/cdk/text-field";
 import {
   Component,
   inject,
+  input,
+  InputSignalWithTransform,
+  numberAttribute,
   OnInit,
   signal,
   Signal,
@@ -21,7 +24,7 @@ import {
   MatTabsModule,
 } from "@angular/material/tabs";
 import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
-import { ActivatedRoute, Params, Router, RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { environment } from "@env/environment";
 import {
   IncludeResult,
@@ -78,8 +81,10 @@ export default class ProjectComponent implements OnInit {
   private us: UserService = inject(UserService);
   private cms: ClassMapperService = inject(ClassMapperService);
   private router: Router = inject(Router);
-  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
 
+  id: InputSignalWithTransform<number, unknown> = input.required({
+    transform: numberAttribute,
+  });
   loading: WritableSignal<boolean> = signal<boolean>(true);
   project: Project = new Project();
 
@@ -99,18 +104,11 @@ export default class ProjectComponent implements OnInit {
   ngOnInit(): void {
     this.as.getIncludes().subscribe((result: IncludeResult): void => {
       this.includes().setIncludeTypes(this.cms.getIncludeTypes(result.list));
-      this.activatedRoute.params.subscribe((params: Params): void => {
-        const id: number = params["id"];
-        if (id) {
-          this.as
-            .getProject(id)
-            .subscribe((result: ProjectDataResult): void => {
-              this.loadProject(result);
-            });
-        } else {
-          this.loading.set(false);
-        }
-      });
+      this.as
+        .getProject(this.id())
+        .subscribe((result: ProjectDataResult): void => {
+          this.loadProject(result);
+        });
     });
   }
 

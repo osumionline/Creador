@@ -107,31 +107,37 @@
 					<ul class="project-download-tasks">
 						<li class="project-download-working"
 							[class]="{'project-download-done': generateStep > 0}">
-							@if (generateStep>0) {
+							@if (generateStep > 0) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
 							Crear estructura básica
 						</li>
 						<li [class]="{'project-download-working': generateStep === 1, 'project-download-done': generateStep > 1}">
-							@if (generateStep>1) {
+							@if (generateStep > 1) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
 							Crear archivo de configuración
 						</li>
 						<li [class]="{'project-download-working': generateStep === 2, 'project-download-done': generateStep > 2}">
-							@if (generateStep>2) {
+							@if (generateStep > 2) {
+							<mat-icon>check_circle_outline</mat-icon>
+							}
+							Crear archivo composer.json
+						</li>
+						<li [class]="{'project-download-working': generateStep === 3, 'project-download-done': generateStep > 3}">
+							@if (generateStep > 3) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
 							Crear modelos
 						</li>
-						<li [class]="{'project-download-working': generateStep === 3, 'project-download-done': generateStep > 3}">
-							@if (generateStep>3) {
+						<li [class]="{'project-download-working': generateStep === 4, 'project-download-done': generateStep > 4}">
+							@if (generateStep > 4) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
 							Añadir archivos
 						</li>
-						<li [class]="{'project-download-working': generateStep === 4, 'project-download-done': generateStep > 4}">
-							@if (generateStep>4) {
+						<li [class]="{'project-download-working': generateStep === 5, 'project-download-done': generateStep > 5}">
+							@if (generateStep > 5) {
 							<mat-icon>check_circle_outline</mat-icon>
 							}
 							Comprimir en Zip

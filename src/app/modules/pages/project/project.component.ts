@@ -310,7 +310,7 @@ export default class ProjectComponent implements OnInit {
       .generateProject(this.project().id, this.generateStep)
       .subscribe((result: ProjectDownloadResult): void => {
         this.generateStep++;
-        if (this.generateStep < 5) {
+        if (this.generateStep < 6) {
           this.generateProject();
         } else {
           this.generateStep = 0;

@@ -14,7 +14,7 @@
 				routerLink="/main">
 			<mat-icon>arrow_back</mat-icon>
 		</button>
-		<span>Creador - {{project.name}}</span>
+		<span>Creador - {{ project().name }}</span>
 		<span class="flex-space"></span>
 		@if (!savingProject() && !generatingProject()) {
 		<button mat-flat-button
@@ -44,7 +44,7 @@
 					<mat-form-field>
 						<mat-label>Nombre del proyecto</mat-label>
 						<input matInput
-							   [(ngModel)]="project.name"
+							   [(ngModel)]="project().name"
 							   required
 							   name="name">
 					</mat-form-field>
@@ -55,7 +55,7 @@
 								  #autosize="cdkTextareaAutosize"
 								  cdkAutosizeMinRows="5"
 								  cdkAutosizeMaxRows="15"
-								  [(ngModel)]="project.description"></textarea>
+								  [(ngModel)]="project().description"></textarea>
 					</mat-form-field>
 				</div>
 			</mat-tab>
@@ -65,7 +65,8 @@
 					<mat-icon class="tab-icon">build</mat-icon>
 					Configuración
 				</ng-template>
-				<app-configuration #configuration />
+				<app-configuration [(projectConfiguration)]="projectConfiguration"
+								   [(projectConfigurationLists)]="projectConfigurationLists" />
 			</mat-tab>
 
 			<mat-tab>
@@ -73,7 +74,7 @@
 					<mat-icon class="tab-icon">view_list</mat-icon>
 					Modelo
 				</ng-template>
-				<app-model #model />
+				<app-model [(projectModel)]="projectModel" />
 			</mat-tab>
 
 			<mat-tab>
@@ -81,10 +82,10 @@
 					<mat-icon class="tab-icon">library_add</mat-icon>
 					Incluir
 				</ng-template>
-				<app-includes #includes />
+				<app-includes [(includeTypes)]="includeTypes" />
 			</mat-tab>
 
-			@if (project.id) {
+			@if (project().id) {
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<mat-icon class="tab-icon">cloud_download</mat-icon>
@@ -92,9 +93,9 @@
 				</ng-template>
 				<div class="project-download">
 					<h3>Descargar proyecto</h3>
-					<p>Fecha de última modificación del proyecto: {{project.updatedAt}}</p>
-					@if (project.lastCompilationDate) {
-					<p>Fecha de última compilación: {{project.lastCompilationDate}}</p>
+					<p>Fecha de última modificación del proyecto: {{ project().updatedAt }}</p>
+					@if (project().lastCompilationDate) {
+					<p>Fecha de última compilación: {{ project().lastCompilationDate }}</p>
 					}
 					<p>
 						<button mat-flat-button
@@ -140,14 +141,14 @@
 					<p>
 						<button mat-flat-button
 								color="primary"
-								[disabled]="generatingProject() || !project.lastCompilationDate"
+								[disabled]="generatingProject() || !project().lastCompilationDate"
 								(click)="downloadProject()">Descargar proyecto</button>
 					</p>
 				</div>
 			</mat-tab>
 			}
 
-			@if (project.id && !generatingProject()) {
+			@if (project().id && !generatingProject()) {
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<mat-icon class="tab-icon">delete_forever</mat-icon>

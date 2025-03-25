@@ -1,5 +1,5 @@
 import { CdkTextareaAutosize } from "@angular/cdk/text-field";
-import { Component, inject } from "@angular/core";
+import { Component, inject, model, ModelSignal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatCard, MatCardContent } from "@angular/material/card";
@@ -9,10 +9,7 @@ import { MatIcon } from "@angular/material/icon";
 import { MatInput } from "@angular/material/input";
 import { MatOption, MatSelect } from "@angular/material/select";
 import { MatTooltip } from "@angular/material/tooltip";
-import {
-  ModelRowTypeInterface,
-  ProjectDataResult,
-} from "@interfaces/interfaces";
+import { ModelRowTypeInterface } from "@interfaces/interfaces";
 import ModelRow from "@model/model-row.model";
 import Model from "@model/model.model";
 import ClassMapperService from "@services/class-mapper.service";
@@ -54,31 +51,35 @@ export default class ModelComponent {
     { id: 9, name: "Float" },
   ];
 
-  projectModel: Model[] = [];
-
-  load(data: ProjectDataResult): void {
-    this.projectModel = this.cms.getModels(data.models);
-  }
-
-  getModel(): Model[] {
-    return this.projectModel;
-  }
+  projectModel: ModelSignal<Model[]> = model.required<Model[]>();
 
   addModel(): void {
-    this.projectModel.push(new Model());
+    this.projectModel.update((value: Model[]): Model[] => {
+      value.push(new Model());
+      return value;
+    });
   }
 
   addModelRow(ind: number, model: Model): void {
-    this.projectModel[ind].rows.push(new ModelRow());
+    this.projectModel.update((value: Model[]): Model[] => {
+      value[ind].rows.push(new ModelRow());
+      return value;
+    });
     model.open = true;
   }
 
   deleteModel(ind: number): void {
-    this.projectModel.splice(ind, 1);
+    this.projectModel.update((value: Model[]): Model[] => {
+      value.splice(ind, 1);
+      return value;
+    });
   }
 
   deleteModelRow(ind: number, field: number): void {
-    this.projectModel[ind].rows.splice(field, 1);
+    this.projectModel.update((value: Model[]): Model[] => {
+      value[ind].rows.splice(field, 1);
+      return value;
+    });
   }
 
   openModel(model: Model): void {
@@ -88,7 +89,7 @@ export default class ModelComponent {
   moveRow(ind_model: number, ind: number, sent: string): void {
     let new_order: number;
     if (sent == "down") {
-      if (ind < this.projectModel[ind_model].rows.length - 1) {
+      if (ind < this.projectModel()[ind_model].rows.length - 1) {
         new_order = ind + 1;
       } else {
         return;
@@ -100,9 +101,11 @@ export default class ModelComponent {
         return;
       }
     }
-    const aux: ModelRow = this.projectModel[ind_model].rows[ind];
-    this.projectModel[ind_model].rows[ind] =
-      this.projectModel[ind_model].rows[new_order];
-    this.projectModel[ind_model].rows[new_order] = aux;
+    const aux: ModelRow = this.projectModel()[ind_model].rows[ind];
+    this.projectModel.update((value: Model[]): Model[] => {
+      value[ind_model].rows[ind] = value[ind_model].rows[new_order];
+      value[ind_model].rows[new_order] = aux;
+      return value;
+    });
   }
 }

@@ -7,8 +7,6 @@ import {
   numberAttribute,
   OnInit,
   signal,
-  Signal,
-  viewChild,
   WritableSignal,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
@@ -86,13 +84,13 @@ export default class ProjectComponent implements OnInit {
     transform: numberAttribute,
   });
   loading: WritableSignal<boolean> = signal<boolean>(true);
-  project: Project = new Project();
-
-  configuration: Signal<ConfigurationComponent> =
-    viewChild.required<ConfigurationComponent>("configuration");
-  model: Signal<ModelComponent> = viewChild.required<ModelComponent>("model");
-  includes: Signal<IncludesComponent> =
-    viewChild.required<IncludesComponent>("includes");
+  project: WritableSignal<Project> = signal<Project>(new Project());
+  projectConfiguration: WritableSignal<ProjectConfiguration> =
+    signal<ProjectConfiguration>(new ProjectConfiguration());
+  projectConfigurationLists: WritableSignal<ProjectConfigurationLists> =
+    signal<ProjectConfigurationLists>(new ProjectConfigurationLists());
+  projectModel: WritableSignal<Model[]> = signal<Model[]>([]);
+  includeTypes: WritableSignal<IncludeType[]> = signal<IncludeType[]>([]);
 
   savingProject: WritableSignal<boolean> = signal<boolean>(false);
   deletingProject: WritableSignal<boolean> = signal<boolean>(false);
@@ -103,26 +101,50 @@ export default class ProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.as.getIncludes().subscribe((result: IncludeResult): void => {
-      this.includes().setIncludeTypes(this.cms.getIncludeTypes(result.list));
-      this.as
-        .getProject(this.id())
-        .subscribe((result: ProjectDataResult): void => {
-          this.loadProject(result);
-        });
+      this.includeTypes.set(this.cms.getIncludeTypes(result.list));
+      this.loadProject();
     });
   }
 
-  loadProject(data: ProjectDataResult): void {
-    this.project = this.cms.getProject(data.project);
+  loadProject(): void {
+    this.as
+      .getProject(this.id())
+      .subscribe((result: ProjectDataResult): void => {
+        this.project.set(this.cms.getProject(result.project));
 
-    this.configuration().load(data);
-    this.model().load(data);
-    this.includes().load(data);
-    this.loading.set(false);
+        // Configuración
+        this.projectConfiguration.set(
+          new ProjectConfiguration().fromInterface(result.configuration)
+        );
+        this.projectConfigurationLists.set(
+          new ProjectConfigurationLists().fromInterface(result.lists)
+        );
+        // Modelo
+        this.projectModel.set(this.cms.getModels(result.models));
+        // Includes
+        for (const i in this.includeTypes()) {
+          if (result.includes.indexOf(this.includeTypes()[i].id) !== -1) {
+            const opt_ind: number = result.includes.indexOf(
+              this.includeTypes()[i].id
+            );
+            if (opt_ind !== -1) {
+              this.includeTypes.update(
+                (value: IncludeType[]): IncludeType[] => {
+                  value[i].selected = true;
+                  return value;
+                }
+              );
+            }
+          }
+        }
+
+        this.loading.set(false);
+        this.savingProject.set(false);
+      });
   }
 
   saveProject(): void {
-    if (this.project.name == "") {
+    if (this.project().name == "") {
       this.dialog.alert({
         title: "Error",
         content: "¡No puedes dejar el nombre del proyecto en blanco!",
@@ -131,21 +153,14 @@ export default class ProjectComponent implements OnInit {
       return;
     }
 
-    const projectConfiguration: ProjectConfiguration =
-      this.configuration().getConfiguration();
-    const projectConfigurationLists: ProjectConfigurationLists =
-      this.configuration().getConfigurationLists();
-    const projectModel: Model[] = this.model().getModel();
-    const includeTypes: IncludeType[] = this.includes().getIncludeTypes();
-
     if (
-      projectConfiguration.hasDB &&
-      (projectConfiguration.dbHost == "" ||
-        projectConfiguration.dbName == "" ||
-        projectConfiguration.dbUser == "" ||
-        (!this.project.id && projectConfiguration.dbPass == "") ||
-        projectConfiguration.dbCharset == "" ||
-        projectConfiguration.dbCollate == "")
+      this.projectConfiguration().hasDB &&
+      (this.projectConfiguration().dbHost == "" ||
+        this.projectConfiguration().dbName == "" ||
+        this.projectConfiguration().dbUser == "" ||
+        (!this.project().id && this.projectConfiguration().dbPass == "") ||
+        this.projectConfiguration().dbCharset == "" ||
+        this.projectConfiguration().dbCollate == "")
     ) {
       this.dialog.alert({
         title: "Error",
@@ -156,7 +171,7 @@ export default class ProjectComponent implements OnInit {
       return;
     }
 
-    for (const model of projectModel) {
+    for (const model of this.projectModel()) {
       if (model.name == "") {
         this.dialog.alert({
           title: "Error",
@@ -216,13 +231,13 @@ export default class ProjectComponent implements OnInit {
     this.savingProject.set(true);
     this.as
       .saveProject(
-        this.project.toInterface(),
-        projectConfiguration.toInterface(),
-        projectConfigurationLists.toInterface(),
-        projectModel.map((item: Model): ModelInterface => {
+        this.project().toInterface(),
+        this.projectConfiguration().toInterface(),
+        this.projectConfigurationLists().toInterface(),
+        this.projectModel().map((item: Model): ModelInterface => {
           return item.toInterface();
         }),
-        includeTypes.map((item: IncludeType): IncludeTypeInterface => {
+        this.includeTypes().map((item: IncludeType): IncludeTypeInterface => {
           return item.toInterface();
         })
       )
@@ -233,20 +248,15 @@ export default class ProjectComponent implements OnInit {
               title: "Info",
               content:
                 'El proyecto "' +
-                this.project.name +
+                this.project().name +
                 '" ha sido correctamente guardado.',
               ok: "Continuar",
             })
             .subscribe((): void => {
-              if (this.project.id == null) {
+              if (this.project().id == null) {
                 this.router.navigate(["/main"]);
               } else {
-                this.as
-                  .getProject(this.project.id)
-                  .subscribe((result: ProjectDataResult): void => {
-                    this.loadProject(result);
-                    this.savingProject.set(false);
-                  });
+                this.loadProject();
               }
             });
         } else {
@@ -266,16 +276,15 @@ export default class ProjectComponent implements OnInit {
   deleteProject(): void {
     this.deletingProject.set(true);
     this.as
-      .deleteProject(this.project.id)
+      .deleteProject(this.project().id)
       .subscribe((result: StatusResult): void => {
         if (result.status == "ok") {
           this.dialog
             .alert({
               title: "Info",
-              content:
-                'El proyecto "' +
-                this.project.name +
-                '" ha sido correctamente borrado.',
+              content: `El proyecto "${
+                this.project().name
+              }" ha sido correctamente borrado.`,
               ok: "Continuar",
             })
             .subscribe((): void => {
@@ -298,14 +307,17 @@ export default class ProjectComponent implements OnInit {
   generateProject(): void {
     this.generatingProject.set(true);
     this.as
-      .generateProject(this.project.id, this.generateStep)
+      .generateProject(this.project().id, this.generateStep)
       .subscribe((result: ProjectDownloadResult): void => {
         this.generateStep++;
         if (this.generateStep < 5) {
           this.generateProject();
         } else {
           this.generateStep = 0;
-          this.project.lastCompilationDate = urldecode(result.date);
+          this.project.update((value: Project): Project => {
+            value.lastCompilationDate = urldecode(result.date);
+            return value;
+          });
           this.generatedProject.set(true);
           this.generatingProject.set(false);
         }
@@ -314,7 +326,7 @@ export default class ProjectComponent implements OnInit {
 
   downloadProject(): void {
     window.location.href = `${environment.apiUrl}download-project/${
-      this.project.id
+      this.project().id
     }?tk=${btoa(this.us.user.token)}`;
   }
 }

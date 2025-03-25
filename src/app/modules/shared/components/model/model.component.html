@@ -8,7 +8,7 @@
   </button>
 </div>
 
-@for (model of projectModel; track model.id; let i = $index) {
+@for (model of projectModel(); track model.id; let i = $index) {
 <mat-card class="project-card">
   <mat-card-content>
     <div class="project-model-header">

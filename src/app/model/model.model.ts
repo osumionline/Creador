@@ -1,5 +1,6 @@
 import { ModelInterface, ModelRowInterface } from "@interfaces/interfaces";
 import ModelRow from "@model/model-row.model";
+import { urldecode, urlencode } from "@osumi/tools";
 
 export default class Model {
   open: boolean = false;
@@ -13,8 +14,8 @@ export default class Model {
 
   fromInterface(m: ModelInterface): Model {
     this.id = m.id;
-    this.name = m.name;
-    this.tableName = m.tableName;
+    this.name = urldecode(m.name);
+    this.tableName = urldecode(m.tableName);
     this.rows = m.rows.map((item: ModelRowInterface): ModelRow => {
       return new ModelRow().fromInterface(item);
     });
@@ -25,8 +26,8 @@ export default class Model {
   toInterface(): ModelInterface {
     return {
       id: this.id,
-      name: this.name,
-      tableName: this.tableName,
+      name: urlencode(this.name),
+      tableName: urlencode(this.tableName),
       rows: this.rows.map((item: ModelRow): ModelRowInterface => {
         return item.toInterface();
       }),

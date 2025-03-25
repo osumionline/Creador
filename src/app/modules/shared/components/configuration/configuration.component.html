@@ -9,25 +9,25 @@
 	<mat-form-field>
 		<mat-label>Base URL</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.baseUrl"
+			   [(ngModel)]="projectConfiguration().baseUrl"
 			   name="base_url">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Admin email</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.adminEmail"
+			   [(ngModel)]="projectConfiguration().adminEmail"
 			   name="admin_email">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Título por defecto</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.defaultTitle"
+			   [(ngModel)]="projectConfiguration().defaultTitle"
 			   name="default_title">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Idioma del sitio</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.lang"
+			   [(ngModel)]="projectConfiguration().lang"
 			   name="lang">
 	</mat-form-field>
 </div>
@@ -41,51 +41,51 @@
 	 [class]="{'project-sub-line-deployed': row.db}">
 	<div class="project-line-title">
 		<span>Acceso a Base de datos</span>
-		<mat-slide-toggle [checked]="projectConfiguration.hasDB"
+		<mat-slide-toggle [checked]="projectConfiguration().hasDB"
 						  (change)="changeHasDB()"></mat-slide-toggle>
 	</div>
 	<mat-form-field>
 		<mat-label>Host</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.dbHost"
+			   [(ngModel)]="projectConfiguration().dbHost"
 			   name="db_host"
-			   [disabled]="!projectConfiguration.hasDB">
+			   [disabled]="!projectConfiguration().hasDB">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Nombre de la BD</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.dbName"
+			   [(ngModel)]="projectConfiguration().dbName"
 			   name="db_name"
-			   [disabled]="!projectConfiguration.hasDB">
+			   [disabled]="!projectConfiguration().hasDB">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Usuario</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.dbUser"
+			   [(ngModel)]="projectConfiguration().dbUser"
 			   name="db_user"
-			   [disabled]="!projectConfiguration.hasDB">
+			   [disabled]="!projectConfiguration().hasDB">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Contraseña</mat-label>
 		<input type="password"
 			   matInput
-			   [(ngModel)]="projectConfiguration.dbPass"
+			   [(ngModel)]="projectConfiguration().dbPass"
 			   name="db_pass"
-			   [disabled]="!projectConfiguration.hasDB">
+			   [disabled]="!projectConfiguration().hasDB">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Charset</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.dbCharset"
+			   [(ngModel)]="projectConfiguration().dbCharset"
 			   name="db_charset"
-			   [disabled]="!projectConfiguration.hasDB">
+			   [disabled]="!projectConfiguration().hasDB">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Collate</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.dbCollate"
+			   [(ngModel)]="projectConfiguration().dbCollate"
 			   name="db_collate"
-			   [disabled]="!projectConfiguration.hasDB">
+			   [disabled]="!projectConfiguration().hasDB">
 	</mat-form-field>
 </div>
 <div class="project-line"
@@ -99,13 +99,13 @@
 	<mat-form-field>
 		<mat-label>Prefijo de las cookies</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.cookiesPrefix"
+			   [(ngModel)]="projectConfiguration().cookiesPrefix"
 			   name="cookies_prefix">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>URL de las cookies</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.cookiesUrl"
+			   [(ngModel)]="projectConfiguration().cookiesUrl"
 			   name="cookies_url">
 	</mat-form-field>
 </div>
@@ -120,19 +120,19 @@
 	<mat-form-field>
 		<mat-label>URL página de error 403</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.error403"
+			   [(ngModel)]="projectConfiguration().error403"
 			   name="error_403">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>URL página de error 404</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.error404"
+			   [(ngModel)]="projectConfiguration().error404"
 			   name="error_404">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>URL página de error 500</mat-label>
 		<input matInput
-			   [(ngModel)]="projectConfiguration.error500"
+			   [(ngModel)]="projectConfiguration().error500"
 			   name="error_500">
 	</mat-form-field>
 </div>
@@ -158,7 +158,7 @@
 				[disabled]="newItem.css === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		@for (item of projectConfigurationLists.css; track item; let i = $index) {
+		@for (item of projectConfigurationLists().css; track item; let i = $index) {
 		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
@@ -185,7 +185,7 @@
 				[disabled]="newItem.cssExt === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		@for (item of projectConfigurationLists.cssExt; track item; let i = $index) {
+		@for (item of projectConfigurationLists().cssExt; track item; let i = $index) {
 		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
@@ -221,7 +221,7 @@
 				[disabled]="newItem.js === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		@for (item of projectConfigurationLists.js; track item; let i = $index) {
+		@for (item of projectConfigurationLists().js; track item; let i = $index) {
 		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
@@ -248,7 +248,7 @@
 				[disabled]="newItem.jsExt === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		@for (item of projectConfigurationLists.jsExt; track item; let i = $index) {
+		@for (item of projectConfigurationLists().jsExt; track item; let i = $index) {
 		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
@@ -284,7 +284,7 @@
 				[disabled]="newItem.libs === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		@for (item of projectConfigurationLists.libs; track item; let i = $index) {
+		@for (item of projectConfigurationLists().libs; track item; let i = $index) {
 		<div class="project-list-item">
 			{{item}}
 			<mat-icon class="project-list-item-icon"
@@ -326,7 +326,7 @@
 				[disabled]="newItem.extraKey === '' || newItem.extraValue === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		@for (item of projectConfigurationLists.extra; track item; let i = $index) {
+		@for (item of projectConfigurationLists().extra; track item; let i = $index) {
 		<div class="project-list-item">
 			<strong>{{item.key}}</strong> {{item.value}}
 			<mat-icon class="project-list-item-icon"
@@ -368,7 +368,7 @@
 				[disabled]="newItem.dirKey === '' || newItem.dirValue === ''">Añadir</button>
 	</div>
 	<div class="project-list">
-		@for (item of projectConfigurationLists.dir; track item; let i = $index) {
+		@for (item of projectConfigurationLists().dir; track item; let i = $index) {
 		<div class="project-list-item">
 			<strong>{{item.key}}</strong> {{item.value}}
 			<mat-icon class="project-list-item-icon"

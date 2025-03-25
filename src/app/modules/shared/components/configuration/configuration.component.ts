@@ -1,15 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, model, ModelSignal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButton } from "@angular/material/button";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInput } from "@angular/material/input";
 import { MatSlideToggle } from "@angular/material/slide-toggle";
-import {
-  ConfigurationRow,
-  NewConfigurationItem,
-  ProjectDataResult,
-} from "@interfaces/interfaces";
+import { ConfigurationRow, NewConfigurationItem } from "@interfaces/interfaces";
 import KeyValue from "@model/key-value.model";
 import ProjectConfigurationLists from "@model/project-configuration-lists.model";
 import ProjectConfiguration from "@model/project-configuration.model";
@@ -29,9 +25,10 @@ import ProjectConfiguration from "@model/project-configuration.model";
   ],
 })
 export default class ConfigurationComponent {
-  projectConfiguration: ProjectConfiguration = new ProjectConfiguration();
-  projectConfigurationLists: ProjectConfigurationLists =
-    new ProjectConfigurationLists();
+  projectConfiguration: ModelSignal<ProjectConfiguration> =
+    model.required<ProjectConfiguration>();
+  projectConfigurationLists: ModelSignal<ProjectConfigurationLists> =
+    model.required<ProjectConfigurationLists>();
   newItem: NewConfigurationItem = {
     css: "",
     cssExt: "",
@@ -55,28 +52,17 @@ export default class ConfigurationComponent {
     dir: false,
   };
 
-  load(data: ProjectDataResult): void {
-    this.projectConfiguration = new ProjectConfiguration().fromInterface(
-      data.configuration
-    );
-    this.projectConfigurationLists =
-      new ProjectConfigurationLists().fromInterface(data.lists);
-  }
-
-  getConfiguration(): ProjectConfiguration {
-    return this.projectConfiguration;
-  }
-
-  getConfigurationLists(): ProjectConfigurationLists {
-    return this.projectConfigurationLists;
-  }
-
   deploy(ind: string): void {
     this.row[ind] = !this.row[ind];
   }
 
   changeHasDB(): void {
-    this.projectConfiguration.hasDB = !this.projectConfiguration.hasDB;
+    this.projectConfiguration.update(
+      (value: ProjectConfiguration): ProjectConfiguration => {
+        value.hasDB = !value.hasDB;
+        return value;
+      }
+    );
   }
 
   addNew(type: string): void {
@@ -86,19 +72,34 @@ export default class ConfigurationComponent {
       case "js":
       case "jsExt":
       case "libs":
-        this.projectConfigurationLists[type].push(this.newItem[type]);
+        this.projectConfigurationLists.update(
+          (value: ProjectConfigurationLists): ProjectConfigurationLists => {
+            value[type].push(this.newItem[type]);
+            return value;
+          }
+        );
         this.newItem[type] = "";
         break;
       case "extra":
-        this.projectConfigurationLists.extra.push(
-          new KeyValue(this.newItem.extraKey, this.newItem.extraValue)
+        this.projectConfigurationLists.update(
+          (value: ProjectConfigurationLists): ProjectConfigurationLists => {
+            value.extra.push(
+              new KeyValue(this.newItem.extraKey, this.newItem.extraValue)
+            );
+            return value;
+          }
         );
         this.newItem.extraKey = "";
         this.newItem.extraValue = "";
         break;
       case "dir":
-        this.projectConfigurationLists.dir.push(
-          new KeyValue(this.newItem.dirKey, this.newItem.dirValue)
+        this.projectConfigurationLists.update(
+          (value: ProjectConfigurationLists): ProjectConfigurationLists => {
+            value.dir.push(
+              new KeyValue(this.newItem.dirKey, this.newItem.dirValue)
+            );
+            return value;
+          }
         );
         this.newItem.dirKey = "";
         this.newItem.dirValue = "";
@@ -107,6 +108,11 @@ export default class ConfigurationComponent {
   }
 
   deleteNew(type: string, ind: number): void {
-    this.projectConfigurationLists[type].splice(ind, 1);
+    this.projectConfigurationLists.update(
+      (value: ProjectConfigurationLists): ProjectConfigurationLists => {
+        value[type].splice(ind, 1);
+        return value;
+      }
+    );
   }
 }

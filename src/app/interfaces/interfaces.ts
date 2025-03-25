@@ -152,6 +152,12 @@ export interface IncludeResult {
   list: IncludeTypeInterface[];
 }
 
+export interface ProjectPluginInterface {
+  id: number;
+  name: string;
+  version: string;
+}
+
 export interface ProjectDataResult {
   status: string;
   project: ProjectInterface;
@@ -159,6 +165,7 @@ export interface ProjectDataResult {
   lists: ProjectConfigurationListsInterface;
   models: ModelInterface[];
   includes: number[];
+  plugins: ProjectPluginInterface[];
 }
 
 export interface ProjectDownloadResult {
@@ -167,10 +174,10 @@ export interface ProjectDownloadResult {
 }
 
 export interface PluginsRep {
-  plugins: PluginRep[];
+  plugins: PluginInterface[];
 }
 
-export interface PluginRep {
+export interface PluginInterface {
   name: string;
   version: string;
   description: string;

@@ -1,1 +1,8 @@
-<p>plugins works!</p>
+<mat-selection-list (selectionChange)="pluginSelected($event)">
+    @for (plugin of plugins(); track plugin.name) {
+    <mat-list-option [value]="plugin"
+                     [selected]="plugin.selected">
+        {{ plugin.name }} (v{{ plugin.version }})
+    </mat-list-option>
+    }
+</mat-selection-list>

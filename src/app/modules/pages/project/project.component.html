@@ -85,6 +85,14 @@
 				<app-includes [(includeTypes)]="includeTypes" />
 			</mat-tab>
 
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<mat-icon class="tab-icon">extension</mat-icon>
+					Plugins
+				</ng-template>
+				<app-plugins [(plugins)]="plugins" />
+			</mat-tab>
+
 			@if (project().id) {
 			<mat-tab>
 				<ng-template mat-tab-label>

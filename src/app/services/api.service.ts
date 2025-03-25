@@ -9,6 +9,7 @@ import {
   LoginDataInterface,
   LoginResult,
   ModelInterface,
+  PluginInterface,
   PluginsRep,
   ProjectConfigurationInterface,
   ProjectConfigurationListsInterface,
@@ -18,7 +19,7 @@ import {
   ProjectResult,
   RegisterData,
   StatusResult,
-} from "src/app/interfaces/interfaces";
+} from "@interfaces/interfaces";
 
 @Injectable({
   providedIn: "root",
@@ -52,7 +53,8 @@ export default class ApiService {
     projectConfiguration: ProjectConfigurationInterface,
     projectConfigurationLists: ProjectConfigurationListsInterface,
     projectModel: ModelInterface[],
-    includeTypes: IncludeTypeInterface[]
+    includeTypes: IncludeTypeInterface[],
+    plugins: PluginInterface[]
   ): Observable<StatusResult> {
     return this.http.post<StatusResult>(this.apiUrl + "save-project", {
       project,
@@ -60,6 +62,7 @@ export default class ApiService {
       projectConfigurationLists,
       projectModel,
       includeTypes,
+      plugins,
     });
   }
 

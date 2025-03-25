@@ -28,14 +28,18 @@ import {
   IncludeResult,
   IncludeTypeInterface,
   ModelInterface,
+  PluginInterface,
+  PluginsRep,
   ProjectDataResult,
   ProjectDownloadResult,
   StatusResult,
 } from "@interfaces/interfaces";
 import IncludeType from "@model/include-type.model";
 import Model from "@model/model.model";
+import Plugin from "@model/plugin.model";
 import ProjectConfigurationLists from "@model/project-configuration-lists.model";
 import ProjectConfiguration from "@model/project-configuration.model";
+import ProjectPlugin from "@model/project-plugin.model";
 import Project from "@model/project.model";
 import { DialogService } from "@osumi/angular-tools";
 import { urldecode } from "@osumi/tools";
@@ -45,17 +49,19 @@ import UserService from "@services/user.service";
 import ConfigurationComponent from "@shared/components/configuration/configuration.component";
 import IncludesComponent from "@shared/components/includes/includes.component";
 import ModelComponent from "@shared/components/model/model.component";
+import PluginsComponent from "@shared/components/plugins/plugins.component";
 
 @Component({
   selector: "app-project",
   templateUrl: "./project.component.html",
   styleUrls: ["./project.component.scss"],
   imports: [
+    ConfigurationComponent,
+    ModelComponent,
+    IncludesComponent,
+    PluginsComponent,
     FormsModule,
     RouterLink,
-    IncludesComponent,
-    ModelComponent,
-    ConfigurationComponent,
     MatToolbar,
     MatToolbarRow,
     MatButton,
@@ -90,7 +96,9 @@ export default class ProjectComponent implements OnInit {
   projectConfigurationLists: WritableSignal<ProjectConfigurationLists> =
     signal<ProjectConfigurationLists>(new ProjectConfigurationLists());
   projectModel: WritableSignal<Model[]> = signal<Model[]>([]);
+  projectPlugins: WritableSignal<ProjectPlugin[]> = signal<ProjectPlugin[]>([]);
   includeTypes: WritableSignal<IncludeType[]> = signal<IncludeType[]>([]);
+  plugins: WritableSignal<Plugin[]> = signal<Plugin[]>([]);
 
   savingProject: WritableSignal<boolean> = signal<boolean>(false);
   deletingProject: WritableSignal<boolean> = signal<boolean>(false);
@@ -100,8 +108,19 @@ export default class ProjectComponent implements OnInit {
   generatedProject: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
+    this.loadIncludes();
+  }
+
+  loadIncludes(): void {
     this.as.getIncludes().subscribe((result: IncludeResult): void => {
       this.includeTypes.set(this.cms.getIncludeTypes(result.list));
+      this.loadPlugins();
+    });
+  }
+
+  loadPlugins(): void {
+    this.as.getPluginList().subscribe((result: PluginsRep): void => {
+      this.plugins.set(this.cms.getPlugins(result.plugins));
       this.loadProject();
     });
   }
@@ -134,6 +153,18 @@ export default class ProjectComponent implements OnInit {
                   return value;
                 }
               );
+            }
+          }
+        }
+        // Plugins
+        this.projectPlugins.set(this.cms.getProjectPlugins(result.plugins));
+        for (const i in this.plugins()) {
+          for (const j in this.projectPlugins()) {
+            if (this.plugins()[i].name == this.projectPlugins()[j].name) {
+              this.plugins.update((value: Plugin[]): Plugin[] => {
+                value[i].selected = true;
+                return value;
+              });
             }
           }
         }
@@ -239,7 +270,12 @@ export default class ProjectComponent implements OnInit {
         }),
         this.includeTypes().map((item: IncludeType): IncludeTypeInterface => {
           return item.toInterface();
-        })
+        }),
+        this.plugins()
+          .filter((item: Plugin): boolean => item.selected)
+          .map((item: Plugin): PluginInterface => {
+            return item.toInterface();
+          })
       )
       .subscribe((result: StatusResult): void => {
         if (result.status == "ok") {
@@ -256,7 +292,7 @@ export default class ProjectComponent implements OnInit {
               if (this.project().id == null) {
                 this.router.navigate(["/main"]);
               } else {
-                this.loadProject();
+                this.loadPlugins();
               }
             });
         } else {

@@ -126,6 +126,13 @@ export default class ProjectComponent implements OnInit {
   }
 
   loadProject(): void {
+    // En proyectos nuevos no cargamos nada
+    if (Number.isNaN(this.id())) {
+      this.loading.set(false);
+      this.savingProject.set(false);
+      return;
+    }
+    // Cargamos el proyecto
     this.as
       .getProject(this.id())
       .subscribe((result: ProjectDataResult): void => {

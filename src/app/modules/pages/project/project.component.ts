@@ -284,25 +284,39 @@ export default class ProjectComponent implements OnInit {
             return item.toInterface();
           })
       )
-      .subscribe((result: StatusResult): void => {
-        if (result.status == "ok") {
-          this.dialog
-            .alert({
-              title: "Info",
-              content:
-                'El proyecto "' +
-                this.project().name +
-                '" ha sido correctamente guardado.',
-              ok: "Continuar",
-            })
-            .subscribe((): void => {
-              if (this.project().id == null) {
-                this.router.navigate(["/main"]);
-              } else {
-                this.loadPlugins();
-              }
-            });
-        } else {
+      .subscribe({
+        next: (result: StatusResult): void => {
+          if (result.status == "ok") {
+            this.dialog
+              .alert({
+                title: "Info",
+                content:
+                  'El proyecto "' +
+                  this.project().name +
+                  '" ha sido correctamente guardado.',
+                ok: "Continuar",
+              })
+              .subscribe((): void => {
+                if (this.project().id == null) {
+                  this.router.navigate(["/main"]);
+                } else {
+                  this.loadPlugins();
+                }
+              });
+          } else {
+            this.dialog
+              .alert({
+                title: "Error",
+                content: "¡Ocurrió un error al guardar el proyecto!",
+                ok: "Continuar",
+              })
+              .subscribe((): void => {
+                this.savingProject.set(false);
+              });
+          }
+        },
+        error: (err): void => {
+          console.error(err);
           this.dialog
             .alert({
               title: "Error",
@@ -312,7 +326,7 @@ export default class ProjectComponent implements OnInit {
             .subscribe((): void => {
               this.savingProject.set(false);
             });
-        }
+        },
       });
   }
 

@@ -1,15 +1,15 @@
-import { ModelInterface, ModelRowInterface } from "@interfaces/interfaces";
-import ModelRow from "@model/model-row.model";
-import { urldecode, urlencode } from "@osumi/tools";
+import { ModelInterface, ModelRowInterface } from '@interfaces/interfaces';
+import ModelRow from '@model/model-row.model';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class Model {
   open: boolean = false;
 
   constructor(
-    public id: number = null,
-    public name: string = "",
-    public tableName: string = "",
-    public rows: ModelRow[] = []
+    public id: number | null = null,
+    public name: string | null = null,
+    public tableName: string | null = null,
+    public rows: ModelRow[] = [],
   ) {}
 
   fromInterface(m: ModelInterface): Model {

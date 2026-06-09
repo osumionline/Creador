@@ -1,10 +1,10 @@
-import { ProjectPluginInterface } from "@interfaces/interfaces";
+import { ProjectPluginInterface } from '@interfaces/interfaces';
 
 export default class ProjectPlugin {
   constructor(
-    public id: number = null,
-    public name: string = null,
-    public version: string = null
+    public id: number | null = null,
+    public name: string | null = null,
+    public version: string | null = null,
   ) {}
 
   fromInterface(p: ProjectPluginInterface): ProjectPlugin {

@@ -1,24 +1,24 @@
-import { ProjectConfigurationInterface } from "@interfaces/interfaces";
-import { urldecode, urlencode } from "@osumi/tools";
+import { ProjectConfigurationInterface } from '@interfaces/interfaces';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class ProjectConfiguration {
   constructor(
-    public baseUrl: string = "",
-    public adminEmail: string = "",
-    public defaultTitle: string = "",
-    public lang: string = "es",
+    public baseUrl: string | null = null,
+    public adminEmail: string | null = null,
+    public defaultTitle: string | null = null,
+    public lang: string | null = 'es',
     public hasDB: boolean = false,
-    public dbHost: string = "",
-    public dbName: string = "",
-    public dbUser: string = "",
-    public dbPass: string = null,
-    public dbCharset: string = "utf8mb4",
-    public dbCollate: string = "utf8mb4_unicode_ci",
-    public cookiesPrefix: string = "",
-    public cookiesUrl: string = "",
-    public error403: string = "",
-    public error404: string = "",
-    public error500: string = ""
+    public dbHost: string | null = null,
+    public dbName: string | null = null,
+    public dbUser: string | null = null,
+    public dbPass: string | null = null,
+    public dbCharset: string | null = 'utf8mb4',
+    public dbCollate: string | null = 'utf8mb4_unicode_ci',
+    public cookiesPrefix: string | null = null,
+    public cookiesUrl: string | null = null,
+    public error403: string | null = null,
+    public error404: string | null = null,
+    public error500: string | null = null,
   ) {}
 
   fromInterface(pc: ProjectConfigurationInterface): ProjectConfiguration {

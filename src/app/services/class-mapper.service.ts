@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import ProjectPlugin from "@app/model/project-plugin.model";
+import { Service } from '@angular/core';
+import ProjectPlugin from '@app/model/project-plugin.model';
 import {
   IncludeTypeInterface,
   ModelInterface,
@@ -7,16 +7,14 @@ import {
   ProjectInterface,
   ProjectPluginInterface,
   UserInterface,
-} from "@interfaces/interfaces";
-import IncludeType from "@model/include-type.model";
-import Model from "@model/model.model";
-import Plugin from "@model/plugin.model";
-import Project from "@model/project.model";
-import User from "@model/user.model";
+} from '@interfaces/interfaces';
+import IncludeType from '@model/include-type.model';
+import Model from '@model/model.model';
+import Plugin from '@model/plugin.model';
+import Project from '@model/project.model';
+import User from '@model/user.model';
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export default class ClassMapperService {
   getUser(u: UserInterface): User {
     return new User().fromInterface(u);

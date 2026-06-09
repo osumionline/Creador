@@ -1,9 +1,6 @@
-import {
-  KeyValueInterface,
-  ProjectConfigurationListsInterface,
-} from "@interfaces/interfaces";
-import KeyValue from "@model/key-value.model";
-import { urldecode, urlencode } from "@osumi/tools";
+import { KeyValueInterface, ProjectConfigurationListsInterface } from '@interfaces/interfaces';
+import KeyValue from '@model/key-value.model';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class ProjectConfigurationLists {
   constructor(
@@ -13,12 +10,10 @@ export default class ProjectConfigurationLists {
     public jsExt: string[] = [],
     public libs: string[] = [],
     public extra: KeyValue[] = [],
-    public dir: KeyValue[] = []
+    public dir: KeyValue[] = [],
   ) {}
 
-  fromInterface(
-    pcl: ProjectConfigurationListsInterface
-  ): ProjectConfigurationLists {
+  fromInterface(pcl: ProjectConfigurationListsInterface): ProjectConfigurationLists {
     this.css = pcl.css.map(urldecode);
     this.cssExt = pcl.cssExt.map(urldecode);
     this.js = pcl.js.map(urldecode);
@@ -36,11 +31,11 @@ export default class ProjectConfigurationLists {
 
   toInterface(): ProjectConfigurationListsInterface {
     return {
-      css: this.css.map(urlencode),
-      cssExt: this.cssExt.map(urlencode),
-      js: this.js.map(urlencode),
-      jsExt: this.jsExt.map(urlencode),
-      libs: this.libs.map(urlencode),
+      css: this.css.map(urlencode) as string[],
+      cssExt: this.cssExt.map(urlencode) as string[],
+      js: this.js.map(urlencode) as string[],
+      jsExt: this.jsExt.map(urlencode) as string[],
+      libs: this.libs.map(urlencode) as string[],
       extra: this.extra.map((item: KeyValue): KeyValueInterface => {
         return item.toInterface();
       }),

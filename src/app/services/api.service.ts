@@ -1,7 +1,7 @@
-import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
-import { environment } from "@env/environment";
-import { Observable } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { inject, Service } from '@angular/core';
+import { environment } from '@env/environment';
+import { Observable } from 'rxjs';
 
 import {
   IncludeResult,
@@ -19,33 +19,31 @@ import {
   ProjectResult,
   RegisterData,
   StatusResult,
-} from "@interfaces/interfaces";
+} from '@interfaces/interfaces';
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export default class ApiService {
   private http: HttpClient = inject(HttpClient);
   apiUrl: string = environment.apiUrl;
 
   login(data: LoginDataInterface): Observable<LoginResult> {
-    return this.http.post<LoginResult>(this.apiUrl + "login", data);
+    return this.http.post<LoginResult>(this.apiUrl + 'login', data);
   }
 
   register(data: RegisterData): Observable<LoginResult> {
-    return this.http.post<LoginResult>(this.apiUrl + "register", data);
+    return this.http.post<LoginResult>(this.apiUrl + 'register', data);
   }
 
   saveSettings(data: RegisterData): Observable<LoginResult> {
-    return this.http.post<LoginResult>(this.apiUrl + "saveSettings", data);
+    return this.http.post<LoginResult>(this.apiUrl + 'saveSettings', data);
   }
 
   getProjects(): Observable<ProjectResult> {
-    return this.http.post<ProjectResult>(this.apiUrl + "get-projects", {});
+    return this.http.post<ProjectResult>(this.apiUrl + 'get-projects', {});
   }
 
   getIncludes(): Observable<IncludeResult> {
-    return this.http.post<IncludeResult>(this.apiUrl + "get-includes", {});
+    return this.http.post<IncludeResult>(this.apiUrl + 'get-includes', {});
   }
 
   saveProject(
@@ -54,9 +52,9 @@ export default class ApiService {
     projectConfigurationLists: ProjectConfigurationListsInterface,
     projectModel: ModelInterface[],
     includeTypes: IncludeTypeInterface[],
-    plugins: PluginInterface[]
+    plugins: PluginInterface[],
   ): Observable<StatusResult> {
-    return this.http.post<StatusResult>(this.apiUrl + "save-project", {
+    return this.http.post<StatusResult>(this.apiUrl + 'save-project', {
       project,
       projectConfiguration,
       projectConfigurationLists,
@@ -67,23 +65,20 @@ export default class ApiService {
   }
 
   getProject(id: number): Observable<ProjectDataResult> {
-    return this.http.post<ProjectDataResult>(this.apiUrl + "get-project", {
+    return this.http.post<ProjectDataResult>(this.apiUrl + 'get-project', {
       id,
     });
   }
 
   deleteProject(id: number): Observable<StatusResult> {
-    return this.http.post<StatusResult>(this.apiUrl + "delete-project", { id });
+    return this.http.post<StatusResult>(this.apiUrl + 'delete-project', { id });
   }
 
   generateProject(id: number, step: number): Observable<ProjectDownloadResult> {
-    return this.http.post<ProjectDownloadResult>(
-      this.apiUrl + "generate-project",
-      { id, step }
-    );
+    return this.http.post<ProjectDownloadResult>(this.apiUrl + 'generate-project', { id, step });
   }
 
   getPluginList(): Observable<PluginsRep> {
-    return this.http.post<PluginsRep>(this.apiUrl + "get-plugin-list", {});
+    return this.http.post<PluginsRep>(this.apiUrl + 'get-plugin-list', {});
   }
 }

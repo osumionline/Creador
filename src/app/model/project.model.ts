@@ -1,14 +1,14 @@
-import { ProjectInterface } from "@interfaces/interfaces";
-import { urldecode, urlencode } from "@osumi/tools";
+import { ProjectInterface } from '@interfaces/interfaces';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class Project {
   constructor(
-    public id: number = null,
-    public name: string = "Nuevo proyecto",
-    public slug: string = "nuevo-proyecto",
-    public description: string = "",
-    public updatedAt: string = "",
-    public lastCompilationDate: string = ""
+    public id: number | null = null,
+    public name: string | null = 'Nuevo proyecto',
+    public slug: string | null = 'nuevo-proyecto',
+    public description: string | null = '',
+    public updatedAt: string | null = '',
+    public lastCompilationDate: string | null = '',
   ) {}
 
   fromInterface(p: ProjectInterface): Project {

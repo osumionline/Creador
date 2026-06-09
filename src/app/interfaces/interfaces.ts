@@ -4,9 +4,9 @@ export interface LoginDataInterface {
 }
 
 export interface UserInterface {
-  id: number;
-  name: string;
-  token: string;
+  id: number | null;
+  name: string | null;
+  token: string | null;
 }
 
 export interface LoginResult {
@@ -40,12 +40,12 @@ export interface StatusResult {
 }
 
 export interface ProjectInterface {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  updatedAt: string;
-  lastCompilationDate: string;
+  id: number | null;
+  name: string | null;
+  slug: string | null;
+  description: string | null;
+  updatedAt: string | null;
+  lastCompilationDate: string | null;
 }
 
 export interface ProjectResult {
@@ -54,27 +54,27 @@ export interface ProjectResult {
 }
 
 export interface ProjectConfigurationInterface {
-  baseUrl: string;
-  adminEmail: string;
-  defaultTitle: string;
-  lang: string;
+  baseUrl: string | null;
+  adminEmail: string | null;
+  defaultTitle: string | null;
+  lang: string | null;
   hasDB: boolean;
-  dbHost: string;
-  dbName: string;
-  dbUser: string;
-  dbPass: string;
-  dbCharset: string;
-  dbCollate: string;
-  cookiesPrefix: string;
-  cookiesUrl: string;
-  error403: string;
-  error404: string;
-  error500: string;
+  dbHost: string | null;
+  dbName: string | null;
+  dbUser: string | null;
+  dbPass: string | null;
+  dbCharset: string | null;
+  dbCollate: string | null;
+  cookiesPrefix: string | null;
+  cookiesUrl: string | null;
+  error403: string | null;
+  error404: string | null;
+  error500: string | null;
 }
 
 export interface KeyValueInterface {
-  key: string;
-  value: string;
+  key: string | null;
+  value: string | null;
 }
 
 export interface ProjectConfigurationListsInterface {
@@ -117,33 +117,33 @@ export interface ModelRowTypeInterface {
 }
 
 export interface ModelRowInterface {
-  id: number;
-  name: string;
-  type: number;
-  size: number;
+  id: number | null;
+  name: string | null;
+  type: number | null;
+  size: number | null;
   autoIncrement: boolean;
   nullable: boolean;
-  defaultValue: string;
-  ref: string;
-  comment: string;
-  order: number;
+  defaultValue: string | null;
+  ref: string | null;
+  comment: string | null;
+  order: number | null;
 }
 
 export interface ModelInterface {
-  id: number;
-  name: string;
-  tableName: string;
+  id: number | null;
+  name: string | null;
+  tableName: string | null;
   rows: ModelRowInterface[];
 }
 
 export interface IncludeVersionInterface {
-  id: number;
-  version: string;
+  id: number | null;
+  version: string | null;
 }
 
 export interface IncludeTypeInterface {
-  id: number;
-  name: string;
+  id: number | null;
+  name: string | null;
   versions: IncludeVersionInterface[];
 }
 
@@ -153,9 +153,9 @@ export interface IncludeResult {
 }
 
 export interface ProjectPluginInterface {
-  id: number;
-  name: string;
-  version: string;
+  id: number | null;
+  name: string | null;
+  version: string | null;
 }
 
 export interface ProjectDataResult {
@@ -178,7 +178,7 @@ export interface PluginsRep {
 }
 
 export interface PluginInterface {
-  name: string;
-  version: string;
-  description: string;
+  name: string | null;
+  version: string | null;
+  description: string | null;
 }

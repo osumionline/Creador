@@ -1,4 +1,4 @@
-import { CdkTextareaAutosize } from "@angular/cdk/text-field";
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   Component,
   inject,
@@ -8,22 +8,17 @@ import {
   OnInit,
   signal,
   WritableSignal,
-} from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { MatButton, MatIconButton } from "@angular/material/button";
-import { MatCard, MatCardContent } from "@angular/material/card";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatIcon } from "@angular/material/icon";
-import { MatInput } from "@angular/material/input";
-import {
-  MatTab,
-  MatTabGroup,
-  MatTabLabel,
-  MatTabsModule,
-} from "@angular/material/tabs";
-import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
-import { Router, RouterLink } from "@angular/router";
-import { environment } from "@env/environment";
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatTab, MatTabGroup, MatTabLabel, MatTabsModule } from '@angular/material/tabs';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { Router, RouterLink } from '@angular/router';
+import { environment } from '@env/environment';
 import {
   IncludeResult,
   IncludeTypeInterface,
@@ -33,28 +28,28 @@ import {
   ProjectDataResult,
   ProjectDownloadResult,
   StatusResult,
-} from "@interfaces/interfaces";
-import IncludeType from "@model/include-type.model";
-import Model from "@model/model.model";
-import Plugin from "@model/plugin.model";
-import ProjectConfigurationLists from "@model/project-configuration-lists.model";
-import ProjectConfiguration from "@model/project-configuration.model";
-import ProjectPlugin from "@model/project-plugin.model";
-import Project from "@model/project.model";
-import { DialogService } from "@osumi/angular-tools";
-import { urldecode } from "@osumi/tools";
-import ApiService from "@services/api.service";
-import ClassMapperService from "@services/class-mapper.service";
-import UserService from "@services/user.service";
-import ConfigurationComponent from "@shared/components/configuration/configuration.component";
-import IncludesComponent from "@shared/components/includes/includes.component";
-import ModelComponent from "@shared/components/model/model.component";
-import PluginsComponent from "@shared/components/plugins/plugins.component";
+} from '@interfaces/interfaces';
+import IncludeType from '@model/include-type.model';
+import Model from '@model/model.model';
+import Plugin from '@model/plugin.model';
+import ProjectConfigurationLists from '@model/project-configuration-lists.model';
+import ProjectConfiguration from '@model/project-configuration.model';
+import ProjectPlugin from '@model/project-plugin.model';
+import Project from '@model/project.model';
+import { DialogService } from '@osumi/angular-tools';
+import { urldecode } from '@osumi/tools';
+import ApiService from '@services/api.service';
+import ClassMapperService from '@services/class-mapper.service';
+import UserService from '@services/user.service';
+import ConfigurationComponent from '@shared/components/configuration/configuration.component';
+import IncludesComponent from '@shared/components/includes/includes.component';
+import ModelComponent from '@shared/components/model/model.component';
+import PluginsComponent from '@shared/components/plugins/plugins.component';
 
 @Component({
-  selector: "app-project",
-  templateUrl: "./project.component.html",
-  styleUrls: ["./project.component.scss"],
+  selector: 'app-project',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.scss'],
   imports: [
     ConfigurationComponent,
     ModelComponent,
@@ -91,8 +86,9 @@ export default class ProjectComponent implements OnInit {
   });
   loading: WritableSignal<boolean> = signal<boolean>(true);
   project: WritableSignal<Project> = signal<Project>(new Project());
-  projectConfiguration: WritableSignal<ProjectConfiguration> =
-    signal<ProjectConfiguration>(new ProjectConfiguration());
+  projectConfiguration: WritableSignal<ProjectConfiguration> = signal<ProjectConfiguration>(
+    new ProjectConfiguration(),
+  );
   projectConfigurationLists: WritableSignal<ProjectConfigurationLists> =
     signal<ProjectConfigurationLists>(new ProjectConfigurationLists());
   projectModel: WritableSignal<Model[]> = signal<Model[]>([]);
@@ -133,133 +129,121 @@ export default class ProjectComponent implements OnInit {
       return;
     }
     // Cargamos el proyecto
-    this.as
-      .getProject(this.id())
-      .subscribe((result: ProjectDataResult): void => {
-        this.project.set(this.cms.getProject(result.project));
+    this.as.getProject(this.id()).subscribe((result: ProjectDataResult): void => {
+      this.project.set(this.cms.getProject(result.project));
 
-        // Configuración
-        this.projectConfiguration.set(
-          new ProjectConfiguration().fromInterface(result.configuration)
-        );
-        this.projectConfigurationLists.set(
-          new ProjectConfigurationLists().fromInterface(result.lists)
-        );
-        // Modelo
-        this.projectModel.set(this.cms.getModels(result.models));
-        // Includes
-        for (const i in this.includeTypes()) {
-          if (result.includes.indexOf(this.includeTypes()[i].id) !== -1) {
-            const opt_ind: number = result.includes.indexOf(
-              this.includeTypes()[i].id
-            );
-            if (opt_ind !== -1) {
-              this.includeTypes.update(
-                (value: IncludeType[]): IncludeType[] => {
-                  value[i].selected = true;
-                  return value;
-                }
-              );
-            }
+      // Configuración
+      this.projectConfiguration.set(new ProjectConfiguration().fromInterface(result.configuration));
+      this.projectConfigurationLists.set(
+        new ProjectConfigurationLists().fromInterface(result.lists),
+      );
+      // Modelo
+      this.projectModel.set(this.cms.getModels(result.models));
+      // Includes
+      for (const i in this.includeTypes()) {
+        const resultCheck: number | null = this.includeTypes()[i].id;
+        if (resultCheck !== null && result.includes.indexOf(resultCheck) !== -1) {
+          const opt_ind: number = result.includes.indexOf(resultCheck);
+          if (opt_ind !== -1) {
+            this.includeTypes.update((value: IncludeType[]): IncludeType[] => {
+              value[i].selected = true;
+              return value;
+            });
           }
         }
-        // Plugins
-        this.projectPlugins.set(this.cms.getProjectPlugins(result.plugins));
-        for (const i in this.plugins()) {
-          for (const j in this.projectPlugins()) {
-            if (this.plugins()[i].name == this.projectPlugins()[j].name) {
-              this.plugins.update((value: Plugin[]): Plugin[] => {
-                value[i].selected = true;
-                return value;
-              });
-            }
+      }
+      // Plugins
+      this.projectPlugins.set(this.cms.getProjectPlugins(result.plugins));
+      for (const i in this.plugins()) {
+        for (const j in this.projectPlugins()) {
+          if (this.plugins()[i].name == this.projectPlugins()[j].name) {
+            this.plugins.update((value: Plugin[]): Plugin[] => {
+              value[i].selected = true;
+              return value;
+            });
           }
         }
+      }
 
-        this.loading.set(false);
-        this.savingProject.set(false);
-      });
+      this.loading.set(false);
+      this.savingProject.set(false);
+    });
   }
 
   saveProject(): void {
-    if (this.project().name == "") {
+    if (this.project().name == '') {
       this.dialog.alert({
-        title: "Error",
-        content: "¡No puedes dejar el nombre del proyecto en blanco!",
-        ok: "Continuar",
+        title: 'Error',
+        content: '¡No puedes dejar el nombre del proyecto en blanco!',
+        ok: 'Continuar',
       });
       return;
     }
 
     if (
       this.projectConfiguration().hasDB &&
-      (this.projectConfiguration().dbHost == "" ||
-        this.projectConfiguration().dbName == "" ||
-        this.projectConfiguration().dbUser == "" ||
-        (!this.project().id && this.projectConfiguration().dbPass == "") ||
-        this.projectConfiguration().dbCharset == "" ||
-        this.projectConfiguration().dbCollate == "")
+      (this.projectConfiguration().dbHost == '' ||
+        this.projectConfiguration().dbName == '' ||
+        this.projectConfiguration().dbUser == '' ||
+        (!this.project().id && this.projectConfiguration().dbPass == '') ||
+        this.projectConfiguration().dbCharset == '' ||
+        this.projectConfiguration().dbCollate == '')
     ) {
       this.dialog.alert({
-        title: "Error",
+        title: 'Error',
         content:
-          "Has marcado que quieres usar una base de datos, ¡pero has dejado alguno de los campos en blanco!",
-        ok: "Continuar",
+          'Has marcado que quieres usar una base de datos, ¡pero has dejado alguno de los campos en blanco!',
+        ok: 'Continuar',
       });
       return;
     }
 
     for (const model of this.projectModel()) {
-      if (model.name == "") {
+      if (model.name == '') {
         this.dialog.alert({
-          title: "Error",
-          content: "¡No puedes dejar el nombre de un modelo en blanco!",
-          ok: "Continuar",
+          title: 'Error',
+          content: '¡No puedes dejar el nombre de un modelo en blanco!',
+          ok: 'Continuar',
         });
         return;
       }
-      if (model.tableName == "") {
+      if (model.tableName == '') {
         this.dialog.alert({
-          title: "Error",
+          title: 'Error',
           content:
-            '¡No puedes dejar en blanco el nombre de la tabla en el modelo "' +
-            model.name +
-            '"!',
-          ok: "Continuar",
+            '¡No puedes dejar en blanco el nombre de la tabla en el modelo "' + model.name + '"!',
+          ok: 'Continuar',
         });
         return;
       }
       if (model.rows.length == 0) {
         this.dialog.alert({
-          title: "Error",
-          content:
-            '¡No has añadido ningún campo en el modelo "' + model.name + '"!',
-          ok: "Continuar",
+          title: 'Error',
+          content: '¡No has añadido ningún campo en el modelo "' + model.name + '"!',
+          ok: 'Continuar',
         });
         return;
       }
       for (const modelRow of model.rows) {
-        if (modelRow.name == "") {
+        if (modelRow.name == '') {
           this.dialog.alert({
-            title: "Error",
+            title: 'Error',
             content:
-              '¡No puedes dejar el nombre del campo en blanco en el modelo "' +
-              model.name +
-              '"!',
-            ok: "Continuar",
+              '¡No puedes dejar el nombre del campo en blanco en el modelo "' + model.name + '"!',
+            ok: 'Continuar',
           });
           return;
         }
         if (!modelRow.type) {
           this.dialog.alert({
-            title: "Error",
+            title: 'Error',
             content:
               '¡No has elegido el tipo de campo para el campo "' +
               modelRow.name +
               '" en el modelo "' +
               model.name +
               '"!',
-            ok: "Continuar",
+            ok: 'Continuar',
           });
           return;
         }
@@ -282,23 +266,21 @@ export default class ProjectComponent implements OnInit {
           .filter((item: Plugin): boolean => item.selected)
           .map((item: Plugin): PluginInterface => {
             return item.toInterface();
-          })
+          }),
       )
       .subscribe({
         next: (result: StatusResult): void => {
-          if (result.status == "ok") {
+          if (result.status == 'ok') {
             this.dialog
               .alert({
-                title: "Info",
+                title: 'Info',
                 content:
-                  'El proyecto "' +
-                  this.project().name +
-                  '" ha sido correctamente guardado.',
-                ok: "Continuar",
+                  'El proyecto "' + this.project().name + '" ha sido correctamente guardado.',
+                ok: 'Continuar',
               })
               .subscribe((): void => {
                 if (this.project().id == null) {
-                  this.router.navigate(["/main"]);
+                  this.router.navigate(['/main']);
                 } else {
                   this.loadPlugins();
                 }
@@ -306,9 +288,9 @@ export default class ProjectComponent implements OnInit {
           } else {
             this.dialog
               .alert({
-                title: "Error",
-                content: "¡Ocurrió un error al guardar el proyecto!",
-                ok: "Continuar",
+                title: 'Error',
+                content: '¡Ocurrió un error al guardar el proyecto!',
+                ok: 'Continuar',
               })
               .subscribe((): void => {
                 this.savingProject.set(false);
@@ -319,9 +301,9 @@ export default class ProjectComponent implements OnInit {
           console.error(err);
           this.dialog
             .alert({
-              title: "Error",
-              content: "¡Ocurrió un error al guardar el proyecto!",
-              ok: "Continuar",
+              title: 'Error',
+              content: '¡Ocurrió un error al guardar el proyecto!',
+              ok: 'Continuar',
             })
             .subscribe((): void => {
               this.savingProject.set(false);
@@ -331,40 +313,44 @@ export default class ProjectComponent implements OnInit {
   }
 
   deleteProject(): void {
+    const id: number | null = this.project().id;
+    if (id === null) {
+      return;
+    }
     this.deletingProject.set(true);
-    this.as
-      .deleteProject(this.project().id)
-      .subscribe((result: StatusResult): void => {
-        if (result.status == "ok") {
-          this.dialog
-            .alert({
-              title: "Info",
-              content: `El proyecto "${
-                this.project().name
-              }" ha sido correctamente borrado.`,
-              ok: "Continuar",
-            })
-            .subscribe((): void => {
-              this.router.navigate(["/main"]);
-            });
-        } else {
-          this.dialog
-            .alert({
-              title: "Error",
-              content: "¡Ocurrió un error al borrar el proyecto!",
-              ok: "Continuar",
-            })
-            .subscribe((): void => {
-              this.deletingProject.set(false);
-            });
-        }
-      });
+    this.as.deleteProject(id).subscribe((result: StatusResult): void => {
+      if (result.status == 'ok') {
+        this.dialog
+          .alert({
+            title: 'Info',
+            content: `El proyecto "${this.project().name}" ha sido correctamente borrado.`,
+            ok: 'Continuar',
+          })
+          .subscribe((): void => {
+            this.router.navigate(['/main']);
+          });
+      } else {
+        this.dialog
+          .alert({
+            title: 'Error',
+            content: '¡Ocurrió un error al borrar el proyecto!',
+            ok: 'Continuar',
+          })
+          .subscribe((): void => {
+            this.deletingProject.set(false);
+          });
+      }
+    });
   }
 
   generateProject(): void {
     this.generatingProject.set(true);
+    const id: number | null = this.project().id;
+    if (id === null) {
+      return;
+    }
     this.as
-      .generateProject(this.project().id, this.generateStep)
+      .generateProject(id, this.generateStep)
       .subscribe((result: ProjectDownloadResult): void => {
         this.generateStep++;
         if (this.generateStep < 6) {
@@ -382,8 +368,11 @@ export default class ProjectComponent implements OnInit {
   }
 
   downloadProject(): void {
-    window.location.href = `${environment.apiUrl}download-project/${
-      this.project().id
-    }?tk=${btoa(this.us.user.token)}`;
+    const id: number | null = this.project().id;
+    const token: string | null = this.us.user ? this.us.user.token : null;
+    if (id === null || token === null) {
+      return;
+    }
+    window.location.href = `${environment.apiUrl}download-project/${id}?tk=${btoa(token)}`;
   }
 }

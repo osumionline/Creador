@@ -1,7 +1,10 @@
-import { IncludeVersionInterface } from "@interfaces/interfaces";
+import { IncludeVersionInterface } from '@interfaces/interfaces';
 
 export default class IncludeVersion {
-  constructor(public id: number = null, public version: string = null) {}
+  constructor(
+    public id: number | null = null,
+    public version: string | null = null,
+  ) {}
 
   fromInterface(iv: IncludeVersionInterface): IncludeVersion {
     this.id = iv.id;

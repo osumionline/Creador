@@ -1,28 +1,18 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from "@angular/core";
-import { MatButton, MatFabButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
-import {
-  MatListItem,
-  MatListItemTitle,
-  MatNavList,
-} from "@angular/material/list";
-import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
-import { Router, RouterLink } from "@angular/router";
-import { ProjectResult } from "@interfaces/interfaces";
-import Project from "@model/project.model";
-import ApiService from "@services/api.service";
-import ClassMapperService from "@services/class-mapper.service";
-import UserService from "@services/user.service";
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { MatButton, MatFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatListItem, MatListItemTitle, MatNavList } from '@angular/material/list';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { Router, RouterLink } from '@angular/router';
+import { ProjectResult } from '@interfaces/interfaces';
+import Project from '@model/project.model';
+import ApiService from '@services/api.service';
+import ClassMapperService from '@services/class-mapper.service';
+import UserService from '@services/user.service';
 
 @Component({
-  selector: "app-main",
-  templateUrl: "./main.component.html",
+  selector: 'app-main',
+  templateUrl: './main.component.html',
   imports: [
     RouterLink,
     MatToolbar,
@@ -48,7 +38,7 @@ export default class MainComponent implements OnInit {
   ngOnInit(): void {
     this.as.getProjects().subscribe({
       next: (result: ProjectResult): void => {
-        if (result.status == "ok") {
+        if (result.status === 'ok') {
           this.projects.set(this.cms.getProjects(result.list));
           this.loading.set(false);
         }
@@ -63,6 +53,6 @@ export default class MainComponent implements OnInit {
 
   logout(): void {
     this.us.logout();
-    this.router.navigate(["/"]);
+    this.router.navigate(['/']);
   }
 }

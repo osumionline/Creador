@@ -1,8 +1,11 @@
-import { KeyValueInterface } from "@interfaces/interfaces";
-import { urldecode, urlencode } from "@osumi/tools";
+import { KeyValueInterface } from '@interfaces/interfaces';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class KeyValue {
-  constructor(public key: string = null, public value: string = null) {}
+  constructor(
+    public key: string | null = null,
+    public value: string | null = null,
+  ) {}
 
   fromInterface(kv: KeyValueInterface): KeyValue {
     this.key = urldecode(kv.key);

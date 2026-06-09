@@ -1,11 +1,11 @@
-import { UserInterface } from "@interfaces/interfaces";
-import { urldecode, urlencode } from "@osumi/tools";
+import { UserInterface } from '@interfaces/interfaces';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class User {
   constructor(
-    public id: number = null,
-    public name: string = null,
-    public token: string = null
+    public id: number | null = null,
+    public name: string | null = null,
+    public token: string | null = null,
   ) {}
 
   fromInterface(u: UserInterface): User {

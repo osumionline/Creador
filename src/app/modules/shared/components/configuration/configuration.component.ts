@@ -1,19 +1,19 @@
-import { Component, model, ModelSignal } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { MatButton } from "@angular/material/button";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInput } from "@angular/material/input";
-import { MatSlideToggle } from "@angular/material/slide-toggle";
-import { ConfigurationRow, NewConfigurationItem } from "@interfaces/interfaces";
-import KeyValue from "@model/key-value.model";
-import ProjectConfigurationLists from "@model/project-configuration-lists.model";
-import ProjectConfiguration from "@model/project-configuration.model";
+import { Component, model, ModelSignal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { ConfigurationRow, NewConfigurationItem } from '@interfaces/interfaces';
+import KeyValue from '@model/key-value.model';
+import ProjectConfigurationLists from '@model/project-configuration-lists.model';
+import ProjectConfiguration from '@model/project-configuration.model';
 
 @Component({
-  selector: "app-configuration",
-  templateUrl: "./configuration.component.html",
-  styleUrls: ["./../../../pages/project/project.component.scss"],
+  selector: 'app-configuration',
+  templateUrl: './configuration.component.html',
+  styleUrls: ['./../../../pages/project/project.component.scss'],
   imports: [
     FormsModule,
     MatFormField,
@@ -25,20 +25,19 @@ import ProjectConfiguration from "@model/project-configuration.model";
   ],
 })
 export default class ConfigurationComponent {
-  projectConfiguration: ModelSignal<ProjectConfiguration> =
-    model.required<ProjectConfiguration>();
+  projectConfiguration: ModelSignal<ProjectConfiguration> = model.required<ProjectConfiguration>();
   projectConfigurationLists: ModelSignal<ProjectConfigurationLists> =
     model.required<ProjectConfigurationLists>();
   newItem: NewConfigurationItem = {
-    css: "",
-    cssExt: "",
-    js: "",
-    jsExt: "",
-    libs: "",
-    extraKey: "",
-    extraValue: "",
-    dirKey: "",
-    dirValue: "",
+    css: '',
+    cssExt: '',
+    js: '',
+    jsExt: '',
+    libs: '',
+    extraKey: '',
+    extraValue: '',
+    dirKey: '',
+    dirValue: '',
   };
   row: ConfigurationRow = {
     general: true,
@@ -52,67 +51,64 @@ export default class ConfigurationComponent {
     dir: false,
   };
 
-  deploy(ind: string): void {
+  deploy(ind: keyof ConfigurationRow): void {
     this.row[ind] = !this.row[ind];
   }
 
   changeHasDB(): void {
-    this.projectConfiguration.update(
-      (value: ProjectConfiguration): ProjectConfiguration => {
-        value.hasDB = !value.hasDB;
-        return value;
-      }
-    );
+    this.projectConfiguration.update((value: ProjectConfiguration): ProjectConfiguration => {
+      value.hasDB = !value.hasDB;
+      return value;
+    });
   }
 
-  addNew(type: string): void {
+  addNew(type: keyof ProjectConfigurationLists): void {
     switch (type) {
-      case "css":
-      case "cssExt":
-      case "js":
-      case "jsExt":
-      case "libs":
+      case 'css':
+      case 'cssExt':
+      case 'js':
+      case 'jsExt':
+      case 'libs':
         this.projectConfigurationLists.update(
           (value: ProjectConfigurationLists): ProjectConfigurationLists => {
             value[type].push(this.newItem[type]);
             return value;
-          }
+          },
         );
-        this.newItem[type] = "";
+        this.newItem[type] = '';
         break;
-      case "extra":
+      case 'extra':
         this.projectConfigurationLists.update(
           (value: ProjectConfigurationLists): ProjectConfigurationLists => {
-            value.extra.push(
-              new KeyValue(this.newItem.extraKey, this.newItem.extraValue)
-            );
+            value.extra.push(new KeyValue(this.newItem.extraKey, this.newItem.extraValue));
             return value;
-          }
+          },
         );
-        this.newItem.extraKey = "";
-        this.newItem.extraValue = "";
+        this.newItem.extraKey = '';
+        this.newItem.extraValue = '';
         break;
-      case "dir":
+      case 'dir':
         this.projectConfigurationLists.update(
           (value: ProjectConfigurationLists): ProjectConfigurationLists => {
-            value.dir.push(
-              new KeyValue(this.newItem.dirKey, this.newItem.dirValue)
-            );
+            value.dir.push(new KeyValue(this.newItem.dirKey, this.newItem.dirValue));
             return value;
-          }
+          },
         );
-        this.newItem.dirKey = "";
-        this.newItem.dirValue = "";
+        this.newItem.dirKey = '';
+        this.newItem.dirValue = '';
         break;
     }
   }
 
-  deleteNew(type: string, ind: number): void {
+  deleteNew(type: keyof ProjectConfigurationLists, ind: number): void {
     this.projectConfigurationLists.update(
       (value: ProjectConfigurationLists): ProjectConfigurationLists => {
-        value[type].splice(ind, 1);
+        const list = value[type];
+        if (Array.isArray(list)) {
+          list.splice(ind, 1);
+        }
         return value;
-      }
+      },
     );
   }
 }

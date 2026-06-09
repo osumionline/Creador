@@ -1,27 +1,22 @@
-import {
-  IncludeTypeInterface,
-  IncludeVersionInterface,
-} from "@interfaces/interfaces";
-import IncludeVersion from "@model/include-version.model";
-import { urldecode, urlencode } from "@osumi/tools";
+import { IncludeTypeInterface, IncludeVersionInterface } from '@interfaces/interfaces';
+import IncludeVersion from '@model/include-version.model';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class IncludeType {
-  selected: boolean = false;
+  selected?: boolean = false;
 
   constructor(
-    public id: number = null,
-    public name: string = null,
-    public versions: IncludeVersion[] = []
+    public id: number | null = null,
+    public name: string | null = null,
+    public versions: IncludeVersion[] = [],
   ) {}
 
   fromInterface(it: IncludeTypeInterface): IncludeType {
     this.id = it.id;
     this.name = urldecode(it.name);
-    this.versions = it.versions.map(
-      (item: IncludeVersionInterface): IncludeVersion => {
-        return new IncludeVersion().fromInterface(item);
-      }
-    );
+    this.versions = it.versions.map((item: IncludeVersionInterface): IncludeVersion => {
+      return new IncludeVersion().fromInterface(item);
+    });
 
     return this;
   }
@@ -31,7 +26,7 @@ export default class IncludeType {
       id: this.id,
       name: urlencode(this.name),
       versions: this.versions.map(
-        (item: IncludeVersion): IncludeVersionInterface => item.toInterface()
+        (item: IncludeVersion): IncludeVersionInterface => item.toInterface(),
       ),
     };
   }

@@ -1,18 +1,18 @@
-import { ModelRowInterface } from "@interfaces/interfaces";
-import { urldecode, urlencode } from "@osumi/tools";
+import { ModelRowInterface } from '@interfaces/interfaces';
+import { urldecode, urlencode } from '@osumi/tools';
 
 export default class ModelRow {
   constructor(
-    public id: number = null,
-    public name: string = null,
-    public type: number = null,
-    public size: number = null,
+    public id: number | null = null,
+    public name: string | null = null,
+    public type: number | null = null,
+    public size: number | null = null,
     public autoIncrement: boolean = false,
     public nullable: boolean = true,
-    public defaultValue: string = null,
-    public ref: string = null,
-    public comment: string = null,
-    public order: number = null
+    public defaultValue: string | null = null,
+    public ref: string | null = null,
+    public comment: string | null = null,
+    public order: number | null = null,
   ) {}
 
   fromInterface(mr: ModelRowInterface): ModelRow {

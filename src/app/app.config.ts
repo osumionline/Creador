@@ -1,31 +1,30 @@
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
-} from "@angular/core";
+} from '@angular/core';
+import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+  MatFormFieldDefaultOptions,
+} from '@angular/material/form-field';
 import {
   InMemoryScrollingOptions,
   provideRouter,
   withComponentInputBinding,
   withInMemoryScrolling,
   withViewTransitions,
-} from "@angular/router";
-
-import { provideHttpClient, withInterceptors } from "@angular/common/http";
-import {
-  MAT_FORM_FIELD_DEFAULT_OPTIONS,
-  MatFormFieldDefaultOptions,
-} from "@angular/material/form-field";
-import routes from "@app/app.routes";
-import TokenInterceptor from "@app/interceptors/token.interceptor";
-import provideCore from "@app/modules/core";
+} from '@angular/router';
+import routes from '@app/app.routes';
+import TokenInterceptor from '@app/interceptors/token.interceptor';
+import provideCore from '@app/modules/core';
 
 const appearance: MatFormFieldDefaultOptions = {
-  appearance: "outline",
+  appearance: 'outline',
 };
 const scrollConfig: InMemoryScrollingOptions = {
-  scrollPositionRestoration: "top",
-  anchorScrolling: "enabled",
+  scrollPositionRestoration: 'top',
+  anchorScrolling: 'enabled',
 };
 
 const appConfig: ApplicationConfig = {
@@ -37,7 +36,7 @@ const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling(scrollConfig),
       withViewTransitions(),
-      withComponentInputBinding()
+      withComponentInputBinding(),
     ),
     provideHttpClient(withInterceptors([TokenInterceptor])),
     provideCore(),
